@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Layout</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* CSS Variables for breakpoints */
+    :root {
+      --container-sm: 640px;
+      --container-md: 768px;
+      --container-lg: 1024px;
+      --container-xl: 1280px;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* Container - centers content with responsive padding */
+   .container {
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--space-4);
+    }
+    @media (min-width: 640px) {
+     .container { max-width: var(--container-sm); }
+    }
+    @media (min-width: 768px) {
+     .container { max-width: var(--container-md); padding: 0 var(--space-6); }
+    }
+    @media (min-width: 1024px) {
+     .container { max-width: var(--container-lg); }
+    }
+    @media (min-width: 1280px) {
+     .container { max-width: var(--container-xl); }
+    }
+
+    /* Grid - mobile first: 1 col, scales up */
+   .grid {
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: 1fr;
+    }
+   .grid-cols-2 { grid-template-columns: 1fr; }
+   .grid-cols-3 { grid-template-columns: 1fr; }
+   .grid-cols-4 { grid-template-columns: 1fr; }
+
+    @media (min-width: 640px) {
+     .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+     .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+     .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+     .grid { gap: var(--space-6); }
+    }
+    @media (min-width: 768px) {
+     .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+     .grid-cols-4 { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (min-width: 1024px) {
+     .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* Flex utilities */
+   .flex { display: flex; }
+   .flex-col { flex-direction: column; }
+   .items-center { align-items: center; }
+   .justify-between { justify-content: space-between; }
+   .gap-4 { gap: var(--space-4); }
+   .gap-6 { gap: var(--space-6); }
+
+    /* Hide/show at breakpoints */
+   .mobile-only { display: block; }
+   .tablet-up { display: none; }
+   .desktop-only { display: none; }
+
+    @media (min-width: 768px) {
+     .mobile-only { display: none; }
+     .tablet-up { display: block; }
+    }
+    @media (min-width: 1024px) {
+     .desktop-only { display: block; }
+    }
+
+    /* Typography scales */
+    h1 { font-size: 1.875rem; font-weight: 800; line-height: 1.2; }
+    h2 { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
+    h3 { font-size: 1.25rem; font-weight: 700; }
+    p { color: #4b5563; }
+
+    @media (min-width: 768px) {
+      h1 { font-size: 2.25rem; }
+      h2 { font-size: 1.875rem; }
+      h3 { font-size: 1.5rem; }
+    }
+    @media (min-width: 1024px) {
+      h1 { font-size: 3rem; }
+      h2 { font-size: 2.25rem; }
+    }
+
+    /* Demo styles */
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: var(--space-4) 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+   .nav-links {
+      display: none;
+      gap: var(--space-6);
+    }
+   .nav-links a {
+      color: #374151;
+      text-decoration: none;
+      font-weight: 500;
+    }
+   .nav-links a:hover { color: #4f46e5; }
+    
+   .hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2);
+    }
+
+    @media (min-width: 768px) {
+     .nav-links { display: flex; }
+     .hamburger { display: none; }
+    }
+
+   .hero {
+      padding: var(--space-12) 0;
+      background: #f9fafb;
+    }
+   .hero-content {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+   .hero h1 {
+      margin-bottom: var(--space-4);
+    }
+   .hero p {
+      font-size: 1.125rem;
+      margin-bottom: var(--space-6);
+    }
+
+   .section {
+      padding: var(--space-12) 0;
+    }
+
+   .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+    }
+   .card h3 {
+      margin-bottom: var(--space-2);
+    }
+
+   .btn {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+    }
+   .btn:hover { background: #4338ca; }
+
+    /* Sidebar layout for dashboard */
+   .dashboard-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: 100vh;
+    }
+   .sidebar {
+      background: #111827;
+      color: #fff;
+      padding: var(--space-6);
+      display: none;
+    }
+   .main-content {
+      padding: var(--space-6);
+    }
+
+    @media (min-width: 1024px) {
+     .dashboard-layout {
+        grid-template-columns: 260px 1fr;
+      }
+     .sidebar {
+        display: block;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+    }
+
+    /* Spacing utilities */
+   .mt-4 { margin-top: var(--space-4); }
+   .mt-6 { margin-top: var(--space-6); }
+   .mt-8 { margin-top: var(--space-8); }
+   .mb-4 { margin-bottom: var(--space-4); }
+   .mb-6 { margin-bottom: var(--space-6); }
+   .py-12 { padding-top: var(--space-12); padding-bottom: var(--space-12); }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="#4f46e5">
+          <rect width="32" height="32" rx="8"/>
+        </svg>
+        <strong>Nova</strong>
+      </div>
+      
+      <nav class="nav-links">
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Docs</a>
+        <a href="#">Sign in</a>
+      </nav>
+
+      <button class="hamburger mobile-only">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Responsive by default</h1>
+        <p>This layout scales from 320px phones to 4K displays. Try resizing your browser.</p>
+        <button class="btn">Get started</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-6">Grid system</h2>
+      <div class="grid grid-cols-3">
+        <div class="card">
+          <h3>Mobile first</h3>
+          <p>Starts at 1 column. Scales up at 640px, 768px, 1024px.</p>
+        </div>
+        <div class="card">
+          <h3>Flexible gaps</h3>
+          <p>Uses CSS variables. 16px mobile, 24px desktop.</p>
+        </div>
+        <div class="card">
+          <h3>Container queries</h3>
+          <p>Max-width containers keep line length readable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Layout Example -->
+  <section class="section">
+    <div class="container">
+      <h2 class="mb-6">Dashboard layout</h2>
+      <div class="dashboard-layout">
+        <aside class="sidebar">
+          <h3>Sidebar</h3>
+          <p style="color: #9ca3af; font-size: 0.875rem;">Hidden on mobile. Fixed 260px on desktop.</p>
+        </aside>
+        <main class="main-content">
+          <div class="card">
+            <h3>Main content</h3>
+            <p>Full width on mobile. Next to sidebar on desktop 1024px+.</p>
+            <div class="grid grid-cols-2 mt-6">
+              <div class="card" style="background: #f9fafb;">
+                <h3>Metric 1</h3>
+                <p>24,832</p>
+              </div>
+              <div class="card" style="background: #f9fafb;">
+                <h3>Metric 2</h3>
+                <p>$48,294</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breakpoint Demo -->
+  <section class="section" style="background: #f9fafb;">
+    <div class="container">
+      <h2 class="mb-6">Breakpoint visibility</h2>
+      <div class="card">
+        <p class="mobile-only"><strong>Mobile only:</strong> Visible below 768px</p>
+        <p class="tablet-up"><strong>Tablet up:</strong> Visible 768px+</p>
+        <p class="desktop-only"><strong>Desktop only:</strong> Visible 1024px+</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
