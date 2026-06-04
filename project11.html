@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ Section</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; color: #111827; background: #fff; }
+    
+    .faq {
+      padding: 80px 0;
+      background: #f9fafb;
+    }
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    
+    .faq-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .faq h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .faq-subtitle {
+      font-size: 1.125rem;
+      color: #6b7280;
+    }
+    
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .faq-item {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 20px 24px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #111827;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-question:hover {
+      color: #4f46e5;
+    }
+    .faq-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+    
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .faq-answer-content {
+      padding: 0 24px 20px;
+      color: #4b5563;
+      line-height: 1.7;
+    }
+    .faq-answer-content a {
+      color: #4f46e5;
+      text-decoration: underline;
+    }
+    
+    .faq-cta {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .faq-cta p {
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+    .btn {
+      display: inline-block;
+      background: #4f46e5;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #4338ca;
+    }
+    
+    @media (min-width: 768px) {
+      .faq h2 { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <section class="faq">
+    <div class="faq-container">
+      <div class="faq-header">
+        <h2>Frequently asked questions</h2>
+        <p class="faq-subtitle">Can’t find the answer you’re looking for? Reach out to our team.</p>
+      </div>
+      
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>How is Nova different from PostHog or Amplitude?</span>
+            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Nova combines feature flags, experiments, and analytics in one platform. Unlike PostHog, we don’t charge per event. Unlike Amplitude, engineers can ship flags without PM tickets. One SDK, zero config, all your product data in one place.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Do I need to add tracking code to every button?</span>
+            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              No. Nova auto-captures page views, clicks, and form submissions. You only add custom events for things like “upgrade clicked” or “report generated.” Our SDK is 12kb gzipped and won’t slow your app.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Can I migrate from LaunchDarkly?</span>
+            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Yes. We have a 1-click importer for LaunchDarkly flags, segments, and user targeting. Most teams migrate in under an hour. <a href="#migration">See migration guide</a>.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>Is my data GDPR and SOC 2 compliant?</span>
+            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              Nova is SOC 2 Type II certified and GDPR compliant. Data is encrypted at rest and in transit. EU data stays in EU regions. We offer DPAs and can sign BAAs for HIPAA on Enterprise plans.
+            </div>
+          </div>
+        </div>
+        
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>What happens if I go over my event limit?</span>
+            <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-content">
+              We never stop collecting data or shut off your dashboard. You’ll get an email at 80% and 100% of your limit. Overages are $0.0001 per event, or you can upgrade. No surprise bills.
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="faq-cta">
+        <p>Still have questions?</p>
+        <a href="#contact" class="btn">Contact support</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all other items
+        faqItems.forEach(i => {
+          i.classList.remove('active');
+          i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          i.querySelector('.faq-answer').style.maxHeight = null;
+        });
+        
+        // Toggle current item
+        if (!isActive) {
+          item.classList.add('active');
+          question.setAttribute('aria-expanded', 'true');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
