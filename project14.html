@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #fff;
+      min-height: 100vh;
+    }
+
+   .signup-wrapper {
+      display: grid;
+      min-height: 100vh;
+    }
+
+    /* Left: Form */
+   .signup-form-section {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+   .signup-container {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+   .signup-logo {
+      margin-bottom: 48px;
+    }
+
+   .signup-header h1 {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+   .signup-header p {
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+
+   .social-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+   .social-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #fff;
+      border: 1px solid #d1d5db;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #374151;
+      cursor: pointer;
+    }
+   .social-btn:hover {
+      background: #f9fafb;
+    }
+
+   .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 24px 0;
+      color: #9ca3af;
+      font-size: 0.875rem;
+    }
+   .divider::before,
+   .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+   .form-group {
+      margin-bottom: 20px;
+    }
+   .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgb(79 70 229 / 0.1);
+    }
+   .form-group.error input,
+   .form-group.error select {
+      border-color: #dc2626;
+    }
+   .error-msg {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 6px;
+      display: none;
+    }
+   .form-group.error.error-msg {
+      display: block;
+    }
+
+   .password-strength {
+      height: 4px;
+      background: #e5e7eb;
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+   .password-strength-bar {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s, background 0.3s;
+    }
+   .strength-weak { background: #dc2626; width: 33%; }
+   .strength-medium { background: #f59e0b; width: 66%; }
+   .strength-strong { background: #16a34a; width: 100%; }
+
+   .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+   .checkbox-group input {
+      width: auto;
+      margin-top: 4px;
+    }
+   .checkbox-group label {
+      margin: 0;
+      font-weight: 400;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+   .checkbox-group a {
+      color: #4f46e5;
+      text-decoration: none;
+    }
+
+   .btn-primary {
+      width: 100%;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+   .btn-primary:hover {
+      background: #4338ca;
+    }
+
+   .login-text {
+      text-align: center;
+      margin-top: 24px;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+   .login-text a {
+      color: #4f46e5;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Right: Benefits */
+   .signup-benefits {
+      background: #1e1b4b;
+      color: #fff;
+      padding: 48px 32px;
+      display: none;
+    }
+   .benefits-content {
+      max-width: 400px;
+    }
+   .benefits-content h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
+   .benefit-list {
+      list-style: none;
+      margin-bottom: 40px;
+    }
+   .benefit-list li {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: #c7d2fe;
+    }
+   .check-icon {
+      color: #22c55e;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+   .testimonial {
+      border-top: 1px solid #3730a3;
+      padding-top: 32px;
+    }
+   .testimonial-quote {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      color: #e0e7ff;
+    }
+   .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+   .testimonial-author img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+   .author-info h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+   .author-info p {
+      font-size: 0.85rem;
+      color: #a5b4fc;
+    }
+
+    /* Desktop: 2 cols */
+    @media (min-width: 1024px) {
+     .signup-wrapper {
+        grid-template-columns: 1fr 1fr;
+      }
+     .signup-benefits {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+     .social-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+     .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-wrapper">
+    <!-- Left: Form -->
+    <div class="signup-form-section">
+      <div class="signup-container">
+        <div class="signup-logo">
+          <svg width="120" height="32" viewBox="0 0 120 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#4f46e5"/>
+            <text x="44" y="22" font-family="system-ui" font-size="20" font-weight="800" fill="#111827">Nova</text>
+          </svg>
+        </div>
+
+        <div class="signup-header">
+          <h1>Get started for free</h1>
+          <p>Create an account to start your 14-day trial</p>
+        </div>
+
+        <div class="social-grid">
+          <button class="social-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18">
+              <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.4-5.88c0-.6-.05-1.15-.17-1.67z"/>
+              <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/>
+              <path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 010-3.04V5.41H1.83a8 8 0 000 7.18l2.67-2.07z"/>
+              <path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 001.83 5.4L4.5 7.49a4.77 4.77 0 014.48-3.3z"/>
+            </svg>
+            Google
+          </button>
+          <button class="social-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+              <path d="M15.3 8.1h-1.3v1.2h1.3c.1 0.2 0.3-.1.6-.3 1-.8 1.1-1.4.1-.3.1-.6.1-1 0-.4 0-.7-.1-1-.1-.6-.5-1.1-1.4-.1-.1-.2-.1-.3-.1h-1.3V3.1h1.3c.7 0 1.4.3 1.9.8.5.5.8 1.2.8 1.9 0.7-.3 1.4-.8 1.9-.5.5-1.2.8-1.9.8zm-10.6 0H3.4c-.7 0-1.4-.3-1.9-.8C1 6.8.7 6.1.7 5.4c0-.7.3-1.4.8-1.9.5-.5 1.2-.8 1.9-.8h1.3v1.2H3.4c-.1 0-.2 0-.3.1-.6.3-1.8-1.1 1.4-.1.3-.1.6-.1 1 0.4 0.7.1 1.1.6.5 1.1 1.1 1.4.1.1.2.1.3.1h1.3v1.2zm4.6-5v10.8c0.3.2.5.5.5s.5-.2.5-.5V3.1c0-.3-.2-.5-.5-.5s-.5.2-.5.5z"/>
+            </svg>
+            GitHub
+          </button>
+        </div>
+
+        <div class="divider">or</div>
+
+        <form id="signupForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First name</label>
+              <input type="text" id="firstName" required autocomplete="given-name">
+              <div class="error-msg">Required</div>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last name</label>
+              <input type="text" id="lastName" required autocomplete="family-name">
+              <div class="error-msg">Required</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Work email</label>
+            <input type="email" id="email" required autocomplete="email">
+            <div class="error-msg">Enter a valid email</div>
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company name</label>
+            <input type="text" id="company" autocomplete="organization">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" required autocomplete="new-password">
+            <div class="password-strength">
+              <div class="password-strength-bar" id="strengthBar"></div>
+            </div>
+            <div class="error-msg">Use 8+ characters</div>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to Nova's <a href="#">Terms</a> and <a href="#">Privacy Policy</a></label>
+          </div>
+
+          <button type="submit" class="btn-primary">Create account</button>
+        </form>
+
+        <p class="login-text">
+          Already have an account? <a href="#">Sign in</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Right: Benefits -->
+    <div class="signup-benefits">
+      <div class="benefits-content">
+        <h2>The fastest way to ship features your users love</h2>
+        <ul class="benefit-list">
+          <li>
+            <svg class="check-icon" width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+            </svg>
+            Ship feature flags in minutes, not days
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+            </svg>
+            Run A/B tests without engineering tickets
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+            </svg>
+            Analytics + flags + experiments in one tool
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+            </svg>
+            SOC 2 Type II + GDPR compliant
+          </li>
+        </ul>
+
+        <div class="testimonial">
+          <p class="testimonial-quote">
+            “We replaced LaunchDarkly, Amplitude, and Hotjar with Nova. Setup took 20 minutes.”
+          </p>
+          <div class="testimonial-author">
+            <img src="https://placehold.co/40x40/4f46e5/fff?text=JD" alt="Jordan Doe">
+            <div class="author-info">
+              <h4>Jordan Doe</h4>
+              <p>CTO, Linear</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('signupForm');
+    const password = document.getElementById('password');
+    const strengthBar = document.getElementById('strengthBar');
+
+    password.addEventListener('input', () => {
+      const val = password.value;
+      let strength = 0;
+      if (val.length >= 8) strength++;
+      if (/[A-Z]/.test(val) && /[a-z]/.test(val)) strength++;
+      if (/[0-9]/.test(val)) strength++;
+      if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+      strengthBar.className = 'password-strength-bar';
+      if (val.length > 0) {
+        if (strength <= 2) strengthBar.classList.add('strength-weak');
+        else if (strength === 3) strengthBar.classList.add('strength-medium');
+        else strengthBar.classList.add('strength-strong');
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let isValid = true;
+      form.querySelectorAll('.form-group').forEach(g => g.classList.remove('error'));
+
+      const required = form.querySelectorAll('[required]');
+      required.forEach(field => {
+        if (!field.value.trim() || (field.type === 'checkbox' &&!field.checked)) {
+          field.closest('.form-group,.checkbox-group').classList.add('error');
+          isValid = false;
+        }
+      });
+
+      const email = form.querySelector('#email');
+      if (email.value &&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        email.closest('.form-group').classList.add('error');
+        isValid = false;
+      }
+
+      if (password.value.length < 8) {
+        password.closest('.form-group').classList.add('error');
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert('Account created! Check your email to verify.');
+      }
+    });
+  </script>
+</body>
+</html>
