@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+    main { flex: 1; } /* pushes footer down */
+    
+    .footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 48px 0 24px;
+      margin-top: auto;
+    }
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    
+    .footer-top {
+      display: grid;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid #1e293b;
+    }
+    
+    .footer-brand {
+      max-width: 280px;
+    }
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .footer-tagline {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .footer-links h4 {
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .footer-links ul {
+      list-style: none;
+    }
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .footer-links a:hover {
+      color: #fff;
+    }
+    
+    .footer-bottom {
+      padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 0.875rem;
+    }
+    .social-links {
+      display: flex;
+      gap: 20px;
+    }
+    .social-links a {
+      color: #94a3b8;
+      text-decoration: none;
+    }
+    .social-links a:hover {
+      color: #fff;
+    }
+    
+    /* Tablet: 2 columns */
+    @media (min-width: 640px) {
+      .footer-top {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+    
+    /* Desktop: 4 columns */
+    @media (min-width: 768px) {
+      .footer-top {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <!-- Your page content -->
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">Nova</a>
+          <p class="footer-tagline">
+            Build products your users love. Ship features faster with real-time feedback.
+          </p>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Changelog</a></li>
+            <li><a href="#">Roadmap</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-links">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Docs</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Status</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div>© 2026 Nova Inc. All rights reserved.</div>
+        <div class="social-links">
+          <a href="#">Twitter</a>
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Discord</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
