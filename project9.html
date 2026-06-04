@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testimonials</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; color: #111827; }
+    
+    .testimonials {
+      padding: 80px 0;
+      background: #f9fafb;
+    }
+    .testimonials-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .testimonials h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .testimonials-subtitle {
+      font-size: 1.125rem;
+      color: #6b7280;
+    }
+    
+    .testimonial-grid {
+      display: grid;
+      gap: 24px;
+    }
+    
+    .testimonial-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+    }
+    .stars {
+      color: #f59e0b;
+      margin-bottom: 16px;
+      font-size: 1.125rem;
+    }
+    .quote {
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-size: 1rem;
+    }
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+    .author-info h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .author-info p {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+    
+    @media (min-width: 768px) {
+      .testimonials h2 { font-size: 3rem; }
+      .testimonial-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <section class="testimonials">
+    <div class="testimonials-container">
+      <div class="testimonials-header">
+        <h2>Loved by product teams</h2>
+        <p class="testimonials-subtitle">Don’t just take our word for it</p>
+      </div>
+      
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">“Nova cut our feature release cycle from 2 weeks to 2 days. The feature flag UI is so good our PMs can ship without bugging engineering.”</p>
+          <div class="author">
+            <img src="https://placehold.co/48x48/e0e7ff/4f46e5?text=JD" alt="Jordan Doe">
+            <div class="author-info">
+              <h4>Jordan Doe</h4>
+              <p>CTO, Linear</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">“We replaced 4 tools with Nova. Analytics, experiments, and feedback in one place. Onboarding took 20 minutes.”</p>
+          <div class="author">
+            <img src="https://placehold.co/48x48/fef3c7/d97706?text=AS" alt="Alex Smith">
+            <div class="author-info">
+              <h4>Alex Smith</h4>
+              <p>Head of Product, Vercel</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">“The DX is unreal. Our engineers actually enjoy using it. Support responds in under 10 minutes every time.”</p>
+          <div class="author">
+            <img src="https://placehold.co/48x48/dcfce7/16a34a?text=MR" alt="Maya Rao">
+            <div class="author-info">
+              <h4>Maya Rao</h4>
+              <p>Eng Lead, Stripe</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
