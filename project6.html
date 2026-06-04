@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Nova</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; color: #111827; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    
+    /* Hero */
+    .about-hero {
+      background: #f9fafb;
+      padding: 64px 0;
+      text-align: center;
+    }
+    .about-hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .about-hero p {
+      font-size: 1.125rem;
+      color: #6b7280;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Story */
+    .story {
+      padding: 64px 0;
+      display: grid;
+      gap: 40px;
+      align-items: center;
+    }
+    .story h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .story p {
+      color: #4b5563;
+      margin-bottom: 16px;
+    }
+    .story img {
+      width: 100%;
+      border-radius: 12px;
+    }
+    
+    /* Values */
+    .values {
+      background: #f9fafb;
+      padding: 64px 0;
+    }
+    .values h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .values-grid {
+      display: grid;
+      gap: 24px;
+    }
+    .value-card {
+      background: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+    .value-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+    .value-card p {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+    
+    /* Team */
+    .team {
+      padding: 64px 0;
+      text-align: center;
+    }
+    .team h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .team-subtitle {
+      color: #6b7280;
+      margin-bottom: 48px;
+    }
+    .team-grid {
+      display: grid;
+      gap: 32px;
+    }
+    .team-member img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+    }
+    .team-member h3 {
+      font-size: 1.125rem;
+      margin-bottom: 4px;
+    }
+    .team-member p {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+    
+    /* CTA */
+    .about-cta {
+      background: #4f46e5;
+      color: #fff;
+      padding: 64px 0;
+      text-align: center;
+    }
+    .about-cta h2 {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+    .about-cta p {
+      opacity: 0.9;
+      margin-bottom: 24px;
+    }
+    .btn-white {
+      background: #fff;
+      color: #4f46e5;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    /* Desktop */
+    @media (min-width: 768px) {
+      .about-hero h1 { font-size: 3.5rem; }
+      .story { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: repeat(3, 1fr); }
+      .team-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <!-- 1. Hero -->
+  <section class="about-hero">
+    <div class="container">
+      <h1>We’re building the future of product development</h1>
+      <p>Nova started with a simple idea: teams should spend time building, not fighting their tools.</p>
+    </div>
+  </section>
+
+  <!-- 2. Story -->
+  <section class="story container">
+    <div>
+      <h2>Our Story</h2>
+      <p>Founded in 2023 by engineers tired of stitching together 12 different tools to ship one feature, Nova was built to unify the product workflow.</p>
+      <p>Today, 10,000+ teams use Nova to collect feedback, run experiments, and ship with confidence. We’re remote-first, profitable, and obsessed with developer experience.</p>
+    </div>
+    <div>
+      <img src="https://placehold.co/500x350/e5e7eb/6b7280?text=Team+Photo" alt="Nova team">
+    </div>
+  </section>
+
+  <!-- 3. Values -->
+  <section class="values">
+    <div class="container">
+      <h2>What we believe</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <h3>Build in public</h3>
+          <p>We share our roadmap, changelog, and metrics. Transparency builds trust.</p>
+        </div>
+        <div class="value-card">
+          <h3>Developers first</h3>
+          <p>If it’s not a joy to use, we don’t ship it. Great DX = great products.</p>
+        </div>
+        <div class="value-card">
+          <h3>Speed matters</h3>
+          <p>Fast software, fast support, fast iteration. The market doesn’t wait.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Team -->
+  <section class="team container">
+    <h2>Meet the team</h2>
+    <p class="team-subtitle">Small team, big impact. We’re hiring.</p>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="https://placehold.co/96x96/e0e7ff/4f46e5?text=AS" alt="Alex Smith">
+        <h3>Alex Smith</h3>
+        <p>CEO & Co-founder</p>
+      </div>
+      <div class="team-member">
+        <img src="https://placehold.co/96x96/fef3c7/d97706?text=MJ" alt="Maya Jones">
+        <h3>Maya Jones</h3>
+        <p>CTO & Co-founder</p>
+      </div>
+      <div class="team-member">
+        <img src="https://placehold.co/96x96/dcfce7/16a34a?text=DL" alt="David Lee">
+        <h3>David Lee</h3>
+        <p>Head of Design</p>
+      </div>
+      <div class="team-member">
+        <img src="https://placehold.co/96x96/fce7f3/db2777?text=SR" alt="Sara Rao">
+        <h3>Sara Rao</h3>
+        <p>Head of Product</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CTA -->
+  <section class="about-cta">
+    <div class="container">
+      <h2>Want to join us?</h2>
+      <p>We’re always looking for talented people who care about great software.</p>
+      <a href="#careers" class="btn-white">See open roles</a>
+    </div>
+  </section>
+</body>
+</html>
