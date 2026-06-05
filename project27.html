@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Modern Blog</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+   .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* Header */
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+   .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-5) 0;
+      gap: var(--space-8);
+    }
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #111827;
+    }
+   .nav {
+      display: flex;
+      gap: var(--space-8);
+      flex: 1;
+      justify-content: center;
+    }
+   .nav a {
+      color: #374151;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+   .nav a:hover, .nav a.active {
+      color: #4f46e5;
+    }
+   .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+   .btn-subscribe {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+   .btn-subscribe:hover {
+      background: #4338ca;
+    }
+   .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2);
+    }
+
+    @media (max-width: 768px) {
+     .nav { display: none; }
+     .hamburger { display: block; }
+     .header-inner { padding: var(--space-4) 0; }
+    }
+
+    /* Hero Featured Post */
+   .hero {
+      background: #f9fafb;
+      padding: var(--space-16) 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+   .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+   .hero-image {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: #e5e7eb;
+    }
+   .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+   .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+   .category-tag {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4f46e5;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      width: fit-content;
+    }
+   .hero-content h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+   .hero-content h1 a {
+      color: #111827;
+      text-decoration: none;
+    }
+   .hero-content h1 a:hover {
+      color: #4f46e5;
+    }
+   .hero-excerpt {
+      font-size: 1.125rem;
+      color: #4b5563;
+      line-height: 1.7;
+    }
+   .post-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+   .author {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 600;
+      color: #111827;
+    }
+   .author-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #4f46e5;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+     .hero-grid { grid-template-columns: 1fr; }
+     .hero-content h1 { font-size: 2rem; }
+     .hero { padding: var(--space-10) 0; }
+    }
+
+    /* Main content + sidebar */
+   .main-section {
+      padding: var(--space-16) 0;
+    }
+   .content-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: var(--space-12);
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+     .content-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Article grid */
+   .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-8);
+    }
+   .section-header h2 {
+      font-size: 1.875rem;
+      font-weight: 800;
+    }
+   .section-header a {
+      color: #4f46e5;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+   .section-header a:hover {
+      text-decoration: underline;
+    }
+
+   .article-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-8);
+    }
+
+    @media (max-width: 640px) {
+     .article-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Article card */
+   .article-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+   .article-image {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      background: #f3f4f6;
+    }
+   .article-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+   .article-card:hover .article-image img {
+      transform: scale(1.03);
+    }
+   .article-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+   .article-content h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+   .article-content h3 a {
+      color: #111827;
+      text-decoration: none;
+    }
+   .article-content h3 a:hover {
+      color: #4f46e5;
+    }
+   .article-excerpt {
+      color: #6b7280;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+   .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+   .sidebar-widget {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+    }
+   .sidebar-widget h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-5);
+    }
+
+    /* Newsletter widget */
+   .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+   .newsletter-form input {
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+   .newsletter-form input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgb(79 70 229 / 0.1);
+    }
+   .newsletter-form button {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+   .newsletter-form button:hover {
+      background: #4338ca;
+    }
+   .newsletter-text {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: var(--space-4);
+    }
+
+    /* Popular posts */
+   .popular-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+   .popular-item {
+      display: flex;
+      gap: var(--space-3);
+    }
+   .popular-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #d1d5db;
+      line-height: 1;
+      min-width: 24px;
+    }
+   .popular-content h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+   .popular-content h4 a {
+      color: #111827;
+      text-decoration: none;
+    }
+   .popular-content h4 a:hover {
+      color: #4f46e5;
+    }
+   .popular-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* Categories */
+   .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+   .category-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3);
+      border-radius: 8px;
+      text-decoration: none;
+      color: #374151;
+      font-weight: 500;
+      transition: background 0.15s;
+    }
+   .category-item:hover {
+      background: #f3f4f6;
+    }
+   .category-count {
+      background: #f3f4f6;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    /* Pagination */
+   .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-12);
+    }
+   .page-btn {
+      min-width: 40px;
+      height: 40px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+   .page-btn:hover {
+      background: #f9fafb;
+    }
+   .page-btn.active {
+      background: #4f46e5;
+      color: #fff;
+      border-color: #4f46e5;
+    }
+
+    /* Footer */
+   .footer {
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      padding: var(--space-12) 0 var(--space-8);
+      margin-top: var(--space-16);
+    }
+   .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+   .footer-col h4 {
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+   .footer-col ul {
+      list-style: none;
+    }
+   .footer-col li {
+      margin-bottom: var(--space-3);
+    }
+   .footer-col a {
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+   .footer-col a:hover {
+      color: #111827;
+    }
+   .footer-bottom {
+      border-top: 1px solid #e5e7eb;
+      padding-top: var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 768px) {
+     .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+     .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="#4f46e5">
+            <rect width="32" height="32" rx="8"/>
+          </svg>
+          The Modern Blog
+        </a>
+        
+        <nav class="nav">
+          <a href="#" class="active">Home</a>
+          <a href="#">Technology</a>
+          <a href="#">Design</a>
+          <a href="#">Business</a>
+          <a href="#">Culture</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="btn-subscribe">Subscribe</button>
+          <button class="hamburger">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Featured -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=500&fit=crop" alt="Featured post">
+        </div>
+        <div class="hero-content">
+          <span class="category-tag">Technology</span>
+          <h1><a href="#">The Future of Web Development: What to Expect in 2026</a></h1>
+          <p class="hero-excerpt">AI-powered tools, edge computing, and WebAssembly are reshaping how we build for the web. Here's what developers need to know to stay ahead.</p>
+          <div class="post-meta">
+            <div class="author">
+              <div class="author-avatar">JD</div>
+              <span>Jordan Doe</span>
+            </div>
+            <span>•</span>
+            <span>Oct 12, 2026</span>
+            <span>•</span>
+            <span>8 min read</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-section">
+    <div class="container">
+      <div class="content-layout">
+        <!-- Articles -->
+        <div>
+          <div class="section-header">
+            <h2>Latest Articles</h2>
+            <a href="#">View all →</a>
+          </div>
+
+          <div class="article-grid">
+            <article class="article-card">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=338&fit=crop" alt="Design">
+              </div>
+              <div class="article-content">
+                <span class="category-tag">Design</span>
+                <h3><a href="#">Design Systems at Scale: Lessons from Top Companies</a></h3>
+                <p class="article-excerpt">How Stripe, Airbnb, and Shopify maintain consistency across thousands of screens and dozens of teams.</p>
+                <div class="post-meta">
+                  <span>Sarah Miller</span>
+                  <span>•</span>
+                  <span>Oct 10</span>
+                  <span>•</span>
+                  <span>6 min</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="article-card">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=338&fit=crop" alt="Data">
+              </div>
+              <div class="article-content">
+                <span class="category-tag">Business</span>
+                <h3><a href="#">Data-Driven Decision Making: A Practical Guide</a></h3>
+                <p class="article-excerpt">Stop guessing. Learn how to build a culture where data informs every product decision your team makes.</p>
+                <div class="post-meta">
+                  <span>Alex Chen</span>
+                  <span>•</span>
+                  <span>Oct 8</span>
+                  <span>•</span>
+                  <span>12 min</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="article-card">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=338&fit=crop" alt="Mobile">
+              </div>
+              <div class="article-content">
+                <span class="category-tag">Technology</span>
+                <h3><a href="#">Building Accessible Mobile Apps: Beyond the Basics</a></h3>
+                <p class="article-excerpt">Accessibility isn't a feature. It's a requirement. Here's how to make your app work for everyone.</p>
+                <div class="post-meta">
+                  <span>Emma Wilson</span>
+                  <span>•</span>
+                  <span>Oct 5</span>
+                  <span>•</span>
+                  <span>9 min</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="article-card">
+              <div class="article-image">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=338&fit=crop" alt="Team">
+              </div>
+              <div class="article-content">
+                <span class="category-tag">Culture</span>
+                <h3><a href="#">Remote Work: The New Normal or Just a Trend?</a></h3>
+                <p class="article-excerpt">Three years in, we analyze the data on productivity, burnout, and team cohesion in distributed teams.</p>
+                <div class="post-meta">
+                  <span>Michael Park</span>
+                  <span>•</span>
+                  <span>Oct 3</span>
+                  <span>•</span>
+                  <span>7 min</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="pagination">
+            <button class="page-btn">←</button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">→</button>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <!-- Newsletter -->
+          <div class="sidebar-widget">
+            <h3>Subscribe to Newsletter</h3>
+            <p class="newsletter-text">Get the latest articles delivered to your inbox weekly.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email">
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+
+          <!-- Popular Posts -->
+          <div class="sidebar-widget">
+            <h3>Popular This Week</h3>
+            <div class="popular-list">
+              <div class="popular-item">
+                <div class="popular-number">1</div>
+                <div class="popular-content">
+                  <h4><a href="#">10 VS Code Extensions Every Developer Needs</a></h4>
+                  <div class="popular-meta">Technology • 5 min</div>
+                </div>
+              </div>
+              <div class="popular-item">
+                <div class="popular-number">2</div>
+                <div class="popular-content">
+                  <h4><a href="#">Why Your Startup Needs a Design System</a></h4>
+                  <div class="popular-meta">Design • 8 min</div>
+                </div>
+              </div>
+              <div class="popular-item">
+                <div class="popular-number">3</div>
+                <div class="popular-content">
+                  <h4><a href="#">The Psychology of Pricing Pages</a></h4>
+                  <div class="popular-meta">Business • 11 min</div>
+                </div>
+              </div>
+              <div class="popular-item">
+                <div class="popular-number">4</div>
+                <div class="popular-content">
+                  <h4><a href="#">CSS Grid vs Flexbox: When to Use Each</a></h4>
+                  <div class="popular-meta">Technology • 6 min</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Categories -->
+          <div class="sidebar-widget">
+            <h3>Categories</h3>
+            <div class="category-list">
+              <a href="#" class="category-item">
+                <span>Technology</span>
+                <span class="category-count">24</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Design</span>
+                <span class="category-count">18</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Business</span>
+                <span class="category-count">15</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Culture</span>
+                <span class="category-count">12</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Tutorials</span>
+                <span class="category-count">31</span>
+              </a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo" style="margin-bottom: 16px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="#4f46e5">
+              <rect width="32" height="32" rx="8"/>
+            </svg>
+            The Modern Blog
+          </div>
+          <p style="color: #6b7280; font-size: 0.9rem;">Thoughtful articles on technology, design, and building better products.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Content</h4>
+          <ul>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Case Studies</a></li>
+            <li><a href="#">Resources</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Write for Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Advertise</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 The Modern Blog. All rights reserved.</p>
+        <div style="display: flex; gap: 16px;">
+          <a href="#" style="color: #6b7280;">Twitter</a>
+          <a href="#" style="color: #6b7280;">LinkedIn</a>
+          <a href="#" style="color: #6b7280;">RSS</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
