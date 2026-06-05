@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mega Menu Navigation</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #16a34a;
+      --purple: #9333ea;
+      --orange: #ea580c;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+    }
+
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
+    }
+
+   .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #111827;
+      padding: 20px 0;
+    }
+
+   .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+    }
+
+    /* Navigation */
+   .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+   .nav-item {
+      position: relative;
+    }
+
+   .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 24px 16px;
+      color: #374151;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      transition: color 0.15s;
+    }
+
+   .nav-link:hover {
+      color: var(--primary);
+    }
+
+   .nav-arrow {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+    }
+
+   .nav-item:hover .nav-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Mega Menu */
+   .mega-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 1100px;
+      max-width: 95vw;
+      padding: 40px;
+      z-index: 50;
+    }
+
+   .nav-item:hover .mega-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+   .mega-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+   .mega-column h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      margin-bottom: 20px;
+    }
+
+   .mega-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+   .mega-item {
+      display: flex;
+      align-items: start;
+      gap: 14px;
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #111827;
+      transition: background 0.15s;
+    }
+
+   .mega-item:hover {
+      background: #f3f4f6;
+    }
+
+   .mega-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+   .mega-icon.blue {
+      background: #dbeafe;
+      color: var(--primary);
+    }
+
+   .mega-icon.green {
+      background: #dcfce7;
+      color: var(--success);
+    }
+
+   .mega-icon.purple {
+      background: #f3e8ff;
+      color: var(--purple);
+    }
+
+   .mega-icon.orange {
+      background: #ffedd5;
+      color: var(--orange);
+    }
+
+   .mega-content {
+      flex: 1;
+    }
+
+   .mega-content h5 {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+   .mega-content p {
+      font-size: 0.85rem;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+   .badge {
+      background: #dbeafe;
+      color: var(--primary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      text-transform: uppercase;
+    }
+
+   .badge.new {
+      background: #dcfce7;
+      color: var(--success);
+    }
+
+    /* Featured Column */
+   .mega-featured {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      padding: 28px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      grid-row: span 2;
+    }
+
+   .mega-featured h4 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #fff;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+   .mega-featured p {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+   .mega-featured-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: rgb(255 255 / 0.2);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+   .mega-featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+   .mega-btn {
+      background: #fff;
+      color: var(--primary);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.15s;
+    }
+
+   .mega-btn:hover {
+      transform: scale(1.02);
+    }
+
+    /* Simple Mega Menu Variant */
+   .mega-menu-simple {
+      width: 700px;
+      padding: 32px;
+    }
+
+   .mega-grid-simple {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+   .mega-simple-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #111827;
+      transition: background 0.15s;
+    }
+
+   .mega-simple-item:hover {
+      background: #f3f4f6;
+    }
+
+   .mega-simple-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+   .mega-simple-content h5 {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+   .mega-simple-content p {
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    /* Header Actions */
+   .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+   .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+
+   .btn:hover {
+      background: var(--primary-dark);
+    }
+
+   .btn-secondary {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+   .btn-secondary:hover {
+      background: #f9fafb;
+    }
+
+    /* Mobile Menu */
+   .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #374151;
+    }
+
+   .mobile-toggle:hover {
+      background: #f3f4f6;
+    }
+
+   .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #fff;
+      z-index: 200;
+      overflow-y: auto;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+   .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+   .mobile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+   .mobile-close {
+      background: none;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #374151;
+    }
+
+   .mobile-nav {
+      padding: 20px;
+    }
+
+   .mobile-nav-item {
+      margin-bottom: 8px;
+    }
+
+   .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 8px;
+      color: #111827;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+   .mobile-nav-link:hover {
+      background: #f3f4f6;
+    }
+
+   .mobile-submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+   .mobile-nav-item.expanded .mobile-submenu {
+      max-height: 600px;
+    }
+
+   .mobile-submenu-item {
+      display: block;
+      padding: 12px 16px 12px 48px;
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+   .mobile-submenu-item:hover {
+      color: var(--primary);
+    }
+
+    @media (max-width: 1024px) {
+     .nav {
+        display: none;
+      }
+     .mobile-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+     .mobile-menu {
+        display: block;
+      }
+    }
+
+    /* Demo Content */
+   .demo-content {
+      max-width: 1400px;
+      margin: 60px auto;
+      padding: 0 24px;
+    }
+
+   .demo-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+   .demo-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+   .demo-card p {
+      color: #6b7280;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">N</div>
+        Nexus
+      </a>
+
+      <nav class="nav">
+        <div class="nav-item">
+          <button class="nav-link">
+            Products
+            <svg class="nav-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="mega-menu">
+            <div class="mega-grid">
+              <div class="mega-featured">
+                <div>
+                  <h4>Introducing Nexus AI</h4>
+                  <p>Supercharge your workflow with AI-powered automation, insights, and intelligent assistance built right into your workspace.</p>
+                  <div class="mega-featured-img">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=338&fit=crop" alt="AI">
+                  </div>
+                </div>
+                <a href="#" class="mega-btn">Explore AI Features</a>
+              </div>
+
+              <div class="mega-column">
+                <h4>Platform</h4>
+                <div class="mega-list">
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon blue">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Analytics <span class="badge">New</span></h5>
+                      <p>Real-time data and insights</p>
+                    </div>
+                  </a>
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon green">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Automation</h5>
+                      <p>Streamline repetitive tasks</p>
+                    </div>
+                  </a>
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon purple">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Collaboration</h5>
+                      <p>Work together seamlessly</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="mega-column">
+                <h4>Solutions</h4>
+                <div class="mega-list">
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon orange">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Enterprise</h5>
+                      <p>Scale with confidence</p>
+                    </div>
+                  </a>
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon blue">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>E-commerce</h5>
+                      <p>Sell online with ease</p>
+                    </div>
+                  </a>
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon green">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Education</h5>
+                      <p>Engage your students</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="mega-column">
+                <h4>Resources</h4>
+                <div class="mega-list">
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon purple">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Documentation</h5>
+                      <p>Guides and API docs</p>
+                    </div>
+                  </a>
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon orange">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Video Tutorials</h5>
+                      <p>Learn step by step</p>
+                    </div>
+                  </a>
+                  <a href="#" class="mega-item">
+                    <div class="mega-icon blue">
+                      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                      </svg>
+                    </div>
+                    <div class="mega-content">
+                      <h5>Community</h5>
+                      <p>Join the discussion</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link">
+            Solutions
+            <svg class="nav-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="mega-menu mega-menu-simple">
+            <div class="mega-grid-simple">
+              <a href="#" class="mega-simple-item">
+                <div class="mega-simple-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                  </svg>
+                </div>
+                <div class="mega-simple-content">
+                  <h5>Analytics Dashboard</h5>
+                  <p>Track metrics and KPIs in real-time</p>
+                </div>
+              </a>
+              <a href="#" class="mega-simple-item">
+                <div class="mega-simple-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </div>
+                <div class="mega-simple-content">
+                  <h5>Automation Suite</h5>
+                  <p>Automate workflows and save time</p>
+                </div>
+              </a>
+              <a href="#" class="mega-simple-item">
+                <div class="mega-simple-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                </div>
+                <div class="mega-simple-content">
+                  <h5>Security Center</h5>
+                  <p>Protect your data and users</p>
+                </div>
+              </a>
+              <a href="#" class="mega-simple-item">
+                <div class="mega-simple-icon">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </div>
+                <div class="mega-simple-content">
+                  <h5>Team Management</h5>
+                  <p>Collaborate effectively</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <button class="nav-link">
+            Resources
+            <svg class="nav-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item">
+              <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+              </svg>
+              <div class="dropdown-content">
+                <div class="dropdown-title">Documentation</div>
+                <div class="dropdown-desc">API and guides</div>
+              </div>
+            </a>
+            <a href="#" class="dropdown-item">
+              <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <div class="dropdown-content">
+                <div class="dropdown-title">Tutorials</div>
+                <div class="dropdown-desc">Step-by-step videos</div>
+              </div>
+            </a>
+            <a href="#" class="dropdown-item">
+              <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div class="dropdown-content">
+                <div class="dropdown-title">Help Center</div>
+                <div class="dropdown-desc">Find answers fast</div>
+              </div>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+              </svg>
+              <div class="dropdown-content">
+                <div class="dropdown-title">Community</div>
+                <div class="dropdown-desc">Join the discussion</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#" class="nav-link">Pricing</a>
+        </div>
+
+        <div class="nav-item">
+          <a href="#" class="nav-link">Enterprise</a>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#" class="btn-secondary">Sign In</a>
+        <a href="#" class="btn">Get Started</a>
+        <button class="mobile-toggle" onclick="toggleMobileMenu()">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-header">
+      <a href="#" class="logo">
+        <div class="logo-icon">N</div>
+        Nexus
+      </a>
+      <button class="mobile-close" onclick="toggleMobileMenu()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 24 24">
+         
