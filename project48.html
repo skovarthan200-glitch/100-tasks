@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagination Component Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+   .demo-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+   .demo-section h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+   .demo-section p {
+      color: #6b7280;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    /* Base Pagination */
+   .pagination {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+   .page-item {
+      list-style: none;
+    }
+
+   .page-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid #d1d5db;
+      background: #fff;
+      color: #374151;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+   .page-link:hover {
+      background: #f9fafb;
+      border-color: #9ca3af;
+      color: #111827;
+    }
+
+   .page-link.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+   .page-link.active:hover {
+      background: var(--primary-dark);
+    }
+
+   .page-link:disabled,
+   .page-link.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+   .page-ellipsis {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      color: #9ca3af;
+      user-select: none;
+    }
+
+    /* Style 1: Simple Prev/Next */
+   .pagination-simple {
+      justify-content: space-between;
+      width: 100%;
+    }
+
+   .pagination-info {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+   .pagination-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Style 2: With Page Info */
+   .pagination-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+   .page-size-select {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+   .page-size-select select {
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+   .page-size-select select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+    }
+
+    /* Style 3: Compact */
+   .pagination-compact .page-link {
+      min-width: 36px;
+      height: 36px;
+      padding: 0 10px;
+      font-size: 0.85rem;
+    }
+
+    /* Style 4: Large */
+   .pagination-large .page-link {
+      min-width: 48px;
+      height: 48px;
+      padding: 0 16px;
+      font-size: 1rem;
+    }
+
+    /* Style 5: Rounded Pills */
+   .pagination-pills .page-link {
+      border-radius: 20px;
+      border: none;
+      background: #f3f4f6;
+    }
+
+   .pagination-pills .page-link:hover {
+      background: #e5e7eb;
+    }
+
+   .pagination-pills .page-link.active {
+      background: var(--primary);
+    }
+
+    /* Style 6: Minimal */
+   .pagination-minimal {
+      gap: 0;
+    }
+
+   .pagination-minimal .page-link {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+    }
+
+   .pagination-minimal .page-link:hover {
+      background: #f3f4f6;
+    }
+
+   .pagination-minimal .page-link.active {
+      background: transparent;
+      color: var(--primary);
+      font-weight: 700;
+      position: relative;
+    }
+
+   .pagination-minimal .page-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Style 7: With Icons */
+   .page-link-icon {
+      gap: 6px;
+    }
+
+    /* Style 8: Load More */
+   .load-more {
+      display: flex;
+      justify-content: center;
+      padding: 24px 0;
+    }
+
+   .btn-load-more {
+      background: #fff;
+      border: 1px solid #d1d5db;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+
+   .btn-load-more:hover {
+      background: #f9fafb;
+      border-color: #9ca3af;
+    }
+
+   .btn-load-more:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Style 9: Infinite Scroll Indicator */
+   .infinite-scroll {
+      text-align: center;
+      padding: 40px 0;
+      color: #6b7280;
+    }
+
+   .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e5e7eb;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Style 10: Jump to Page */
+   .page-jump {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+   .page-jump input {
+      width: 60px;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      text-align: center;
+      font-family: inherit;
+    }
+
+   .page-jump input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+    }
+
+   .page-jump button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+   .page-jump button:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Mobile Responsive */
+   @media (max-width: 640px) {
+     .pagination {
+        justify-content: center;
+      }
+     .page-link {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 8px;
+        font-size: 0.85rem;
+      }
+     .pagination-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+      }
+     .pagination-info {
+        text-align: center;
+      }
+     .hide-mobile {
+        display: none;
+      }
+    }
+
+    /* Demo Table */
+   .demo-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+    }
+
+   .demo-table th,
+   .demo-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+   .demo-table th {
+      background: #f9fafb;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+    }
+
+   .demo-table tbody tr:hover {
+      background: #f9fafb;
+    }
+
+   .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+   .badge.success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+   .badge.warning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Style 1: Full Numbered Pagination -->
+    <div class="demo-section">
+      <h2>Numbered Pagination</h2>
+      <p>Standard pagination with page numbers, prev/next, and ellipsis</p>
+      
+      <table class="demo-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#1024</td>
+            <td>John Doe</td>
+            <td><span class="badge success">Active</span></td>
+            <td>Oct 18, 2026</td>
+          </tr>
+          <tr>
+            <td>#1023</td>
+            <td>Sarah Miller</td>
+            <td><span class="badge success">Active</span></td>
+            <td>Oct 17, 2026</td>
+          </tr>
+          <tr>
+            <td>#1022</td>
+            <td>Mike Chen</td>
+            <td><span class="badge warning">Pending</span></td>
+            <td>Oct 16, 2026</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination-wrapper">
+        <div class="pagination-info">
+          Showing <strong>1-10</strong> of <strong>97</strong> results
+        </div>
+        <nav aria-label="Pagination">
+          <ul class="pagination">
+            <li class="page-item">
+              <button class="page-link disabled" disabled>
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+              </button>
+            </li>
+            <li class="page-item"><a href="#" class="page-link active">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item"><a href="#" class="page-link">3</a></li>
+            <li class="page-item"><a href="#" class="page-link">4</a></li>
+            <li class="page-item"><a href="#" class="page-link">5</a></li>
+            <li class="page-item"><span class="page-ellipsis">...</span></li>
+            <li class="page-item"><a href="#" class="page-link">10</a></li>
+            <li class="page-item">
+              <a href="#" class="page-link">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="page-size-select">
+          <label>Show:</label>
+          <select>
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Style 2: Simple Prev/Next -->
+    <div class="demo-section">
+      <h2>Simple Previous/Next</h2>
+      <p>Minimal pagination for mobile or simple lists</p>
+      
+      <nav class="pagination pagination-simple" aria-label="Pagination">
+        <button class="page-link disabled" disabled>
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          Previous
+        </button>
+        <div class="pagination-info">Page <strong>1</strong> of <strong>10</strong></div>
+        <button class="page-link">
+          Next
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Style 3: Compact -->
+    <div class="demo-section">
+      <h2>Compact Pagination</h2>
+      <p>Smaller size for dense interfaces</p>
+      
+      <nav aria-label="Pagination">
+        <ul class="pagination pagination-compact">
+          <li class="page-item">
+            <button class="page-link">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link active">2</a></li>
+          <li class="page-item"><a href="#" class="page-link">3</a></li>
+          <li class="page-item hide-mobile"><a href="#" class="page-link">4</a></li>
+          <li class="page-item hide-mobile"><a href="#" class="page-link">5</a></li>
+          <li class="page-item"><span class="page-ellipsis">...</span></li>
+          <li class="page-item"><a href="#" class="page-link">20</a></li>
+          <li class="page-item">
+            <a href="#" class="page-link">
+              <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Style 4: Pill Style -->
+    <div class="demo-section">
+      <h2>Pill Style Pagination</h2>
+      <p>Rounded pills with soft background</p>
+      
+      <nav aria-label="Pagination">
+        <ul class="pagination pagination-pills">
+          <li class="page-item">
+            <button class="page-link">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link">2</a></li>
+          <li class="page-item"><a href="#" class="page-link active">3</a></li>
+          <li class="page-item"><a href="#" class="page-link">4</a></li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item">
+            <a href="#" class="page-link">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Style 5: Minimal Underline -->
+    <div class="demo-section">
+      <h2>Minimal Underline Style</h2>
+      <p>Clean design with active underline indicator</p>
+      
+      <nav aria-label="Pagination">
+        <ul class="pagination pagination-minimal">
+          <li class="page-item">
+            <button class="page-link">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link">2</a></li>
+          <li class="page-item"><a href="#" class="page-link active">3</a></li>
+          <li class="page-item"><a href="#" class="page-link">4</a></li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item">
+            <a href="#" class="page-link">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Style 6: With Icons -->
+    <div class="demo-section">
+      <h2>Pagination with Icons</h2>
+      <p>First/Last page buttons with double chevrons</p>
+      
+      <nav aria-label="Pagination">
+        <ul class="pagination">
+          <li class="page-item">
+            <button class="page-link page-link-icon" title="First page">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link page-link-icon" title="Previous page">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item"><a href="#" class="page-link">6</a></li>
+          <li class="page-item"><a href="#" class="page-link active">7</a></li>
+          <li class="page-item"><a href="#" class="page-link">8</a></li>
+          <li class="page-item"><a href="#" class="page-link">9</a></li>
+          <li class="page-item">
+            <button class="page-link page-link-icon" title="Next page">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </li>
+          <li class="page-item">
+            <button class="page-link page-link-icon" title="Last page">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Style 7: Load More Button -->
+    <div class="demo-section">
+      <h2>Load More Button</h2>
+      <p>Progressive loading instead of traditional pagination</p>
+      
+      <div class="load-more">
+        <button class="btn-load-more">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          Load More Results
+        </button>
+      </div>
+      <p style="text-align: center; color: #6b7280; font-size: 0.9rem; margin-top: 16px;">Showing 24 of 156 items</p>
+    </div>
+
+    <!-- Style 8: Infinite Scroll -->
+    <div class="demo-section">
+      <h2>Infinite Scroll Indicator</h2>
+      <p>Auto-loading content as user scrolls</p>
+      
+      <div class="infinite-scroll">
+        <div class="spinner"></div>
+        <div>Loading more content...</div>
+      </div>
+    </div>
+
+    <!-- Style 9: Jump to Page -->
+    <div class="demo-section">
+      <h2>Jump to Page</h2>
+      <p>Direct page navigation with input</p>
+      
+      <div class="pagination-wrapper">
+        <nav aria-label="Pagination">
+          <ul class="pagination">
+            <li class="page-item">
+              <button class="page-link">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+              </button>
+            </li>
+            <li class="page-item"><a href="#" class="page-link">1</a></li>
+            <li class="page-item"><a href="#" class="page-link">2</a></li>
+            <li class="page-item"><a href="#" class="page-link active">3</a></li>
+            <li class="page-item"><span class="page-ellipsis">...</span></li>
+            <li class="page-item"><a href="#" class="page-link">15</a></li>
+            <li class="page-item">
+              <button class="page-link">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </nav>
+        <div class="page-jump">
+          <label>Go to page:</label>
+          <input type="number" min="1" max="15" value="3">
+          <button>Go</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle page clicks
+    document.querySelectorAll('.page-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        if (!this.classList.contains('disabled')) {
+          e.preventDefault();
+          document.querySelectorAll('.page-link').forEach(l => l.classList.remove('active'));
+          if (!this.querySelector('svg')) {
+            this.classList.add('active');
+          }
+        }
+      });
+    });
+
+    // Handle load more
+    document.querySelectorAll('.btn-load-more').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.innerHTML = '<div class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></div> Loading...';
+        this.disabled = true;
+        setTimeout(() => {
+          this.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 0 01-15.357-2m15.357 2H15"/></svg> Load More Results';
+          this.disabled = false;
+        }, 1500);
+      });
+    });
+  </script>
+</body>
+</html>
