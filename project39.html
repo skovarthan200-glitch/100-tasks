@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Slider Component</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+   .demo-section {
+      margin-bottom: 60px;
+    }
+
+   .demo-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    /* Main Slider */
+  .slider {
+      position: relative;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+  .slider-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+  .slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+  .slide-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+
+  .slide-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 0.8) 100%);
+      padding: 40px 32px;
+      color: #fff;
+    }
+
+  .slide-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+  .slide-description {
+      font-size: 1rem;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+
+    /* Navigation Arrows */
+  .slider-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgb(255 255 255 / 0.9);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111827;
+      transition: all 0.2s;
+      backdrop-filter: blur(8px);
+    }
+
+  .slider-nav:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+  .slider-nav.prev {
+      left: 20px;
+    }
+
+  .slider-nav.next {
+      right: 20px;
+    }
+
+  .slider-nav:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Dots */
+  .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+  .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgb(255 255 255 / 0.5);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+  .dot:hover {
+      background: rgb(255 255 255 / 0.8);
+    }
+
+  .dot.active {
+      width: 24px;
+      border-radius: 4px;
+      background: #fff;
+    }
+
+    /* Thumbnail Slider */
+  .slider-with-thumbs {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+  .main-slider {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+
+  .thumbnails {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px 0;
+    }
+
+  .thumb {
+      min-width: 100px;
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.2s;
+      opacity: 0.6;
+    }
+
+  .thumb:hover {
+      opacity: 1;
+    }
+
+  .thumb.active {
+      border-color: var(--primary);
+      opacity: 1;
+    }
+
+  .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Fade Slider */
+  .fade-slider {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      aspect-ratio: 16/9;
+    }
+
+  .fade-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+  .fade-slide.active {
+      opacity: 1;
+    }
+
+  .fade-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Progress bar */
+  .slider-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: var(--primary);
+      transition: width 0.1s linear;
+    }
+
+    /* Autoplay controls */
+  .autoplay-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+  .control-btn {
+      background: rgb(0 0 0 / 0.5);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+
+  .control-btn:hover {
+      background: rgb(0 0 0 / 0.7);
+    }
+
+    /* Counter */
+  .slide-counter {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgb(0 0 0 / 0.5);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+    .slide-title { font-size: 1.5rem; }
+    .slide-description { font-size: 0.9rem; }
+    .slider-nav { width: 40px; height: 40px; }
+    .slider-nav.prev { left: 12px; }
+    .slider-nav.next { right: 12px; }
+    .slide-content { padding: 24px 20px 20px; }
+    .thumbnails { gap: 8px; }
+    .thumb { min-width: 80px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero Slider -->
+    <div class="demo-section">
+      <h2 class="demo-title">Hero Slider with Content</h2>
+      <div class="slider" id="heroSlider">
+        <div class="slide-counter">
+          <span id="currentSlide">1</span> / <span id="totalSlides">4</span>
+        </div>
+
+        <div class="autoplay-controls">
+          <button class="control-btn" id="playPauseBtn" onclick="toggleAutoplay()">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" id="playIcon">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" id="pauseIcon" style="display: none;">
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="slider-track" id="sliderTrack">
+          <div class="slide">
+            <img class="slide-image" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=675&fit=crop" alt="Mountain">
+            <div class="slide-content">
+              <h3 class="slide-title">Explore the Mountains</h3>
+              <p class="slide-description">Discover breathtaking peaks and pristine wilderness. Adventure awaits at every turn.</p>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="slide-image" src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&h=675&fit=crop" alt="Forest">
+            <div class="slide-content">
+              <h3 class="slide-title">Deep Forest Trails</h3>
+              <p class="slide-description">Walk through ancient forests and connect with nature's tranquility.</p>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="slide-image" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1200&h=675&fit=crop" alt="Lake">
+            <div class="slide-content">
+              <h3 class="slide-title">Serene Lakes</h3>
+              <p class="slide-description">Find peace by crystal clear waters reflecting perfect sunsets.</p>
+            </div>
+          </div>
+
+          <div class="slide">
+            <img class="slide-image" src="https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=1200&h=675&fit=crop" alt="Beach">
+            <div class="slide-content">
+              <h3 class="slide-title">Coastal Paradise</h3>
+              <p class="slide-description">Feel the ocean breeze and listen to waves on pristine beaches.</p>
+            </div>
+          </div>
+        </div>
+
+        <button class="slider-nav prev" onclick="prevSlide()">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <button class="slider-nav next" onclick="nextSlide()">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+
+        <div class="slider-dots" id="sliderDots"></div>
+        <div class="slider-progress" id="sliderProgress"></div>
+      </div>
+    </div>
+
+    <!-- Thumbnail Slider -->
+    <div class="demo-section">
+      <h2 class="demo-title">Slider with Thumbnails</h2>
+      <div class="slider-with-thumbs">
+        <div class="main-slider">
+          <div class="slider-track" id="thumbSliderTrack">
+            <div class="slide">
+              <img class="slide-image" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=675&fit=crop" alt="1">
+            </div>
+            <div class="slide">
+              <img class="slide-image" src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&h=675&fit=crop" alt="2">
+            </div>
+            <div class="slide">
+              <img class="slide-image" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=1200&h=675&fit=crop" alt="3">
+            </div>
+            <div class="slide">
+              <img class="slide-image" src="https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=1200&h=675&fit=crop" alt="4">
+            </div>
+          </div>
+
+          <button class="slider-nav prev" onclick="prevThumbSlide()">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+
+          <button class="slider-nav next" onclick="nextThumbSlide()">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="thumbnails" id="thumbnails">
+          <div class="thumb active" onclick="goToThumbSlide(0)">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=113&fit=crop" alt="Thumb 1">
+          </div>
+          <div class="thumb" onclick="goToThumbSlide(1)">
+            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=113&fit=crop" alt="Thumb 2">
+          </div>
+          <div class="thumb" onclick="goToThumbSlide(2)">
+            <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=200&h=113&fit=crop" alt="Thumb 3">
+          </div>
+          <div class="thumb" onclick="goToThumbSlide(3)">
+            <img src="https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=200&h=113&fit=crop" alt="Thumb 4">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fade Slider -->
+    <div class="demo-section">
+      <h2 class="demo-title">Fade Transition Slider</h2>
+      <div class="fade-slider" id="fadeSlider">
+        <div class="fade-slide active">
+          <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200&h=675&fit=crop" alt="Field">
+        </div>
+        <div class="fade-slide">
+          <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=1200&h=675&fit=crop" alt="Waterfall">
+        </div>
+        <div class="fade-slide">
+          <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&h=675&fit=crop" alt="Desert">
+        </div>
+
+        <button class="slider-nav prev" onclick="prevFadeSlide()">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <button class="slider-nav next" onclick="nextFadeSlide()">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+
+        <div class="slider-dots" id="fadeDots"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Hero Slider
+    let currentSlide = 0;
+    let autoplayInterval = null;
+    let isPlaying = false;
+    const slides = document.querySelectorAll('#sliderTrack.slide');
+    const totalSlides = slides.length;
+    const track = document.getElementById('sliderTrack');
+    const dotsContainer = document.getElementById('sliderDots');
+    const progressBar = document.getElementById('sliderProgress');
+
+    // Create dots
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0? ' active' : '');
+      dot.onclick = () => goToSlide(i);
+      dotsContainer.appendChild(dot);
+    }
+
+    function updateSlider() {
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      document.getElementById('currentSlide').textContent = currentSlide + 1;
+      document.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+      resetProgress();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+    }
+
+    function toggleAutoplay() {
+      isPlaying =!isPlaying;
+      document.getElementById('playIcon').style.display = isPlaying? 'none' : 'block';
+      document.getElementById('pauseIcon').style.display = isPlaying? 'block' : 'none';
+
+      if (isPlaying) {
+        autoplayInterval = setInterval(nextSlide, 4000);
+        startProgress();
+      } else {
+        clearInterval(autoplayInterval);
+        progressBar.style.width = '0%';
+      }
+    }
+
+    function startProgress() {
+      progressBar.style.width = '0%';
+      progressBar.style.transition = 'width 4s linear';
+      setTimeout(() => progressBar.style.width = '100%', 50);
+    }
+
+    function resetProgress() {
+      if (isPlaying) {
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+        setTimeout(startProgress, 50);
+      }
+    }
+
+    // Thumbnail Slider
+    let currentThumbSlide = 0;
+    const thumbTrack = document.getElementById('thumbSliderTrack');
+    const thumbSlides = thumbTrack.querySelectorAll('.slide');
+    const thumbs = document.querySelectorAll('.thumb');
+
+    function updateThumbSlider() {
+      thumbTrack.style.transform = `translateX(-${currentThumbSlide * 100}%)`;
+      thumbs.forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === currentThumbSlide);
+      });
+    }
+
+    function nextThumbSlide() {
+      currentThumbSlide = (currentThumbSlide + 1) % thumbSlides.length;
+      updateThumbSlider();
+    }
+
+    function prevThumbSlide() {
+      currentThumbSlide = (currentThumbSlide - 1 + thumbSlides.length) % thumbSlides.length;
+      updateThumbSlider();
+    }
+
+    function goToThumbSlide(index) {
+      currentThumbSlide = index;
+      updateThumbSlider();
+    }
+
+    // Fade Slider
+    let currentFadeSlide = 0;
+    const fadeSlides = document.querySelectorAll('#fadeSlider.fade-slide');
+    const fadeDotsContainer = document.getElementById('fadeDots');
+
+    // Create fade dots
+    for (let i = 0; i < fadeSlides.length; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0? ' active' : '');
+      dot.onclick = () => goToFadeSlide(i);
+      fadeDotsContainer.appendChild(dot);
+    }
+
+    function updateFadeSlider() {
+      fadeSlides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentFadeSlide);
+      });
+      document.querySelectorAll('#fadeDots.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentFadeSlide);
+      });
+    }
+
+    function nextFadeSlide() {
+      currentFadeSlide = (currentFadeSlide + 1) % fadeSlides.length;
+      updateFadeSlider();
+    }
+
+    function prevFadeSlide() {
+      currentFadeSlide = (currentFadeSlide - 1 + fadeSlides.length) % fadeSlides.length;
+      updateFadeSlider();
+    }
+
+    function goToFadeSlide(index) {
+      currentFadeSlide = index;
+      updateFadeSlider();
+    }
+
+    // Auto-advance fade slider
+    setInterval(nextFadeSlide, 5000);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    track.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    track.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      if (touchEndX < touchStartX - 50) nextSlide();
+      if (touchEndX > touchStartX + 50) prevSlide();
+    }
+  </script>
+</body>
+</html>
