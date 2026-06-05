@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Component Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #f59e0b;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+   .demo-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+   .demo-section h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+   .demo-section p {
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
+
+   .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+   .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+   .btn:hover {
+      background: var(--primary-dark);
+    }
+
+   .btn-secondary {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+
+   .btn-secondary:hover {
+      background: #f9fafb;
+    }
+
+   .btn-danger {
+      background: var(--danger);
+    }
+
+   .btn-danger:hover {
+      background: #b91c1c;
+    }
+
+   .btn-success {
+      background: var(--success);
+    }
+
+   .btn-success:hover {
+      background: #15803d;
+    }
+
+    /* Modal Base */
+   .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgb(0 0 0 / 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+   .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+   .modal {
+      background: #fff;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+   .modal-header {
+      padding: 24px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+
+   .modal-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+   .modal-icon.danger {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+   .modal-icon.success {
+      background: #dcfce7;
+      color: var(--success);
+    }
+
+   .modal-icon.warning {
+      background: #fef3c7;
+      color: var(--warning);
+    }
+
+   .modal-icon.info {
+      background: #dbeafe;
+      color: var(--primary);
+    }
+
+   .modal-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+   .modal-close {
+      background: none;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+      flex-shrink: 0;
+    }
+
+   .modal-close:hover {
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+   .modal-body {
+      padding: 0 24px 24px;
+    }
+
+   .modal-text {
+      color: #6b7280;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+   .modal-footer {
+      padding: 0 24px 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    /* Form Modal */
+   .modal-large {
+      max-width: 640px;
+    }
+
+   .modal-body-scroll {
+      max-height: calc(90vh - 200px);
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+   .form-group {
+      margin-bottom: 20px;
+    }
+
+   .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+   .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+
+   .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+    }
+
+   .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+   .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+   .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Image Modal */
+   .modal-image {
+      max-width: 900px;
+      padding: 0;
+      background: #000;
+    }
+
+   .modal-image img {
+      width: 100%;
+      display: block;
+    }
+
+   .modal-image .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgb(255 255 255 / 0.9);
+      color: #111827;
+    }
+
+   .modal-image .modal-close:hover {
+      background: #fff;
+    }
+
+   .modal-image-info {
+      padding: 20px 24px;
+      background: #fff;
+    }
+
+   .modal-image-title {
+      font-weight: 700;
+      font-size: 1.125rem;
+      margin-bottom: 4px;
+    }
+
+   .modal-image-meta {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    /* Slide-over Modal */
+   .slide-over-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgb(0 0 0 / 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 50;
+      display: none;
+      justify-content: flex-end;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+   .slide-over-overlay.active {
+      display: flex;
+    }
+
+   .slide-over {
+      background: #fff;
+      width: 100%;
+      max-width: 480px;
+      height: 100%;
+      box-shadow: -10px 0 25px -5px rgb(0 0 0 / 0.1);
+      animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+   .slide-over-header {
+      padding: 24px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+   .slide-over-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+   .slide-over-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+   .slide-over-footer {
+      padding: 24px;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Confirmation Modal */
+   .modal-confirm {
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+   .modal-confirm .modal-icon {
+      margin: 0 auto 20px;
+    }
+
+    /* Toast Notification */
+   .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #111827;
+      color: #fff;
+      padding: 16px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 400px;
+      z-index: 60;
+      animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+   .toast.success {
+      background: var(--success);
+    }
+
+   .toast.error {
+      background: var(--danger);
+    }
+
+   .toast-close {
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 4px;
+      margin-left: auto;
+    }
+
+    @media (max-width: 640px) {
+    .modal {
+        margin: 16px;
+      }
+    .modal-footer {
+        flex-direction: column-reverse;
+      }
+    .modal-footer .btn {
+        width: 100%;
+      }
+    .form-row {
+        grid-template-columns: 1fr;
+      }
+    .slide-over {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Confirmation Modal -->
+    <div class="demo-section">
+      <h2>Confirmation Modal</h2>
+      <p>Use for destructive actions or important confirmations</p>
+      <div class="button-group">
+        <button class="btn btn-danger" onclick="openModal('deleteModal')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+          Delete Item
+        </button>
+        <button class="btn btn-secondary" onclick="openModal('saveModal')">Save Changes</button>
+        <button class="btn btn-secondary" onclick="openModal('warningModal')">Warning Dialog</button>
+      </div>
+    </div>
+
+    <!-- Form Modal -->
+    <div class="demo-section">
+      <h2>Form Modal</h2>
+      <p>Collect user input in a focused overlay</p>
+      <div class="button-group">
+        <button class="btn" onclick="openModal('formModal')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Create New Project
+        </button>
+        <button class="btn btn-secondary" onclick="openModal('editModal')">Edit Profile</button>
+      </div>
+    </div>
+
+    <!-- Image Modal -->
+    <div class="demo-section">
+      <h2>Image Lightbox</h2>
+      <p>Display images in full-screen overlay</p>
+      <div class="button-group">
+        <button class="btn" onclick="openModal('imageModal')">View Image</button>
+      </div>
+    </div>
+
+    <!-- Slide-over Modal -->
+    <div class="demo-section">
+      <h2>Slide-over Panel</h2>
+      <p>Side drawer for settings or details</p>
+      <div class="button-group">
+        <button class="btn" onclick="openSlideOver()">Open Settings Panel</button>
+        <button class="btn btn-secondary" onclick="openSlideOver('notifications')">View Notifications</button>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="demo-section">
+      <h2>Toast Notifications</h2>
+      <p>Non-blocking feedback messages</p>
+      <div class="button-group">
+        <button class="btn btn-success" onclick="showToast('success')">Success Toast</button>
+        <button class="btn btn-danger" onclick="showToast('error')">Error Toast</button>
+        <button class="btn btn-secondary" onclick="showToast('info')">Info Toast</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" id="deleteModal" onclick="closeModal('deleteModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-confirm">
+        <div class="modal-icon danger">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <h3 class="modal-title">Delete project?</h3>
+        <p class="modal-text">Are you sure you want to delete this project? This action cannot be undone and all project data will be permanently removed.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('deleteModal')">Cancel</button>
+        <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Save Confirmation Modal -->
+  <div class="modal-overlay" id="saveModal" onclick="closeModal('saveModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-confirm">
+        <div class="modal-icon success">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3 class="modal-title">Save changes?</h3>
+        <p class="modal-text">You have unsaved changes. Would you like to save them before closing?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('saveModal')">Discard</button>
+        <button class="btn btn-success" onclick="confirmSave()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warning Modal -->
+  <div class="modal-overlay" id="warningModal" onclick="closeModal('warningModal')">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <div class="modal-icon warning">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+          </div>
+          <h3 class="modal-title">Storage almost full</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('warningModal')">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-text">You're using 95% of your storage quota. Upgrade your plan or delete some files to avoid service interruption.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('warningModal')">Dismiss</button>
+        <button class="btn" onclick="closeModal('warningModal')">Upgrade Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Modal -->
+  <div class="modal-overlay" id="formModal" onclick="closeModal('formModal')">
+    <div class="modal modal-large" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Create New Project</h3>
+          <p class="modal-text" style="margin-bottom: 0;">Fill in the details to get started</p>
+        </div>
+        <button class="modal-close" onclick="closeModal('formModal')">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body-scroll">
+        <div class="form-group">
+          <label class="form-label">Project Name *</label>
+          <input type="text" class="form-input" placeholder="Enter project name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-input form-textarea" placeholder="Describe your project..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Category *</label>
+            <select class="form-input form-select">
+              <option>Select category</option>
+              <option>Web Application</option>
+              <option>Mobile App</option>
+              <option>Design System</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Priority</label>
+            <select class="form-input form-select">
+              <option>Low</option>
+              <option selected>Medium</option>
+              <option>High</option>
+              <option>Urgent</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Due Date</label>
+          <input type="date" class="form-input">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Team Members</label>
+          <input type="text" class="form-input" placeholder="Add team members...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('formModal')">Cancel</button>
+        <button class="btn" onclick="submitForm()">Create Project</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal-overlay" id="editModal" onclick="closeModal('editModal')">
+    <div class="modal modal-large" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Edit Profile</h3>
+          <p class="modal-text" style="margin-bottom: 0;">Update your personal information</p>
+        </div>
+        <button class="modal-close" onclick="closeModal('editModal')">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body-scroll">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" value="John">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" value="Doe">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" value="john.doe@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bio</label>
+          <textarea class="form-input form-textarea">Product designer passionate about creating beautiful and functional user experiences.</textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('editModal')">Cancel</button>
+        <button class="btn" onclick="submitForm()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="modal-overlay" id="imageModal" onclick="closeModal('imageModal')">
+    <div class="modal modal-image" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal('imageModal')">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop" alt="Full size">
+      <div class="modal-image-info">
+        <div class="modal-image-title">Mountain Peak at Sunset</div>
+        <div class="modal-image-meta">Captured on October 15, 2026 • 4.2 MB • 3840x2160</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide-over Modal -->
+  <div class="slide-over-overlay" id="slideOver" onclick="closeSlideOver()">
+    <div class="slide-over" onclick="event.stopPropagation()">
+      <div class="slide-over-header">
+        <h3 class="slide-over-title">Settings</h3>
+        <button class="modal-close" onclick="closeSlideOver()">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="slide-over-body">
+        <div class="form-group">
+          <label class="form-label">Display Name</label>
+          <input type="text" class="form-input" value="John Doe">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Notifications</label>
+          <select class="form-input form-select">
+            <option>All notifications</option>
+            <option>Important only</option>
+            <option>None</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Theme</label>
+          <select class="form-input form-select">
+            <option>Light</option>
+            <option>Dark</option>
+            <option>System</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Language</label>
+          <select class="form-input form-select">
+            <option>English</option>
+            <option>Spanish</option>
+            <option>French</option>
+          </select>
+        </div>
+      </div>
+      <div class="slide-over-footer">
+        <button class="btn btn-secondary" onclick="closeSlideOver()">Cancel</button>
+        <button class="btn" onclick="closeSlideOver(); showToast('success')">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openSlideOver() {
+      document.getElementById('slideOver').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSlideOver() {
+      document.getElementById('slideOver').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function confirmDelete() {
+      closeModal('deleteModal');
+      showToast('success', 'Project deleted successfully');
+    }
+
+    function confirmSave() {
+      closeModal('saveModal');
+      showToast('success', 'Changes saved successfully');
+    }
+
+    function submitForm() {
+      closeModal('formModal');
+      closeModal('editModal');
+      showToast('success', 'Form submitted successfully');
+    }
+
+    function showToast(type, message) {
+      const existingToast = document.querySelector('.toast');
+      if (existingToast) existingToast.remove();
+
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      const icon = type === 'success' 
+        ? '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+        : type === 'error'
+        ? '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+        : '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+
+      toast.innerHTML = `
+        ${icon}
+        <span>${message || 'Action completed'}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      `;
+
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 4000);
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active, .slide-over-overlay.active').forEach(modal => {
+          modal.classList.remove('active');
+        });
+        document.body.style.overflow = '';
+      }
+    });
+  </script>
+</body>
+</html>
