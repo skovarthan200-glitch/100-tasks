@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnHub - Online Education</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.6;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* Header */
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+   .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) 0;
+      gap: var(--space-8);
+    }
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #111827;
+    }
+   .search-bar {
+      flex: 1;
+      max-width: 500px;
+      position: relative;
+    }
+   .search-bar input {
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+   .search-bar input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgb(79 70 229 / 0.1);
+    }
+   .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #6b7280;
+    }
+   .nav {
+      display: flex;
+      gap: var(--space-6);
+    }
+   .nav a {
+      color: #374151;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+   .nav a:hover {
+      color: #4f46e5;
+    }
+   .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .btn {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+   .btn:hover {
+      background: #4338ca;
+    }
+   .btn-secondary {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+   .btn-secondary:hover {
+      background: #f9fafb;
+    }
+
+    @media (max-width: 768px) {
+     .nav { display: none; }
+     .search-bar { display: none; }
+    }
+
+    /* Hero */
+   .hero {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: #fff;
+      padding: var(--space-16) 0;
+    }
+   .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+   .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+    }
+   .hero-content p {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      margin-bottom: var(--space-6);
+      line-height: 1.6;
+    }
+   .hero-stats {
+      display: flex;
+      gap: var(--space-8);
+      margin-top: var(--space-8);
+    }
+   .stat {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+   .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+   .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+   .hero-image {
+      background: rgb(255 255 255 / 0.1);
+      border-radius: 16px;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-width: 1024px) {
+     .hero-grid { grid-template-columns: 1fr; }
+     .hero-content h1 { font-size: 2rem; }
+    }
+
+    /* Section */
+   .section {
+      padding: var(--space-16) 0;
+    }
+   .section-white {
+      background: #fff;
+    }
+   .section-header {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+   .section-header h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: var(--space-3);
+    }
+   .section-header p {
+      font-size: 1.125rem;
+      color: #6b7280;
+    }
+
+    /* Category cards */
+   .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+   .category-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+   .category-card:hover {
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      transform: translateY(-4px);
+      border-color: #4f46e5;
+    }
+   .category-icon {
+      width: 56px;
+      height: 56px;
+      background: #eef2ff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      color: #4f46e5;
+    }
+   .category-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+   .category-card p {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 1024px) {
+     .category-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+     .category-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Course grid */
+   .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+   .course-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.2s;
+    }
+   .course-card:hover {
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+   .course-image {
+      aspect-ratio: 16/9;
+      background: #f3f4f6;
+      position: relative;
+      overflow: hidden;
+    }
+   .course-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+   .course-badge {
+      position: absolute;
+      top: var(--space-3);
+      left: var(--space-3);
+      background: #16a34a;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+   .course-content {
+      padding: var(--space-5);
+    }
+   .course-category {
+      font-size: 0.8rem;
+      color: #4f46e5;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+   .course-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: var(--space-2);
+    }
+   .course-card h3 a {
+      color: #111827;
+      text-decoration: none;
+    }
+   .course-card h3 a:hover {
+      color: #4f46e5;
+    }
+   .course-instructor {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: var(--space-3);
+    }
+   .instructor-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #4f46e5;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+   .course-meta {
+      display: flex;
+      gap: var(--space-4);
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: var(--space-3);
+    }
+   .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+   .course-rating {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+   .stars {
+      color: #f59e0b;
+      font-size: 0.9rem;
+    }
+   .rating-value {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+   .rating-count {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+   .course-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: var(--space-4);
+      border-top: 1px solid #f3f4f6;
+    }
+   .course-price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #111827;
+    }
+   .course-price.free {
+      color: #16a34a;
+    }
+
+    @media (max-width: 1024px) {
+     .course-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+     .course-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Progress bar */
+   .progress-bar {
+      background: #e5e7eb;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: var(--space-2);
+    }
+   .progress-fill {
+      background: #4f46e5;
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s;
+    }
+   .progress-text {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* Instructor section */
+   .instructor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+   .instructor-card {
+      text-align: center;
+    }
+   .instructor-avatar-lg {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      margin: 0 auto var(--space-4);
+      overflow: hidden;
+    }
+   .instructor-avatar-lg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+   .instructor-card h4 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+   .instructor-title {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: var(--space-3);
+    }
+   .instructor-stats {
+      font-size: 0.875rem;
+      color: #4b5563;
+    }
+
+    @media (max-width: 1024px) {
+     .instructor-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Features */
+   .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+    }
+   .feature-card {
+      text-align: center;
+    }
+   .feature-icon {
+      width: 64px;
+      height: 64px;
+      background: #eef2ff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      color: #4f46e5;
+    }
+   .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+   .feature-card p {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+     .feature-grid { grid-template-columns: 1fr; }
+    }
+
+    /* CTA */
+   .cta-section {
+      background: #4f46e5;
+      color: #fff;
+      padding: var(--space-16) 0;
+      text-align: center;
+      border-radius: 16px;
+      margin: var(--space-16) 0;
+    }
+   .cta-section h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-4);
+    }
+   .cta-section p {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      margin-bottom: var(--space-6);
+    }
+
+    /* Footer */
+   .footer {
+      background: #111827;
+      color: #9ca3af;
+      padding: var(--space-12) 0 var(--space-8);
+    }
+   .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+   .footer h4 {
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+   .footer ul {
+      list-style: none;
+    }
+   .footer li {
+      margin-bottom: var(--space-3);
+    }
+   .footer a {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+   .footer a:hover {
+      color: #fff;
+    }
+   .footer-bottom {
+      border-top: 1px solid #374151;
+      padding-top: var(--space-6);
+      text-align: center;
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+     .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="#4f46e5">
+            <rect width="32" height="32" rx="8"/>
+          </svg>
+          LearnHub
+        </a>
+        
+        <div class="search-bar">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" placeholder="Search courses...">
+        </div>
+
+        <nav class="nav">
+          <a href="#">Categories</a>
+          <a href="#">For Business</a>
+          <a href="#">Teach</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#" class="btn btn-secondary">Log In</a>
+          <a href="#" class="btn">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1>Learn Without Limits</h1>
+          <p>Start, switch, or advance your career with 10,000+ courses, certificates, and degrees from world-class universities and companies.</p>
+          <div style="display: flex; gap: 16px;">
+            <a href="#" class="btn" style="background: #fff; color: #4f46e5;">Explore Courses</a>
+            <a href="#" class="btn" style="background: transparent; border: 2px solid #fff;">Join for Free</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-value">10K+</div>
+              <div class="stat-label">Courses</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">50M+</div>
+              <div class="stat-label">Learners</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">200+</div>
+              <div class="stat-label">Instructors</div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <svg width="200" height="200" fill="none" stroke="rgb(255 255 255 / 0.3)" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Top Categories</h2>
+        <p>Explore courses in your field</p>
+      </div>
+      <div class="category-grid">
+        <div class="category-card">
+          <div class="category-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+            </svg>
+          </div>
+          <h3>Computer Science</h3>
+          <p>2,400+ courses</p>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3>Business</h3>
+          <p>1,800+ courses</p>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+            </svg>
+          </div>
+          <h3>Design</h3>
+          <p>1,200+ courses</p>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3>Data Science</h3>
+          <p>950+ courses</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Courses -->
+  <section class="section section-white">
+    <div class="container">
+      <div class="section-header">
+        <h2>Featured Courses</h2>
+        <a href="#">View all →</a>
+      </div>
+      <div class="course-grid">
+        <article class="course-card">
+          <div class="course-image">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=225&fit=crop" alt="Course">
+            <span class="course-badge">Bestseller</span>
+          </div>
+          <div class="course-content">
+            <div class="course-category">Development</div>
+            <h3><a href="#">Complete Python Bootcamp: From Zero to Hero</a></h3>
+            <div class="course-instructor">
+              <div class="instructor-avatar">JD</div>
+              <span>Jose Portilla</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                22 hours
+              </div>
+              <div class="meta-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Beginner
+              </div>
+            </div>
+            <div class="course-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">4.8</span>
+              <span class="rating-count">(284,392)</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 65%;"></div>
+            </div>
+            <div class="progress-text">65% complete</div>
+            <div class="course-footer">
+              <div class="course-price">$84.99</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=225&fit=crop" alt="Course">
+          </div>
+          <div class="course-content">
+            <div class="course-category">Business</div>
+            <h3><a href="#">Digital Marketing Masterclass</a></h3>
+            <div class="course-instructor">
+              <div class="instructor-avatar">SM</div>
+              <span>Sarah Miller</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                18 hours
+              </div>
+              <div class="meta-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                All Levels
+              </div>
+            <div class="course-rating">
+              <span class="stars">★★★★★</span>
+              <span class="rating-value">4.9</span>
+              <span class="rating-count">(156,821)</span>
+            </div>
+            <div class="course-footer">
+              <div class="course-price">$94.99</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="course-card">
+          <div class="course-image">
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=225&fit=crop" alt="Course">
+          </div>
+          <div class="course-content">
+            <div class="course-category">Design</div>
+            <h3><a href="#">UI/UX Design: From Wireframe to Prototype</a></h3>
+            <div class="course-instructor">
+              <div class="instructor-avatar">AC</div>
+              <span>Alex Chen</span>
+            </div>
+            <div class="course-meta">
+              <div class="meta-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                15 hours
+              </div>
+              <div class="meta-item">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Intermediate
+              </div>
+            </div>
+            <div class="course-rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-value">4.7</span>
+              <span class="rating-count">(92,453)</span>
+            </div>
+            <div class="course-footer">
+              <div class="course-price free">Free</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instructors -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Learn from Industry Experts</h2>
+        <p>Our instructors are professionals from top companies</p>
+      </div>
+      <div class="instructor-grid">
+        <div class="instructor-card">
+          <div class="instructor-avatar-lg">
+            <img src="https://i.pravatar.cc/240?img=1" alt="Instructor">
+          </div>
+          <h4>Jose Portilla</h4>
+          <div class="instructor-title">Data Scientist</div>
+          <div class="instructor-stats">2.5M+ students</div>
+        </div>
+        <div class="instructor-card">
+          <div class="instructor-avatar-lg">
+            <img src="https://i.pravatar.cc/240?img=5" alt="Instructor">
+          </div>
+          <h4>Sarah Miller</h4>
+          <div class="instructor-title">Marketing Expert</div>
+          <div class="instructor-stats">1.8M+ students</div>
+        </div>
+        <div class="instructor-card">
+          <div class="instructor-avatar-lg">
+            <img src="https://i.pravatar.cc/240?img=3" alt="Instructor">
+          </div>
+          <h4>Alex Chen</h4>
+          <div class="instructor-title">UX Designer</div>
+          <div class="instructor-stats">950K+ students</div>
+        </div>
+        <div class="instructor-card">
+          <div class="instructor-avatar-lg">
+            <img src="https://i.pravatar.cc/240?img=8" alt="Instructor">
+          </div>
+          <h4>Michael Park</h4>
+          <div class="instructor-title">Software Engineer</div>
+          <div class="instructor-stats">1.2M+ students</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section section-white">
+    <div class="container">
+      <div class="section-header">
+        <h2>Why Learn with Us</h2>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+          <h3>Learn at Your Pace</h3>
+          <p>Access courses 24/7 on any device. Learn when and where it works for you.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="32" height="32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 0 001.946.806 3.42 3.
