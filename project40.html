@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Card Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --primary: #2563eb;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .section {
+      margin-bottom: 60px;
+    }
+
+   .section-title {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+   .section-subtitle {
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+
+    /* Base Card */
+   .card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+   .card:hover {
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Grid Layouts */
+   .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+   .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+   .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+   .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+   .grid-auto {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    @media (max-width: 1200px) {
+     .grid-4 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 1024px) {
+     .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+     .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Product Card */
+   .product-card .card-image {
+      aspect-ratio: 1;
+      background: #f3f4f6;
+      position: relative;
+      overflow: hidden;
+    }
+
+   .product-card .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+   .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--danger);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+   .badge.new {
+      background: var(--success);
+    }
+
+   .badge.sale {
+      background: var(--warning);
+    }
+
+   .card-content {
+      padding: 20px;
+    }
+
+   .card-category {
+      font-size: 0.8rem;
+      color: #6b7280;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+   .card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+   .card-title a {
+      color: #111827;
+      text-decoration: none;
+    }
+
+   .card-title a:hover {
+      color: var(--primary);
+    }
+
+   .card-text {
+      font-size: 0.9rem;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+   .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid #f3f4f6;
+    }
+
+   .price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #111827;
+    }
+
+   .price-old {
+      font-size: 1rem;
+      color: #9ca3af;
+      text-decoration: line-through;
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
+   .rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+   .rating svg {
+      color: #fbbf24;
+    }
+
+    /* Blog Card */
+   .blog-card .card-image {
+      aspect-ratio: 16/9;
+    }
+
+   .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+
+   .blog-author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+   .author-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.7rem;
+    }
+
+   .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+   .tag {
+      background: #f3f4f6;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    /* Profile Card */
+   .profile-card {
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+   .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.75rem;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+
+   .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+   .online-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 20px;
+      height: 20px;
+      background: var(--success);
+      border: 3px solid #fff;
+      border-radius: 50%;
+    }
+
+   .profile-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+   .profile-role {
+      color: #6b7280;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+   .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 20px 0;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 20px;
+    }
+
+   .stat {
+      text-align: center;
+    }
+
+   .stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: block;
+    }
+
+   .stat-label {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+   .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+   .btn:hover {
+      background: var(--primary-dark);
+    }
+
+   .btn-secondary {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #d1d5db;
+      margin-top: 8px;
+    }
+
+   .btn-secondary:hover {
+      background: #f9fafb;
+    }
+
+    /* Stats Card */
+   .stats-card {
+      padding: 24px;
+    }
+
+   .stats-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+
+   .stats-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .stats-value {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+   .stats-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 600;
+    }
+
+   .stats-change {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+   .stats-change.positive {
+      color: var(--success);
+    }
+
+   .stats-change.negative {
+      color: var(--danger);
+    }
+
+    /* Horizontal Card */
+   .horizontal-card {
+      display: flex;
+      gap: 20px;
+    }
+
+   .horizontal-card .card-image {
+      width: 200px;
+      aspect-ratio: 4/3;
+      flex-shrink: 0;
+    }
+
+   .horizontal-card .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 640px) {
+    .horizontal-card {
+        flex-direction: column;
+      }
+    .horizontal-card .card-image {
+        width: 100%;
+      }
+    }
+
+    /* Feature Card */
+   .feature-card {
+      padding: 32px;
+      text-align: center;
+    }
+
+   .feature-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+   .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+   .feature-text {
+      color: #6b7280;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Notification Card */
+   .notification-card {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+    }
+
+   .notification-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+   .notification-content {
+      flex: 1;
+    }
+
+   .notification-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+   .notification-text {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+   .notification-time {
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+   .notification-close {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+   .notification-close:hover {
+      color: #6b7280;
+    }
+
+    /* Skeleton Loading */
+   .skeleton {
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+      background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+      background-size: 200% 100%;
+      border-radius: 8px;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+   .skeleton-card .card-image {
+      aspect-ratio: 1;
+    }
+
+   .skeleton-text {
+      height: 16px;
+      margin-bottom: 12px;
+    }
+
+   .skeleton-title {
+      height: 24px;
+      width: 70%;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Product Cards -->
+    <section class="section">
+      <h2 class="section-title">Product Cards</h2>
+      <p class="section-subtitle">E-commerce product display with pricing and ratings</p>
+      
+      <div class="grid grid-4">
+        <div class="card product-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop" alt="Product">
+            <span class="badge">Sale</span>
+          </div>
+          <div class="card-content">
+            <div class="card-category">Electronics</div>
+            <h3 class="card-title">
+              <a href="#">Wireless Headphones Pro</a>
+            </h3>
+            <p class="card-text">Premium noise-canceling headphones with 30hr battery</p>
+            <div class="card-footer">
+              <div>
+                <span class="price">$249</span>
+                <span class="price-old">$299</span>
+              </div>
+              <div class="rating">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                4.8
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card product-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop" alt="Product">
+            <span class="badge new">New</span>
+          </div>
+          <div class="card-content">
+            <div class="card-category">Audio</div>
+            <h3 class="card-title">
+              <a href="#">Smart Speaker Mini</a>
+            </h3>
+            <p class="card-text">Voice-controlled speaker with premium sound quality</p>
+            <div class="card-footer">
+              <div>
+                <span class="price">$99</span>
+              </div>
+              <div class="rating">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                4.6
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card product-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=400&fit=crop" alt="Product">
+          </div>
+          <div class="card-content">
+            <div class="card-category">Footwear</div>
+            <h3 class="card-title">
+              <a href="#">Running Shoes Elite</a>
+            </h3>
+            <p class="card-text">Lightweight performance shoes for serious runners</p>
+            <div class="card-footer">
+              <div>
+                <span class="price">$159</span>
+              </div>
+              <div class="rating">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                4.9
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card product-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=400&fit=crop" alt="Product">
+          </div>
+          <div class="card-content">
+            <div class="card-category">Accessories</div>
+            <h3 class="card-title">
+              <a href="#">Sunglasses Classic</a>
+            </h3>
+            <p class="card-text">UV protection with polarized lenses</p>
+            <div class="card-footer">
+              <div>
+                <span class="price">$89</span>
+              </div>
+              <div class="rating">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                4.7
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Cards -->
+    <section class="section">
+      <h2 class="section-title">Blog Cards</h2>
+      <p class="section-subtitle">Article previews with author and metadata</p>
+      
+      <div class="grid grid-3">
+        <div class="card blog-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&h=338&fit=crop" alt="Blog">
+          </div>
+          <div class="card-content">
+            <div class="blog-meta">
+              <div class="blog-author">
+                <div class="author-avatar">JD</div>
+                <span>John Doe</span>
+              </div>
+              <span>•</span>
+              <span>5 min read</span>
+            </div>
+            <h3 class="card-title">
+              <a href="#">The Future of Web Development in 2026</a>
+            </h3>
+            <p class="card-text">Exploring the latest trends in frontend frameworks, performance optimization, and developer tools that are shaping the web.</p>
+            <div class="tags">
+              <span class="tag">Web Dev</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Performance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card blog-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=338&fit=crop" alt="Blog">
+          </div>
+          <div class="card-content">
+            <div class="blog-meta">
+              <div class="blog-author">
+                <div class="author-avatar" style="background: #8b5cf6;">SM</div>
+                <span>Sarah Miller</span>
+              </div>
+              <span>•</span>
+              <span>8 min read</span>
+            </div>
+            <h3 class="card-title">
+              <a href="#">Design Systems That Scale</a>
+            </h3>
+            <p class="card-text">How to build and maintain design systems that grow with your product and team without becoming a burden.</p>
+            <div class="tags">
+              <span class="tag">Design</span>
+              <span class="tag">UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card blog-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=338&fit=crop" alt="Blog">
+          </div>
+          <div class="card-content">
+            <div class="blog-meta">
+              <div class="blog-author">
+                <div class="author-avatar" style="background: #f59e0b;">AK</div>
+                <span>Alex Kim</span>
+              </div>
+              <span>•</span>
+              <span>6 min read</span>
+            </div>
+            <h3 class="card-title">
+              <a href="#">Analytics Best Practices</a>
+            </h3>
+            <p class="card-text">Data-driven decisions require the right metrics. Learn which KPIs actually matter for your business.</p>
+            <div class="tags">
+              <span class="tag">Analytics</span>
+              <span class="tag">Data</span>
+              <span class="tag">Business</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Cards -->
+    <section class="section">
+      <h2 class="section-title">Profile Cards</h2>
+      <p class="section-subtitle">User profiles with stats and actions</p>
+      
+      <div class="grid grid-4">
+        <div class="card profile-card">
+          <div class="profile-avatar">
+            <img src="https://i.pravatar.cc/160?img=1" alt="User">
+            <span class="online-badge"></span>
+          </div>
+          <h3 class="profile-name">Sarah Miller</h3>
+          <p class="profile-role">Senior Product Designer</p>
+          <div class="profile-stats">
+            <div class="stat">
+              <span class="stat-value">142</span>
+              <span class="stat-label">Projects</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">2.4K</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">890</span>
+              <span class="stat-label">Following</span>
+            </div>
+          <button class="btn">Follow</button>
+          <button class="btn btn-secondary">Message</button>
+        </div>
+
+        <div class="card profile-card">
+          <div class="profile-avatar" style="background: #8b5cf6;">
+            MC
+          </div>
+          <h3 class="profile-name">Mike Chen</h3>
+          <p class="profile-role">Full Stack Engineer</p>
+          <div class="profile-stats">
+            <div class="stat">
+              <span class="stat-value">89</span>
+              <span class="stat-label">Projects</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1.8K</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">432</span>
+              <span class="stat-label">Following</span>
+            </div>
+          <button class="btn">Follow</button>
+          <button class="btn btn-secondary">Message</button>
+        </div>
+
+        <div class="card profile-card">
+          <div class="profile-avatar" style="background: #f59e0b;">
+            EW
+          </div>
+          <h3 class="profile-name">Emma Wilson</h3>
+          <p class="profile-role">Marketing Lead</p>
+          <div class="profile-stats">
+            <div class="stat">
+              <span class="stat-value">67</span>
+              <span class="stat-label">Projects</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">3.1K</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">521</span>
+              <span class="stat-label">Following</span>
+            </div>
+          <button class="btn">Follow</button>
+          <button class="btn btn-secondary">Message</button>
+        </div>
+
+        <div class="card profile-card">
+          <div class="profile-avatar" style="background: #10b981;">
+            DK
+          </div>
+          <h3 class="profile-name">David Kim</h3>
+          <p class="profile-role">Data Scientist</p>
+          <div class="profile-stats">
+            <div class="stat">
+              <span class="stat-value">54</span>
+              <span class="stat-label">Projects</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">1.2K</span>
+              <span class="stat-label">Followers</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value">298</span>
+              <span class="stat-label">Following</span>
+            </div>
+          </div>
+          <button class="btn">Follow</button>
+          <button class="btn btn-secondary">Message</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Cards -->
+    <section class="section">
+      <h2 class="section-title">Stats Cards</h2>
+      <p class="section-subtitle">KPI and metrics display</p>
+      
+      <div class="grid grid-4">
+        <div class="card stats-card">
+          <div class="stats-header">
+            <div>
+              <div class="stats-label">Total Revenue</div>
+            </div>
+            <div class="stats-icon" style="background: #dbeafe;">
+              <svg width="24" height="24" fill="#2563eb" viewBox="0 0 24 24">
+                <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+          <div class="stats-value">$48,254</div>
+          <div class="stats-change positive">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+            12.5% vs last month
+          </div>
+        </div>
+
+        <div class="card stats-card">
+          <div class="stats-header">
+            <div>
+              <div class="stats-label">Active Users</div>
+            </div>
+            <div class="stats-icon" style="background: #dcfce7;">
+              <svg width="24" height="24" fill="#16a34a" viewBox="0 0 24 24">
+                <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stats-value">8,549</div>
+          <div class="stats-change positive">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+            8.2% vs last month
+          </div>
+        </div>
+
+        <div class="card stats-card">
+          <div class="stats-header">
+            <div>
+              <div class="stats-label">Conversion Rate</div>
+            </div>
+            <div class="stats-icon" style="background: #fef3c7;">
+              <svg width="24" height="24" fill="#f59e0b" viewBox="0 0 24 24">
+                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="stats-value">3.42%</div>
+          <div class="stats-change positive">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+            2.1% vs last month
+          </div>
+        </div>
+
+        <div class="card stats-card">
+          <div class="stats-header">
+            <div>
+              <div class="stats-label">Bounce Rate</div>
+            </div>
+            <div class="stats-icon" style="background: #fee2e2;">
+              <svg width="24" height="24" fill="#dc2626" viewBox="0 0 24 24">
+                <path d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+              </svg>
+            </div>
+          <div class="stats-value">32.4%</div>
+          <div class="stats-change negative">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+            </svg>
+            1.8% vs last month
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Horizontal Cards -->
+    <section class="section">
+      <h2 class="section-title">Horizontal Cards</h2>
+      <p class="section-subtitle">List view with image and content side by side</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div class="card horizontal-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&h=300&fit=crop" alt="Article">
+          </div>
+          <div class="card-content">
+            <div class="card-category">Technology</div>
+            <h3 class="card-title">
+              <a href="#">Building Scalable Web Applications</a>
+            </h3>
+            <p class="card-text">Learn the best practices for creating web applications that can handle millions of users without breaking a sweat. We cover architecture, caching, and database optimization.</p>
+            <div class="card-footer" style="border: none; padding: 0;">
+              <div class="blog-meta">
+                <div class="blog-author">
+                  <div class="author-avatar">JD</div>
+                  <span>John Doe</span>
+                </div>
+                <span>•</span>
+                <span>Oct 18, 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card horizontal-card">
+          <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop" alt="Article">
+          </div>
+          <div class="card-content">
+            <div class="card-category">Design</div>
+            <h3 class="card-title">
+              <a href="#">Color Theory for UI Designers</a>
+            </h3>
+            <p class="card-text">Master the art of color selection and create harmonious interfaces that delight users. Includes practical examples and tools.</p>
+            <div class="card-footer" style="border: none; padding: 0;">
+              <div class="blog-meta">
+                <div class="blog-author">
+                  <div class="author-avatar" style="background: #8b5cf6;">SM</div>
+                  <span>Sarah Miller</span>
+                </div>
+                <span>•</span>
+                <span>Oct 15, 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Cards -->
+    <section class="section">
+      <h2 class="section-title">Feature Cards</h2>
+      <p class="section-subtitle">Highlight product features or services</p>
+      
+      <div class="grid grid-3">
+        <div class="card feature-card">
+          <div class="feature-icon" style="background: #dbeafe;">
+            <svg width="32" height="32" fill="#2563eb" viewBox="0 0 24 24">
+              <path d="
