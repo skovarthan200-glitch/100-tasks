@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablet Layout</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --touch-target: 48px;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      font-size: 16px;
+    }
+
+    /* Tablet-first: 768px to 1024px sweet spot */
+   .app {
+      display: grid;
+      grid-template-columns: 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar - off-canvas mobile, rail tablet, full desktop */
+   .sidebar {
+      background: #111827;
+      color: #d1d5db;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 240px;
+      z-index: 50;
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+   .sidebar.open {
+      transform: translateX(0);
+    }
+
+    /* Tablet: Icon rail mode */
+    @media (min-width: 768px) and (max-width: 1023px) {
+     .app {
+        grid-template-columns: 72px 1fr;
+      }
+     .sidebar {
+        position: static;
+        transform: translateX(0);
+        width: 72px;
+      }
+     .sidebar-label {
+        display: none;
+      }
+     .sidebar-logo-text {
+        display: none;
+      }
+     .sidebar-header {
+        justify-content: center;
+      }
+    }
+
+    /* Desktop: Full sidebar */
+    @media (min-width: 1024px) {
+     .app {
+        grid-template-columns: 240px 1fr;
+      }
+     .sidebar {
+        position: static;
+        transform: translateX(0);
+        width: 240px;
+      }
+     .sidebar-label {
+        display: inline;
+      }
+     .sidebar-logo-text {
+        display: inline;
+      }
+    }
+
+   .sidebar-header {
+      padding: var(--space-5);
+      border-bottom: 1px solid #374151;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .logo-icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+    }
+   .sidebar-logo-text {
+      font-weight: 800;
+      font-size: 1.125rem;
+      color: #fff;
+    }
+
+   .sidebar-nav {
+      flex: 1;
+      padding: var(--space-3);
+      overflow-y: auto;
+    }
+   .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: 8px;
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+      min-height: var(--touch-target);
+    }
+   .nav-item:hover {
+      background: #1f2937;
+      color: #fff;
+    }
+   .nav-item.active {
+      background: #4f46e5;
+      color: #fff;
+    }
+   .nav-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    /* Main */
+   .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Topbar */
+   .topbar {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      min-height: 64px;
+    }
+   .menu-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2);
+      width: var(--touch-target);
+      height: var(--touch-target);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+   .menu-toggle:hover {
+      background: #f3f4f6;
+    }
+    
+    /* Hide hamburger on tablet+ when rail is visible */
+    @media (min-width: 768px) {
+     .menu-toggle { display: none; }
+    }
+
+   .search-bar {
+      flex: 1;
+      max-width: 500px;
+      position: relative;
+    }
+   .search-bar input {
+      width: 100%;
+      padding: 12px 12px 12px 44px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      min-height: var(--touch-target);
+    }
+   .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: #6b7280;
+    }
+
+   .topbar-actions {
+      display: flex;
+      gap: var(--space-2);
+      margin-left: auto;
+    }
+   .icon-btn {
+      background: none;
+      border: none;
+      width: var(--touch-target);
+      height: var(--touch-target);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+   .icon-btn:hover {
+      background: #f3f4f6;
+    }
+
+    /* Content */
+   .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-6);
+    }
+   .page-header {
+      margin-bottom: var(--space-6);
+    }
+   .page-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+    }
+   .page-header p {
+      color: #6b7280;
+      font-size: 1.0625rem;
+    }
+
+    /* Tablet grid: 2 columns default */
+   .grid {
+      display: grid;
+      gap: var(--space-5);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) {
+     .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+     .grid-cols-3 { grid-template-columns: repeat(2, 1fr); }
+     .grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+     .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+     .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* Card */
+   .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+    }
+   .card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+   .card p {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* Metric cards - tablet optimized */
+   .metric-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-5);
+    }
+   .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: var(--space-2) 0;
+    }
+   .metric-label {
+      font-size: 0.9rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* Table - horizontal scroll on tablet */
+   .table-wrapper {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+   .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      min-width: 600px;
+    }
+    thead {
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th {
+      text-align: left;
+      padding: var(--space-4);
+      font-weight: 600;
+      color: #374151;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+    td {
+      padding: var(--space-4);
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    /* Buttons - 48px touch targets */
+   .btn {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 0 var(--space-6);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      min-height: var(--touch-target);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+   .btn:hover {
+      background: #4338ca;
+    }
+
+    /* Overlay for mobile menu */
+   .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgb(0 0 0 / 0.5);
+      z-index: 40;
+      display: none;
+    }
+   .overlay.active {
+      display: block;
+    }
+    @media (min-width: 768px) {
+     .overlay { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <svg class="logo-icon" viewBox="0 0 32 32" fill="#4f46e5">
+          <rect width="32" height="32" rx="8"/>
+        </svg>
+        <span class="sidebar-logo-text">Nova</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+          <span class="sidebar-label">Dashboard</span>
+        </a>
+        <a href="#" class="nav-item">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+          <span class="sidebar-label">Analytics</span>
+        </a>
+        <a href="#" class="nav-item">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span class="sidebar-label">Users</span>
+        </a>
+        <a href="#" class="nav-item">
+          <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37a1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          <span class="sidebar-label">Settings</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="menu-toggle" id="menuToggle">
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+
+        <div class="search-bar">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-btn">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-header">
+          <h1>Tablet Dashboard</h1>
+          <p>Optimized for 768px–1024px with touch targets and 2-column layouts</p>
+        </div>
+
+        <!-- Metrics: 2-col on tablet -->
+        <div class="grid grid-cols-2">
+          <div class="metric-card">
+            <div class="metric-label">Total Users</div>
+            <div class="metric-value">24,832</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Revenue</div>
+            <div class="metric-value">$48,294</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Active Now</div>
+            <div class="metric-value">1,429</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Conversion</div>
+            <div class="metric-value">3.24%</div>
+          </div>
+        </div>
+
+        <!-- Content grid: 2-col on tablet -->
+        <div class="grid grid-cols-2 mt-6">
+          <div class="card">
+            <h3>Recent Activity</h3>
+            <p>Tablet uses 2-column grid. Cards stack on mobile, 2-up on tablet, 4-up on desktop.</p>
+            <button class="btn mt-4">View all</button>
+          </div>
+          <div class="card">
+            <h3>Quick Actions</h3>
+            <p>48px touch targets. Larger text 16px base. Generous spacing 20-24px.</p>
+            <button class="btn mt-4">New project</button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrapper mt-6">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Role</th>
+                  <th>Last active</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Jordan Doe</td>
+                  <td>Active</td>
+                  <td>Admin</td>
+                  <td>2 hours ago</td>
+                </tr>
+                <tr>
+                  <td>Sarah Miller</td>
+                  <td>Active</td>
+                  <td>User</td>
+                  <td>1 day ago</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    const overlay = document.getElementById('overlay');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+    });
+  </script>
+</body>
+</html>
