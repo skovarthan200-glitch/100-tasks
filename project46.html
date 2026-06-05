@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadcrumb Navigation System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+   .demo-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+   .demo-section h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+   .demo-section p {
+      color: #6b7280;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    /* Base Breadcrumb */
+   .breadcrumb {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+   .breadcrumb-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+   .breadcrumb-link {
+      color: #6b7280;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+
+   .breadcrumb-link:hover {
+      color: var(--primary);
+      background: #eff6ff;
+    }
+
+   .breadcrumb-separator {
+      color: #d1d5db;
+      user-select: none;
+    }
+
+   .breadcrumb-current {
+      color: #111827;
+      font-weight: 600;
+      padding: 6px 10px;
+    }
+
+   .breadcrumb-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Style 2: With Background */
+   .breadcrumb-pills {
+      background: #f3f4f6;
+      padding: 12px 16px;
+      border-radius: 10px;
+    }
+
+   .breadcrumb-pills .breadcrumb-link {
+      background: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    }
+
+   .breadcrumb-pills .breadcrumb-link:hover {
+      background: #fff;
+      box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
+    }
+
+   .breadcrumb-pills .breadcrumb-current {
+      background: var(--primary);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 8px;
+    }
+
+    /* Style 3: Chevron Separators */
+   .breadcrumb-chevrons .breadcrumb-separator svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Style 4: Collapsed with Dropdown */
+   .breadcrumb-collapsed .breadcrumb-ellipsis {
+      position: relative;
+    }
+
+   .breadcrumb-ellipsis-btn {
+      background: #f3f4f6;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #6b7280;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+   .breadcrumb-ellipsis-btn:hover {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+   .breadcrumb-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      padding: 8px;
+      min-width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all 0.2s;
+      z-index: 50;
+    }
+
+   .breadcrumb-ellipsis:hover .breadcrumb-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+   .breadcrumb-dropdown-item {
+      display: block;
+      padding: 10px 14px;
+      border-radius: 6px;
+      color: #374151;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.15s;
+    }
+
+   .breadcrumb-dropdown-item:hover {
+      background: #f3f4f6;
+      color: var(--primary);
+    }
+
+    /* Style 5: Arrow Style */
+   .breadcrumb-arrows {
+      gap: 0;
+    }
+
+   .breadcrumb-arrows .breadcrumb-item {
+      position: relative;
+      gap: 0;
+    }
+
+   .breadcrumb-arrows .breadcrumb-link,
+   .breadcrumb-arrows .breadcrumb-current {
+      padding: 10px 20px 10px 32px;
+      background: #f3f4f6;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+      margin-left: -12px;
+    }
+
+   .breadcrumb-arrows .breadcrumb-item:first-child .breadcrumb-link {
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%);
+      padding-left: 20px;
+      margin-left: 0;
+    }
+
+   .breadcrumb-arrows .breadcrumb-current {
+      background: var(--primary);
+      color: #fff;
+      z-index: 1;
+    }
+
+   .breadcrumb-arrows .breadcrumb-link:hover {
+      background: #e5e7eb;
+    }
+
+    /* Style 6: Minimal with Icons */
+   .breadcrumb-minimal {
+      font-size: 0.85rem;
+    }
+
+   .breadcrumb-minimal .breadcrumb-link {
+      padding: 4px 8px;
+    }
+
+   .breadcrumb-minimal .breadcrumb-separator {
+      margin: 0 4px;
+    }
+
+    /* Style 7: Structured Data Breadcrumb */
+   .breadcrumb-structured {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      padding: 16px 20px;
+      border-radius: 10px;
+    }
+
+    /* Mobile Responsive */
+   @media (max-width: 640px) {
+     .breadcrumb {
+        font-size: 0.85rem;
+      }
+     .breadcrumb-link,
+     .breadcrumb-current {
+        padding: 4px 8px;
+      }
+     .breadcrumb-hide-mobile {
+        display: none;
+      }
+     .breadcrumb-arrows .breadcrumb-link,
+     .breadcrumb-arrows .breadcrumb-current {
+        padding: 8px 16px 8px 28px;
+      }
+    }
+
+    /* Page Layout Demo */
+   .page-header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+
+   .page-title {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-top: 16px;
+    }
+
+   .page-content {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+      min-height: 300px;
+    }
+
+    /* Utility Classes */
+   .flex {
+      display: flex;
+    }
+   .items-center {
+      align-items: center;
+    }
+   .gap-2 {
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Style 1: Basic Breadcrumb -->
+    <div class="demo-section">
+      <h2>Basic Breadcrumb</h2>
+      <p>Standard navigation trail with slash separators</p>
+      
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">
+              <svg class="breadcrumb-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">/</span>
+            <a href="#" class="breadcrumb-link">Products</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">/</span>
+            <a href="#" class="breadcrumb-link">Electronics</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Wireless Headphones</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Style 2: Pills Background -->
+    <div class="demo-section">
+      <h2>Pill Style Breadcrumb</h2>
+      <p>Each item styled as a pill with background</p>
+      
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb breadcrumb-pills">
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">›</span>
+            <a href="#" class="breadcrumb-link">Projects</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">›</span>
+            <a href="#" class="breadcrumb-link">Website Redesign</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Tasks</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Style 3: Chevron Separators -->
+    <div class="demo-section">
+      <h2>Chevron Separators</h2>
+      <p>Uses chevron icons instead of slashes</p>
+      
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb breadcrumb-chevrons">
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </span>
+            <a href="#" class="breadcrumb-link">Documentation</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </span>
+            <a href="#" class="breadcrumb-link">API Reference</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </span>
+            <span class="breadcrumb-current">Authentication</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Style 4: Collapsed with Dropdown -->
+    <div class="demo-section">
+      <h2>Collapsed Breadcrumb</h2>
+      <p>Long paths collapsed with ellipsis dropdown for mobile</p>
+      
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb breadcrumb-collapsed">
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">
+              <svg class="breadcrumb-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">/</span>
+            <div class="breadcrumb-ellipsis">
+              <button class="breadcrumb-ellipsis-btn">
+                ...
+                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+              <div class="breadcrumb-dropdown">
+                <a href="#" class="breadcrumb-dropdown-item">Products</a>
+                <a href="#" class="breadcrumb-dropdown-item">Electronics</a>
+                <a href="#" class="breadcrumb-dropdown-item">Audio</a>
+                <a href="#" class="breadcrumb-dropdown-item">Headphones</a>
+              </div>
+            </div>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">/</span>
+            <a href="#" class="breadcrumb-link">Wireless</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Pro X Model</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Style 5: Arrow Steps -->
+    <div class="demo-section">
+      <h2>Arrow Step Breadcrumb</h2>
+      <p>Visual flow with arrow-shaped segments</p>
+      
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb breadcrumb-arrows">
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">Cart</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">Shipping</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">Payment</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-current">Review</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Style 6: Minimal -->
+    <div class="demo-section">
+      <h2>Minimal Breadcrumb</h2>
+      <p>Compact style for tight spaces</p>
+      
+      <nav aria-label="Breadcrumb">
+        <ol class="breadcrumb breadcrumb-minimal">
+          <li class="breadcrumb-item">
+            <a href="#" class="breadcrumb-link">Docs</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">›</span>
+            <a href="#" class="breadcrumb-link">Guides</a>
+          </li>
+          <li class="breadcrumb-item breadcrumb-hide-mobile">
+            <span class="breadcrumb-separator">›</span>
+            <a href="#" class="breadcrumb-link">Getting Started</a>
+          </li>
+          <li class="breadcrumb-item">
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Installation</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Complete Page Example -->
+    <div class="demo-section" style="padding: 0; overflow: hidden;">
+      <div class="page-header">
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb breadcrumb-structured">
+            <li class="breadcrumb-item">
+              <a href="#" class="breadcrumb-link">
+                <svg class="breadcrumb-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                Dashboard
+              </a>
+            </li>
+            <li class="breadcrumb-item">
+              <span class="breadcrumb-separator">/</span>
+              <a href="#" class="breadcrumb-link">Team</a>
+            </li>
+            <li class="breadcrumb-item">
+              <span class="breadcrumb-separator">/</span>
+              <a href="#" class="breadcrumb-link">Members</a>
+            </li>
+            <li class="breadcrumb-item">
+              <span class="breadcrumb-separator">/</span>
+              <span class="breadcrumb-current">John Doe</span>
+            </li>
+          </ol>
+        </nav>
+        <h1 class="page-title">John Doe</h1>
+      </div>
+      <div class="page-content">
+        <p>This shows how breadcrumbs integrate into a full page layout. They appear above the page title to show hierarchy and provide quick navigation back to parent sections.</p>
+        <p>Breadcrumbs improve UX by answering: "Where am I?" and "How did I get here?" Users can jump to any ancestor level with one click.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Handle breadcrumb dropdown toggle
+    document.querySelectorAll('.breadcrumb-ellipsis-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const dropdown = this.nextElementSibling;
+        const isOpen = dropdown.style.opacity === '1';
+        
+        document.querySelectorAll('.breadcrumb-dropdown').forEach(d => {
+          d.style.opacity = '0';
+          d.style.visibility = 'hidden';
+        });
+        
+        if (!isOpen) {
+          dropdown.style.opacity = '1';
+          dropdown.style.visibility = 'visible';
+        }
+      });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.breadcrumb-dropdown').forEach(d => {
+        d.style.opacity = '0';
+        d.style.visibility = 'hidden';
+      });
+    });
+  </script>
+</body>
+</html>
