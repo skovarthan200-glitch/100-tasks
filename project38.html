@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoVault Gallery</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #fff;
+      line-height: 1.5;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* Header */
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+   .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) 0;
+      gap: var(--space-6);
+    }
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #111827;
+    }
+   .search-bar {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+   .search-bar input {
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+   .search-bar input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgb(14 165 233 / 0.1);
+    }
+   .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #6b7280;
+    }
+   .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+   .btn:hover {
+      background: var(--primary-dark);
+    }
+   .btn-secondary {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+   .btn-secondary:hover {
+      background: #f9fafb;
+    }
+   .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+     .search-bar { display: none; }
+    }
+
+    /* Toolbar */
+   .toolbar {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: var(--space-4) 0;
+    }
+   .toolbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+   .filter-tabs {
+      display: flex;
+      gap: var(--space-2);
+    }
+   .filter-tab {
+      padding: 8px 16px;
+      border: none;
+      background: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+   .filter-tab:hover {
+      background: #f3f4f6;
+    }
+   .filter-tab.active {
+      background: #e0f2fe;
+      color: var(--primary);
+    }
+   .view-controls {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+    }
+   .view-btn {
+      background: none;
+      border: 1px solid #d1d5db;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+    }
+   .view-btn:hover {
+      background: #f3f4f6;
+    }
+   .view-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+   .sort-select {
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    /* Gallery */
+   .gallery-section {
+      padding: var(--space-8) 0;
+    }
+   .gallery-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-6);
+    }
+   .gallery-header h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+   .gallery-count {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    /* Masonry grid */
+   .gallery-grid {
+      columns: 4;
+      column-gap: var(--space-4);
+    }
+   .gallery-item {
+      break-inside: avoid;
+      margin-bottom: var(--space-4);
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      background: #f3f4f6;
+    }
+   .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+   .gallery-image {
+      width: 100%;
+      display: block;
+    }
+   .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgb(0 0 0 / 0.7) 100%);
+      opacity: 0;
+      transition: opacity 0.2s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: var(--space-3);
+    }
+   .gallery-actions {
+      display: flex;
+      gap: var(--space-2);
+      justify-content: flex-end;
+    }
+   .gallery-btn {
+      background: rgb(255 255 255 / 0.9);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111827;
+    }
+   .gallery-btn:hover {
+      background: #fff;
+    }
+   .gallery-info {
+      color: #fff;
+    }
+   .gallery-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+   .gallery-meta {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 1200px) {
+     .gallery-grid { columns: 3; }
+    }
+    @media (max-width: 768px) {
+     .gallery-grid { columns: 2; }
+    }
+    @media (max-width: 480px) {
+     .gallery-grid { columns: 1; }
+    }
+
+    /* Upload zone */
+   .upload-zone {
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      padding: var(--space-12);
+      text-align: center;
+      background: #f9fafb;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+   .upload-zone:hover {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+   .upload-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-4);
+      background: #e0f2fe;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+    }
+   .upload-zone h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+   .upload-zone p {
+      color: #6b7280;
+      font-size: 0.95rem;
+      margin-bottom: var(--space-4);
+    }
+
+    /* Lightbox */
+   .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgb(0 0 0 / 0.95);
+      z-index: 50;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+    }
+   .lightbox.active {
+      display: flex;
+    }
+   .lightbox-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+    }
+   .lightbox-image {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 8px;
+    }
+   .lightbox-close {
+      position: absolute;
+      top: -48px;
+      right: 0;
+      background: rgb(255 255 255 / 0.1);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+   .lightbox-close:hover {
+      background: rgb(255 255 255 / 0.2);
+    }
+   .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgb(255 255 255 / 0.1);
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+   .lightbox-nav:hover {
+      background: rgb(255 255 255 / 0.2);
+    }
+   .lightbox-prev {
+      left: -64px;
+    }
+   .lightbox-next {
+      right: -64px;
+    }
+   .lightbox-info {
+      position: absolute;
+      bottom: -60px;
+      left: 0;
+      right: 0;
+      color: #fff;
+      text-align: center;
+    }
+   .lightbox-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+   .lightbox-meta {
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+
+    @media (max-width: 768px) {
+     .lightbox-nav { display: none; }
+    }
+
+    /* Empty state */
+   .empty-state {
+      text-align: center;
+      padding: var(--space-16) var(--space-6);
+    }
+   .empty-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto var(--space-6);
+      background: #f3f4f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+    }
+   .empty-state h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+   .empty-state p {
+      color: #6b7280;
+      margin-bottom: var(--space-6);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="#0ea5e9">
+            <rect width="32" height="32" rx="8"/>
+          </svg>
+          PhotoVault
+        </a>
+        
+        <div class="search-bar">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" placeholder="Search photos, albums, people...">
+        </div>
+
+        <div class="header-actions">
+          <button class="btn">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+            </svg>
+            Upload
+          </button>
+          <div class="user-avatar">JD</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="container">
+      <div class="toolbar-inner">
+        <div class="filter-tabs">
+          <button class="filter-tab active">All Photos</button>
+          <button class="filter-tab">Albums</button>
+          <button class="filter-tab">Favorites</button>
+          <button class="filter-tab">Shared</button>
+          <button class="filter-tab">Archived</button>
+        </div>
+        
+        <div class="view-controls">
+          <select class="sort-select">
+            <option>Date added</option>
+            <option>Date taken</option>
+            <option>Name</option>
+            <option>Size</option>
+          </select>
+          <button class="view-btn active">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4 11h6a1 1 0 001-1V4a1 1 0 00-1-1H4a1 1 0 00-1 1v6a1 1 0 001 1zm0 8h6a1 1 0 001-1v-6a1 1 0 00-1-1H4a1 1 0 00-1 1v6a1 1 0 001 1zm10 0h6a1 1 0 001-1v-6a1 1 0 00-1-1h-6a1 1 0 00-1 1v6a1 1 0 001 1zm-1-8h6a1 1 0 001-1V4a1 1 0 00-1-1h-6a1 1 0 00-1 1v6a1 1 0 001 1z"/>
+            </svg>
+          </button>
+          <button class="view-btn">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4 6h16v2H4V6zm0 5h16v2H4v-2zm0 5h16v2H4v-2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <main class="gallery-section">
+    <div class="container">
+      <div class="gallery-header">
+        <h2>All Photos</h2>
+        <div class="gallery-count">1,247 photos</div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(0)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=800&fit=crop" alt="Mountain">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Mountain Peak</div>
+              <div class="gallery-meta">Oct 15, 2026 • 4.2 MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(1)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&h=400&fit=crop" alt="Forest">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364L12 7.636l-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Forest Trail</div>
+              <div class="gallery-meta">Oct 12, 2026 • 3.8 MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(2)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&h=900&fit=crop" alt="Lake">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 0 00-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Lake Sunset</div>
+              <div class="gallery-meta">Oct 10, 2026 • 5.1 MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(3)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1505144808419-1957a94ca61e?w=600&h=500&fit=crop" alt="Beach">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Beach Waves</div>
+              <div class="gallery-meta">Oct 8, 2026 • 3.5 MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(4)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=600&h=700&fit=crop" alt="Field">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 0 00-6.364-6.364L12 7.636l-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Golden Field</div>
+              <div class="gallery-meta">Oct 5, 2026 • 4.7 MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(5)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=600&fit=crop" alt="Mountains">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Snow Peaks</div>
+              <div class="gallery-meta">Oct 3, 2026 • 4.9 MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(6)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=600&h=850&fit=crop" alt="Waterfall">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Waterfall</div>
+              <div class="gallery-meta">Sep 28, 2026 • 6.2 MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item" onclick="openLightbox(7)">
+          <img class="gallery-image" src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=600&h=450&fit=crop" alt="Desert">
+          <div class="gallery-overlay">
+            <div class="gallery-actions">
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                </svg>
+              </button>
+              <button class="gallery-btn" onclick="event.stopPropagation()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-title">Desert Dunes</div>
+              <div class="gallery-meta">Sep 25, 2026 • 3.9 MB</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+      <button class="lightbox-nav lightbox-prev" onclick="prevImage()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <img class="lightbox-image" id="lightbox-img" src="" alt="">
+      <button class="lightbox-nav lightbox-next" onclick="nextImage()">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <
