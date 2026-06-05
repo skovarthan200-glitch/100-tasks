@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConnectHub - Social Feed</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --primary: #1877f2;
+      --success: #16a34a;
+      --danger: #dc2626;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f0f2f5;
+      line-height: 1.5;
+    }
+
+   .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 var(--space-4);
+    }
+
+    /* Header */
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    }
+   .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) 0;
+      gap: var(--space-4);
+    }
+   .header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+   .logo {
+      font-weight: 800;
+      font-size: 1.75rem;
+      text-decoration: none;
+      color: var(--primary);
+    }
+   .search-bar {
+      position: relative;
+      width: 280px;
+    }
+   .search-bar input {
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: none;
+      background: #f0f2f5;
+      border-radius: 20px;
+      font-size: 0.95rem;
+    }
+   .search-bar input:focus {
+      outline: none;
+      background: #e5e7eb;
+    }
+   .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #6b7280;
+    }
+   .header-nav {
+      display: flex;
+      gap: var(--space-2);
+    }
+   .nav-btn {
+      background: none;
+      border: none;
+      padding: var(--space-3) var(--space-6);
+      border-radius: 8px;
+      cursor: pointer;
+      color: #6b7280;
+      position: relative;
+    }
+   .nav-btn:hover {
+      background: #f3f4f6;
+    }
+   .nav-btn.active {
+      color: var(--primary);
+    }
+   .nav-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+   .header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .icon-btn {
+      background: #f0f2f5;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+   .icon-btn:hover {
+      background: #e5e7eb;
+    }
+   .notification-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background: var(--danger);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 10px;
+      min-width: 18px;
+      text-align: center;
+    }
+   .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+     .search-bar { display: none; }
+    }
+    @media (max-width: 768px) {
+     .header-nav { display: none; }
+    }
+
+    /* Main layout */
+   .main-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr 360px;
+      gap: var(--space-6);
+      padding: var(--space-6) 0;
+      align-items: start;
+    }
+
+    @media (max-width: 1200px) {
+     .main-layout { grid-template-columns: 1fr 360px; }
+     .left-sidebar { display: none; }
+    }
+    @media (max-width: 768px) {
+     .main-layout { grid-template-columns: 1fr; }
+     .right-sidebar { display: none; }
+    }
+
+    /* Left sidebar */
+   .left-sidebar {
+      position: sticky;
+      top: 80px;
+    }
+   .sidebar-menu {
+      background: #fff;
+      border-radius: 12px;
+      padding: var(--space-4);
+    }
+   .menu-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: 8px;
+      text-decoration: none;
+      color: #374151;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: var(--space-1);
+    }
+   .menu-item:hover {
+      background: #f3f4f6;
+    }
+   .menu-item.active {
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 600;
+    }
+   .menu-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.875rem;
+    }
+
+    /* Feed */
+   .feed {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    /* Stories */
+   .stories {
+      background: #fff;
+      border-radius: 12px;
+      padding: var(--space-4);
+      display: flex;
+      gap: var(--space-3);
+      overflow-x: auto;
+      margin-bottom: var(--space-4);
+    }
+   .story {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+   .story-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+   .story-avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #fff;
+      padding: 2px;
+    }
+   .story-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+   .story-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-align: center;
+      max-width: 70px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+   .story-add {
+      background: #f3f4f6;
+      border: 2px dashed #d1d5db;
+    }
+   .story-add .story-avatar-inner {
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Create post */
+   .create-post {
+      background: #fff;
+      border-radius: 12px;
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+   .post-input-row {
+      display: flex;
+      gap: var(--space-3);
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: var(--space-3);
+    }
+   .post-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+   .post-input {
+      flex: 1;
+      background: #f0f2f5;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+   .post-input:hover {
+      background: #e5e7eb;
+    }
+   .post-actions {
+      display: flex;
+      justify-content: space-around;
+    }
+   .post-action-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: none;
+      border: none;
+      padding: var(--space-3) var(--space-4);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+   .post-action-btn:hover {
+      background: #f3f4f6;
+    }
+
+    /* Post card */
+   .post-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+   .post-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-4);
+    }
+   .post-user-info {
+      flex: 1;
+    }
+   .post-user-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+   .post-user-name a {
+      color: #111827;
+      text-decoration: none;
+    }
+   .post-user-name a:hover {
+      text-decoration: underline;
+    }
+   .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+   .post-options {
+      background: none;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b7280;
+    }
+   .post-options:hover {
+      background: #f3f4f6;
+    }
+   .post-content {
+      padding: 0 var(--space-4) var(--space-4);
+    }
+   .post-text {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: var(--space-3);
+    }
+   .post-image {
+      width: calc(100% + 32px);
+      margin: 0 -16px;
+      max-height: 500px;
+      object-fit: cover;
+    }
+   .post-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      font-size: 0.9rem;
+      color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+    }
+   .post-reactions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+   .reaction-icons {
+      display: flex;
+      margin-right: 4px;
+    }
+   .reaction-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      margin-left: -6px;
+    }
+   .reaction-icon:first-child {
+      margin-left: 0;
+   }
+   .post-actions-row {
+      display: flex;
+      padding: var(--space-2) var(--space-4);
+    }
+   .post-action {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      background: none;
+      border: none;
+      padding: var(--space-3);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+   .post-action:hover {
+      background: #f3f4f6;
+    }
+   .post-action.liked {
+      color: var(--primary);
+    }
+
+    /* Comments */
+   .comments-section {
+      padding: var(--space-4);
+      border-top: 1px solid #e5e7eb;
+    }
+   .comment {
+      display: flex;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+   .comment-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+   .comment-content {
+      flex: 1;
+    }
+   .comment-bubble {
+      background: #f0f2f5;
+      border-radius: 16px;
+      padding: var(--space-2) var(--space-3);
+      display: inline-block;
+    }
+   .comment-author {
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 2px;
+    }
+   .comment-text {
+      font-size: 0.9rem;
+    }
+   .comment-actions {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: 4px;
+      padding-left: var(--space-3);
+    }
+   .comment-action {
+      background: none;
+      border: none;
+      color: #6b7280;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+   .comment-action:hover {
+      text-decoration: underline;
+    }
+   .comment-input-row {
+      display: flex;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+   .comment-input {
+      flex: 1;
+      background: #f0f2f5;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+   .comment-input:focus {
+      outline: none;
+      background: #e5e7eb;
+    }
+
+    /* Right sidebar */
+   .right-sidebar {
+      position: sticky;
+      top: 80px;
+    }
+   .widget {
+      background: #fff;
+      border-radius: 12px;
+      padding: var(--space-5);
+      margin-bottom: var(--space-4);
+    }
+   .widget-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+   .widget-header h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+   .widget-header a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+   .suggestion-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+   .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .suggestion-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+   .suggestion-info {
+      flex: 1;
+    }
+   .suggestion-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+   .suggestion-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+   .btn-follow {
+      background: #e5e7eb;
+      color: #111827;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+   .btn-follow:hover {
+      background: #d1d5db;
+    }
+   .btn-follow.following {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Trending */
+   .trending-item {
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid #f3f4f6;
+      cursor: pointer;
+    }
+   .trending-item:last-child {
+      border-bottom: none;
+   }
+   .trending-item:hover {
+      background: #f9fafb;
+      margin: 0 calc(-1 * var(--space-5));
+      padding: var(--space-3) var(--space-5);
+    }
+   .trending-category {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+   .trending-topic {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+   .trending-count {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* Footer */
+   .footer-links {
+      padding: var(--space-4) 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+   .footer-links a {
+      color: #6b7280;
+      text-decoration: none;
+      margin-right: var(--space-2);
+    }
+   .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="header-left">
+          <a href="#" class="logo">ConnectHub</a>
+          <div class="search-bar">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input type="text" placeholder="Search ConnectHub">
+          </div>
+        </div>
+        
+        <nav class="header-nav">
+          <button class="nav-btn active">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M3 12l2-2m0 0l7-7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+          </button>
+          <button class="nav-btn">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+            </svg>
+          </button>
+          <button class="nav-btn">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+          </button>
+        </nav>
+
+        <div class="header-right">
+          <button class="icon-btn">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+          </button>
+          <button class="icon-btn">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            <span class="notification-badge">3</span>
+          </button>
+          <button class="icon-btn">
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="notification-badge">5</span>
+          </button>
+          <div class="user-avatar">JD</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container">
+    <div class="main-layout">
+      <!-- Left Sidebar -->
+      <aside class="left-sidebar">
+        <div class="sidebar-menu">
+          <a href="#" class="menu-item active">
+            <div class="menu-avatar">JD</div>
+            <span>John Doe</span>
+          </a>
+          <a href="#" class="menu-item">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            Friends
+          </a>
+          <a href="#" class="menu-item">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+            </svg>
+            Groups
+          </a>
+          <a href="#" class="menu-item">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+            </svg>
+            Pages
+          </a>
+          <a href="#" class="menu-item">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            Videos
+          </a>
+          <a href="#" class="menu-item">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Events
+          </a>
+          <div class="nav-divider"></div>
+          <a href="#" class="menu-item">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24">
+              <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+            </svg>
+            Saved
+          </a>
+        </div>
+      </aside>
+
+      <!-- Feed -->
+      <div class="feed">
+        <!-- Stories -->
+        <div class="stories">
+          <div class="story story-add">
+            <div class="story-avatar">
+              <div class="story-avatar-inner">
+                <svg width="24" height="24" fill="#6b7280" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+              </div>
+            </div>
+            <span class="story-name">Create Story</span>
+          </div>
+          <div class="story">
+            <div class="story-avatar">
+              <div class="story-avatar-inner">
+                <img src="https://i.pravatar.cc/150?img=1" alt="Story">
+              </div>
+            <span class="story-name">Sarah M.</span>
+          </div>
+          <div class="story">
+            <div class="story-avatar">
+              <div class="story-avatar-inner">
+                <img src="https://i.pravatar.cc/150?img=2" alt="Story">
+              </div>
+            </div>
+            <span class="story-name">Mike C.</span>
+          </div>
+          <div class="story">
+            <div class="story-avatar">
+              <div class="story-avatar-inner">
+                <img src="https://i.pravatar.cc/150?img=3" alt="Story">
+              </div>
+            </div>
+            <span class="story-name">Emma W.</span>
+          </div>
+          <div class="story">
+            <div class="story-avatar">
+              <div class="story-avatar-inner">
+                <img src="https://i.pravatar.cc/150?img=4" alt="Story">
+              </div>
+            <span class="story-name">David K.</span>
+          </div>
+          <div class="story">
+            <div class="story-avatar">
+              <div class="story-avatar-inner">
+                <img src="https://i.pravatar.cc/150?img=5" alt="Story">
+              </div>
+            <span class="story-name">Lisa P.</span>
+          </div>
+        </div>
+
+        <!-- Create Post -->
+        <div class="create-post">
+          <div class="post-input-row">
+            <div class="post-avatar">JD</div>
+            <input type="text" class="post-input" placeholder="What's on your mind, John?">
+          </div>
+          <div class="post-actions">
+            <button class="post-action-btn">
+              <svg width="20" height="20" fill="#45bd62" viewBox="0 0 24 24">
+                <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+              <span>Live Video</span>
+            </button>
+            <button class="post-action-btn">
+              <svg width="20" height="20" fill="#1877f2" viewBox="0 0 24 24">
+                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <span>Photo/Video</span>
+            </button>
+            <button class="post-action-btn">
+              <svg width="20" height="20" fill="#f59e0b" viewBox="0 0 24 24">
+                <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span>Feeling/Activity</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Post 1 -->
+        <article class="post-card">
+          <div class="post-header">
+            <div class="post-avatar">SM</div>
+            <div class="post-user-info">
+              <div class="post-user-name"><a href="#">Sarah Miller</a></div>
+              <div class="post-meta">
+                <span>2 hours ago</span>
+                <span>•</span>
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+            </div>
+            <button class="post-options">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2
