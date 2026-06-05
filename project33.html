@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinTrack Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --primary: #2563eb;
+      --success: #16a34a;
+      --danger: #dc2626;
+      --warning: #f59e0b;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+    }
+
+   .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* Header */
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+   .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) 0;
+    }
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #111827;
+    }
+   .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+   .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-2);
+      position: relative;
+    }
+   .notification-dot {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 8px;
+      height: 8px;
+      background: var(--danger);
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+   .user-menu {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+   .user-menu:hover {
+      background: #f3f4f6;
+    }
+   .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* Sidebar + Main */
+   .dashboard-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: var(--space-8);
+      padding: var(--space-8) 0;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+     .dashboard-layout { grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar */
+   .sidebar {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-5);
+      position: sticky;
+      top: 100px;
+    }
+   .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+   .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-radius: 8px;
+      text-decoration: none;
+      color: #374151;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+   .nav-item:hover {
+      background: #f3f4f6;
+    }
+   .nav-item.active {
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 600;
+    }
+   .nav-divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: var(--space-4) 0;
+    }
+
+    @media (max-width: 1024px) {
+     .sidebar { display: none; }
+    }
+
+    /* Page header */
+   .page-header {
+      margin-bottom: var(--space-8);
+    }
+   .page-header h1 {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+    }
+   .page-subtitle {
+      color: #6b7280;
+      font-size: 1rem;
+    }
+
+    /* Stats cards */
+   .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+   .stat-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+    }
+   .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: var(--space-4);
+    }
+   .stat-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+   .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+   .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+    }
+   .stat-change {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+   .stat-change.positive {
+      color: var(--success);
+    }
+   .stat-change.negative {
+      color: var(--danger);
+    }
+
+    @media (max-width: 1200px) {
+     .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+     .stats-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Chart + Cards */
+   .chart-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+   .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+    }
+   .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-5);
+    }
+   .card-header h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+   .card-header a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+   .card-header a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+     .chart-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Chart placeholder */
+   .chart-placeholder {
+      height: 280px;
+      background: linear-gradient(180deg, #eff6ff 0%, #fff 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: end;
+      gap: var(--space-2);
+      padding: var(--space-4);
+    }
+   .chart-bar {
+      flex: 1;
+      background: var(--primary);
+      border-radius: 4px 4px 0 0;
+      opacity: 0.8;
+    }
+
+    /* Credit card */
+   .credit-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: var(--space-6);
+      margin-bottom: var(--space-5);
+      position: relative;
+      overflow: hidden;
+    }
+   .credit-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 200px;
+      height: 200px;
+      background: rgb(255 255 255 / 0.1);
+      border-radius: 50%;
+    }
+   .card-type {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-bottom: var(--space-4);
+    }
+   .card-number {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-5);
+    }
+   .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+    }
+   .card-info label {
+      display: block;
+      font-size: 0.75rem;
+      opacity: 0.8;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+   .card-info div {
+      font-weight: 600;
+    }
+   .card-chip {
+      width: 40px;
+      height: 32px;
+      background: #fbbf24;
+      border-radius: 6px;
+    }
+
+    /* Quick actions */
+   .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+   .quick-btn {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: var(--space-4);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+   .quick-btn:hover {
+      background: #f3f4f6;
+      border-color: var(--primary);
+    }
+   .quick-btn svg {
+      width: 24px;
+      height: 24px;
+      margin: 0 auto var(--space-2);
+      color: var(--primary);
+    }
+   .quick-btn span {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    /* Transactions table */
+   .table-container {
+      overflow-x: auto;
+    }
+   .transaction-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+   .transaction-table th {
+      text-align: left;
+      padding: var(--space-3) var(--space-4);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b7280;
+      border-bottom: 1px solid #e5e7eb;
+    }
+   .transaction-table td {
+      padding: var(--space-4);
+      border-bottom: 1px solid #f3f4f6;
+    }
+   .transaction-table tr:hover {
+      background: #f9fafb;
+    }
+   .transaction-merchant {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .merchant-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+   .merchant-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+   .merchant-category {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+   .transaction-date {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+   .transaction-amount {
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: right;
+    }
+   .transaction-amount.income {
+      color: var(--success);
+    }
+   .transaction-amount.expense {
+      color: #111827;
+    }
+   .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+   .status-badge.completed {
+      background: #dcfce7;
+      color: #166534;
+    }
+   .status-badge.pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    @media (max-width: 768px) {
+     .transaction-table th:nth-child(3),
+     .transaction-table td:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="#2563eb">
+            <rect width="32" height="32" rx="8"/>
+          </svg>
+          FinTrack
+        </a>
+        
+        <div class="header-actions">
+          <button class="icon-btn">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </button>
+          <button class="icon-btn">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="user-menu">
+            <div class="user-avatar">JD</div>
+            <div>
+              <div style="font-weight: 600; font-size: 0.9rem;">John Doe</div>
+              <div style="font-size: 0.8rem; color: #6b7280;">Premium</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard -->
+  <main class="container">
+    <div class="dashboard-layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item active">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+            </svg>
+            Accounts
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+            </svg>
+            Transactions
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+            Analytics
+          </a>
+          <a href="#" class="nav-item">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            Investments
+          </a>
+          <div class="nav-divider"></div>
+          <a href="#" class="nav-item">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            </svg>
+            Settings
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div>
+        <div class="page-header">
+          <h1>Dashboard</h1>
+          <p class="page-subtitle">Welcome back, John. Here's your financial overview.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Total Balance</div>
+              <div class="stat-icon" style="background: #dbeafe;">
+                <svg width="20" height="20" fill="#2563eb" viewBox="0 0 24 24">
+                  <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">$24,580.00</div>
+            <div class="stat-change positive">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+              +12.5% from last month
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Monthly Income</div>
+              <div class="stat-icon" style="background: #dcfce7;">
+                <svg width="20" height="20" fill="#16a34a" viewBox="0 0 24 24">
+                  <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">$8,450.00</div>
+            <div class="stat-change positive">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+              +8.2% from last month
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Monthly Expenses</div>
+              <div class="stat-icon" style="background: #fee2e2;">
+                <svg width="20" height="20" fill="#dc2626" viewBox="0 0 24 24">
+                  <path d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">$3,280.00</div>
+            <div class="stat-change negative">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/>
+              </svg>
+              +5.1% from last month
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Savings Rate</div>
+              <div class="stat-icon" style="background: #fef3c7;">
+                <svg width="20" height="20" fill="#f59e0b" viewBox="0 0 24 24">
+                  <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="stat-value">61.2%</div>
+            <div class="stat-change positive">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+              +3.4% from last month
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts + Cards -->
+        <div class="chart-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3>Cash Flow Overview</h3>
+              <select style="border: 1px solid #d1d5db; border-radius: 6px; padding: 6px 12px; font-size: 0.875rem;">
+                <option>Last 6 months</option>
+                <option>Last year</option>
+              </select>
+            </div>
+            <div class="chart-placeholder">
+              <div class="chart-bar" style="height: 60%;"></div>
+              <div class="chart-bar" style="height: 80%;"></div>
+              <div class="chart-bar" style="height: 45%;"></div>
+              <div class="chart-bar" style="height: 90%;"></div>
+              <div class="chart-bar" style="height: 70%;"></div>
+              <div class="chart-bar" style="height: 85%;"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>My Cards</h3>
+              <a href="#">Manage</a>
+            </div>
+            <div class="credit-card">
+              <div class="card-type">Premium Card</div>
+              <div class="card-number">**** **** 4832</div>
+              <div class="card-footer">
+                <div class="card-info">
+                  <label>Card Holder</label>
+                  <div>John Doe</div>
+                </div>
+                <div class="card-info">
+                  <label>Expires</label>
+                  <div>12/28</div>
+                </div>
+                <div class="card-chip"></div>
+              </div>
+            </div>
+            <div class="quick-actions">
+              <button class="quick-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                </svg>
+                <span>Add Money</span>
+              </button>
+              <button class="quick-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                </svg>
+                <span>Transfer</span>
+              </button>
+              <button class="quick-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span>Pay Bills</span>
+              </button>
+              <button class="quick-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                </svg>
+                <span>New Card</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transactions -->
+        <div class="card">
+          <div class="card-header">
+            <h3>Recent Transactions</h3>
+            <a href="#">View all</a>
+          </div>
+          <div class="table-container">
+            <table class="transaction-table">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="transaction-merchant">
+                      <div class="merchant-icon">AM</div>
+                      <div>
+                        <div class="merchant-name">Amazon</div>
+                        <div class="merchant-category">Shopping</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="transaction-date">Oct 18, 2026</td>
+                  <td><span style="font-size: 0.9rem;">Shopping</span></td>
+                  <td><span class="status-badge completed">Completed</span></td>
+                  <td class="transaction-amount expense">-$89.99</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="transaction-merchant">
+                      <div class="merchant-icon" style="background: #dcfce7; color: #166534;">S</div>
+                      <div>
+                        <div class="merchant-name">Salary Deposit</div>
+                        <div class="merchant-category">Income</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="transaction-date">Oct 15, 2026</td>
+                  <td><span style="font-size: 0.9rem;">Income</span></td>
+                  <td><span class="status-badge completed">Completed</span></td>
+                  <td class="transaction-amount income">+$4,250.00</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="transaction-merchant">
+                      <div class="merchant-icon">NF</div>
+                      <div>
+                        <div class="merchant-name">Netflix</div>
+                        <div class="merchant-category">Entertainment</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="transaction-date">Oct 14, 2026</td>
+                  <td><span style="font-size: 0.9rem;">Subscription</span></td>
+                  <td><span class="status-badge completed">Completed</span></td>
+                  <td class="transaction-amount expense">-$15.99</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="transaction-merchant">
+                      <div class="merchant-icon">UB</div>
+                      <div>
+                        <div class="merchant-name">Uber</div>
+                        <div class="merchant-category">Transport</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="transaction-date">Oct 13, 2026</td>
+                  <td><span style="font-size: 0.9rem;">Transport</span></td>
+                  <td><span class="status-badge pending">Pending</span></td>
+                  <td class="transaction-amount expense">-$24.50</td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="transaction-merchant">
+                      <div class="merchant-icon">SW</div>
+                      <div>
+                        <div class="merchant-name">Starbucks</div>
+                        <div class="merchant-category">Food & Drink</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="transaction-date">Oct 12, 2026</td>
+                  <td><span style="font-size: 0.9rem;">Food</span></td>
+                  <td><span class="status-badge completed">Completed</span></td>
+                  <td class="transaction-amount expense">-$6.75</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo" style="margin-bottom: 16px; color: #fff;">
+            <svg width="32" height="32" viewBox="0
