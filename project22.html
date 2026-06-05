@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desktop Layout</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Desktop: 1280px+ optimized */
+   .app {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar - fixed, always visible on desktop */
+   .sidebar {
+      background: #fff;
+      border-right: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+   .sidebar-header {
+      padding: var(--space-6);
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+
+   .sidebar-nav {
+      flex: 1;
+      padding: var(--space-4);
+    }
+   .nav-section {
+      margin-bottom: var(--space-6);
+    }
+   .nav-section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0 var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+   .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 10px var(--space-3);
+      border-radius: 8px;
+      color: #374151;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 2px;
+      transition: all 0.15s;
+    }
+   .nav-item:hover {
+      background: #f3f4f6;
+      color: #111827;
+    }
+   .nav-item.active {
+      background: #eef2ff;
+      color: #4f46e5;
+    }
+   .nav-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+   .nav-badge {
+      margin-left: auto;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+   .sidebar-footer {
+      border-top: 1px solid #e5e7eb;
+      padding: var(--space-4);
+    }
+   .user-menu {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+   .user-menu:hover {
+      background: #f3f4f6;
+    }
+   .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #4f46e5;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.875rem;
+    }
+   .user-info h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+   .user-info p {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    /* Main */
+   .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Topbar */
+   .topbar {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: var(--space-4) var(--space-8);
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+   .breadcrumb {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+   .breadcrumb span {
+      color: #111827;
+      font-weight: 600;
+    }
+
+   .search-bar {
+      flex: 1;
+      max-width: 480px;
+      position: relative;
+    }
+   .search-bar input {
+      width: 100%;
+      padding: 10px 12px 10px 40px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: all 0.15s;
+    }
+   .search-bar input:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgb(79 70 229 / 0.1);
+    }
+   .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #6b7280;
+    }
+
+   .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-left: auto;
+    }
+   .icon-btn {
+      background: none;
+      border: none;
+      padding: var(--space-2);
+      border-radius: 8px;
+      cursor: pointer;
+      color: #6b7280;
+      transition: all 0.15s;
+      position: relative;
+    }
+   .icon-btn:hover {
+      background: #f3f4f6;
+      color: #111827;
+    }
+   .notification-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      background: #dc2626;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    /* Content */
+   .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-8);
+    }
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-8);
+      gap: var(--space-6);
+    }
+   .page-header h1 {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: var(--space-2);
+    }
+   .page-header p {
+      color: #6b7280;
+      font-size: 0.95rem;
+    }
+
+    /* Buttons */
+   .btn {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: background 0.15s;
+    }
+   .btn:hover {
+      background: #4338ca;
+    }
+   .btn-secondary {
+      background: #fff;
+      color: #374151;
+      border: 1px solid #d1d5db;
+    }
+   .btn-secondary:hover {
+      background: #f9fafb;
+    }
+
+    /* Grid - 4 cols on desktop */
+   .grid {
+      display: grid;
+      gap: var(--space-6);
+    }
+   .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+   .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+   .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+    /* Cards */
+   .card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+      transition: box-shadow 0.15s;
+    }
+   .card:hover {
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+   .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-4);
+    }
+   .card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+   .card p {
+      color: #6b7280;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    /* Metric cards */
+   .metric-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-5);
+    }
+   .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-3);
+    }
+   .metric-title {
+      font-size: 0.875rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+   .metric-icon {
+      width: 40px;
+      height: 40px;
+      background: #eef2ff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4f46e5;
+    }
+   .metric-value {
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+   .metric-change {
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+   .metric-change.positive {
+      color: #16a34a;
+    }
+   .metric-change.negative {
+      color: #dc2626;
+    }
+
+    /* Table - full width, dense */
+   .table-wrapper {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    thead {
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    th {
+      text-align: left;
+      padding: var(--space-3) var(--space-4);
+      font-weight: 600;
+      color: #374151;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: var(--space-4);
+      border-bottom: 1px solid #f3f4f6;
+    }
+    tbody tr:hover {
+      background: #f9fafb;
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Chart area */
+   .chart-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+    }
+   .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-5);
+    }
+   .chart-header h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+   .chart-placeholder {
+      height: 400px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+    }
+
+    /* Utilities */
+   .flex { display: flex; }
+   .items-center { align-items: center; }
+   .justify-between { justify-content: space-between; }
+   .gap-2 { gap: var(--space-2); }
+   .gap-4 { gap: var(--space-4); }
+   .mb-6 { margin-bottom: var(--space-6); }
+   .mb-8 { margin-bottom: var(--space-8); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="#4f46e5">
+            <rect width="32" height="32" rx="8"/>
+          </svg>
+          <span>Nova</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <a href="#" class="nav-item active">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            Dashboard
+          </a>
+          <a href="#" class="nav-item">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+            Analytics
+          </a>
+          <a href="#" class="nav-item">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+            </svg>
+            Experiments
+            <span class="nav-badge">12</span>
+          </a>
+          <a href="#" class="nav-item">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+            </svg>
+            Feature Flags
+          </a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">Team</div>
+          <a href="#" class="nav-item">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+            Members
+          </a>
+          <a href="#" class="nav-item">
+            <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            Settings
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-menu">
+          <div class="user-avatar">JD</div>
+          <div class="user-info">
+            <h4>Jordan Doe</h4>
+            <p>Admin</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="breadcrumb">Dashboard / <span>Overview</span></div>
+
+        <div class="search-bar">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <input type="text" placeholder="Search experiments, users, or docs...">
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-btn">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+            </svg>
+            <span class="notification-dot"></span>
+          </button>
+          <button class="icon-btn">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <main class="content">
+        <div class="container">
+          <div class="page-header">
+            <div>
+              <h1>Dashboard</h1>
+              <p>Welcome back, Jordan. Here's what's happening today.</p>
+            </div>
+            <div class="flex gap-4">
+              <button class="btn btn-secondary">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                Export
+              </button>
+              <button class="btn">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                New experiment
+              </button>
+            </div>
+          </div>
+
+          <!-- Metrics: 4-col desktop -->
+          <div class="grid grid-cols-4 mb-8">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Total Users</span>
+                <div class="metric-icon">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                </div>
+              <div class="metric-value">24,832</div>
+              <div class="metric-change positive">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                12.5% from last month
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Active Experiments</span>
+                <div class="metric-icon">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value">12</div>
+              <div class="metric-change positive">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                3 new this week
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Conversion Rate</span>
+                <div class="metric-icon">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value">3.24%</div>
+              <div class="metric-change negative">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+                0.8% from last week
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Revenue</span>
+                <div class="metric-icon">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="metric-value">$48,294</div>
+              <div class="metric-change positive">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                18.2% from last month
+              </div>
+            </div>
+          </div>
+
+          <!-- Main content: 2-col layout -->
+          <div class="grid grid-cols-2 mb-8">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Analytics Overview</h3>
+                <select style="padding: 6px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.875rem;">
+                  <option>Last 7 days</option>
+                  <option>Last 30 days</option>
+                  <option>Last 90 days</option>
+                </select>
+              </div>
+              <div class="chart-placeholder">
+                Chart.js or Recharts goes here
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3>Recent Experiments</h3>
+                <p>Latest A/B tests and results</p>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+                <div style="padding: var(--space-4); background: #f9fafb; border-radius: 8px;">
+                  <div class="flex justify-between items-center">
+                    <strong>Checkout button color</strong>
+                    <span style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">+12% lift</span>
+                  </div>
+                </div>
+                <div style="padding: var(--space-4); background: #f9fafb; border-radius: 8px;">
+                  <div class="flex justify-between items-center">
+                    <strong>Homepage hero copy</strong>
+                    <span style="background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Running</span>
+                  </div>
+                </div>
+                <div style="padding: var(--space-4); background: #f9fafb; border-radius: 8px;">
+                  <div class="flex justify-between items-center">
+                    <strong>Pricing page layout</strong>
+                    <span style="background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">-3% lift</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Data table -->
+          <div class="table-wrapper">
+            <div class="table-scroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Experiment Name</th>
+                    <th>Status</th>
+                    <th>Visitors</th>
+                    <th>Conversion</th>
+                    <th>Lift</th>
+                    <th>Confidence</th>
+                    <th>Owner</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Checkout button color</strong></td>
+                    <td><span style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Completed</span></td>
+                    <td>12,432</td>
+                    <td>4.2%</td>
+                    <td style="color: #16a34a; font-weight: 600;">+12%</td>
+                    <td>99%</td>
+                    <td>Jordan Doe</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Homepage hero copy</strong></td>
+                    <td><span style="background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Running</span></td>
+                    <td>8,291</td>
+                    <td>3.8%</td>
+                    <td style
