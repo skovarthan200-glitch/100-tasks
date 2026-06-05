@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loading Animation Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --primary: #2563eb;
+      --success: #16a34a;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.5;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+   .demo-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+
+   .demo-section h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+   .demo-section p {
+      color: #6b7280;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+   .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+    }
+
+   .demo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+   .demo-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #6b7280;
+    }
+
+    /* Spinner - Circular */
+   .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #e5e7eb;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+   .spinner-sm {
+      width: 24px;
+      height: 24px;
+      border-width: 2px;
+    }
+
+   .spinner-lg {
+      width: 56px;
+      height: 56px;
+      border-width: 4px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Spinner - Dots */
+   .spinner-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+   .spinner-dots span {
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out;
+    }
+
+   .spinner-dots span:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+   .spinner-dots span:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes bounce {
+      0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.5;
+      }
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Spinner - Pulse */
+   .spinner-pulse {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    /* Spinner - Ring */
+   .spinner-ring {
+      width: 40px;
+      height: 40px;
+      position: relative;
+    }
+
+   .spinner-ring div {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 3px solid transparent;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    }
+
+   .spinner-ring div:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+
+   .spinner-ring div:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+
+   .spinner-ring div:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+
+    /* Progress Bar */
+   .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+   .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+   .progress-indeterminate .progress-fill {
+      width: 40%;
+      animation: progress 1.5s ease-in-out infinite;
+    }
+
+    @keyframes progress {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(350%);
+      }
+    }
+
+   .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+   .progress-percent {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Progress Circle */
+   .progress-circle {
+      width: 80px;
+      height: 80px;
+      position: relative;
+    }
+
+   .progress-circle svg {
+      transform: rotate(-90deg);
+    }
+
+   .progress-circle-bg {
+      fill: none;
+      stroke: #e5e7eb;
+      stroke-width: 6;
+    }
+
+   .progress-circle-fill {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 6;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.3s;
+    }
+
+   .progress-circle-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+
+    /* Skeleton Loading */
+   .skeleton {
+      background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s ease-in-out infinite;
+      border-radius: 8px;
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+   .skeleton-card {
+      width: 100%;
+      padding: 20px;
+    }
+
+   .skeleton-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+
+   .skeleton-text {
+      height: 16px;
+      margin-bottom: 12px;
+    }
+
+   .skeleton-text-sm {
+      height: 12px;
+      width: 60%;
+    }
+
+   .skeleton-title {
+      height: 24px;
+      width: 70%;
+      margin-bottom: 16px;
+    }
+
+   .skeleton-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      margin-bottom: 16px;
+    }
+
+   .skeleton-flex {
+      display: flex;
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* Dots Wave */
+   .dots-wave {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+   .dots-wave span {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: wave 1.4s ease-in-out infinite;
+    }
+
+   .dots-wave span:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+   .dots-wave span:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+   .dots-wave span:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+   .dots-wave span:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes wave {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    /* Bars Loading */
+   .bars-loading {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      height: 40px;
+    }
+
+   .bars-loading span {
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+      border-radius: 2px;
+      animation: bars 1.2s ease-in-out infinite;
+    }
+
+   .bars-loading span:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+   .bars-loading span:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+   .bars-loading span:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+   .bars-loading span:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bars {
+      0%, 100% {
+        transform: scaleY(0.4);
+      }
+      50% {
+        transform: scaleY(1);
+      }
+    }
+
+    /* Button Loading States */
+   .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+
+   .btn:hover {
+      background: var(--primary-dark);
+    }
+
+   .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+   .btn-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgb(255 255 255 / 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    /* Full Page Loader */
+   .page-loader {
+      position: fixed;
+      inset: 0;
+      background: rgb(255 255 255 / 0.95);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 999;
+    }
+
+   .page-loader-text {
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* Inline Loader */
+   .inline-loader {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+   .inline-spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #e5e7eb;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    /* Card Loading State */
+   .card-loading {
+      padding: 40px;
+      text-align: center;
+    }
+
+   .card-loading-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+    }
+
+   .card-loading-text {
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* Gradient Spinner */
+   .spinner-gradient {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, var(--primary));
+      animation: spin 1s linear infinite;
+      position: relative;
+    }
+
+   .spinner-gradient::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      background: #fff;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Spinners -->
+    <div class="demo-section">
+      <h2>Spinner Loaders</h2>
+      <p>Circular loading indicators for async operations</p>
+      
+      <div class="demo-grid">
+        <div class="demo-item">
+          <div class="spinner spinner-sm"></div>
+          <div class="demo-label">Small</div>
+        </div>
+        <div class="demo-item">
+          <div class="spinner"></div>
+          <div class="demo-label">Default</div>
+        </div>
+        <div class="demo-item">
+          <div class="spinner spinner-lg"></div>
+          <div class="demo-label">Large</div>
+        </div>
+        <div class="demo-item">
+          <div class="spinner-gradient"></div>
+          <div class="demo-label">Gradient</div>
+        </div>
+        <div class="demo-item">
+          <div class="spinner-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="demo-label">Ring</div>
+        </div>
+        <div class="demo-item">
+          <div class="spinner-pulse"></div>
+          <div class="demo-label">Pulse</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dots & Bars -->
+    <div class="demo-section">
+      <h2>Dot & Bar Animations</h2>
+      <p>Bouncing dots and animated bars for playful loading states</p>
+      
+      <div class="demo-grid">
+        <div class="demo-item">
+          <div class="spinner-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="demo-label">Bouncing Dots</div>
+        </div>
+        <div class="demo-item">
+          <div class="dots-wave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="demo-label">Wave Dots</div>
+        </div>
+        <div class="demo-item">
+          <div class="bars-loading">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="demo-label">Bars</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Bars -->
+    <div class="demo-section">
+      <h2>Progress Indicators</h2>
+      <p>Determinate and indeterminate progress for file uploads and operations</p>
+      
+      <div style="margin-bottom: 32px;">
+        <div class="progress-label">
+          <span>Uploading file...</span>
+          <span class="progress-percent">67%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 67%;"></div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 32px;">
+        <div class="progress-label">
+          <span>Processing...</span>
+        </div>
+        <div class="progress-bar progress-indeterminate">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 32px; align-items: center;">
+        <div class="demo-item">
+          <div class="progress-circle">
+            <svg width="80" height="80">
+              <circle class="progress-circle-bg" cx="40" cy="40" r="32"></circle>
+              <circle class="progress-circle-fill" cx="40" cy="40" r="32" 
+                      stroke-dasharray="201" 
+                      stroke-dashoffset="50"></circle>
+            </svg>
+            <div class="progress-circle-text">75%</div>
+          </div>
+          <div class="demo-label">Circular Progress</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skeleton Screens -->
+    <div class="demo-section">
+      <h2>Skeleton Screens</h2>
+      <p>Content placeholders while data loads</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <div class="skeleton-card">
+          <div class="skeleton-flex">
+            <div class="skeleton skeleton-avatar"></div>
+            <div style="flex: 1;">
+              <div class="skeleton skeleton-title"></div>
+              <div class="skeleton skeleton-text"></div>
+              <div class="skeleton skeleton-text-sm"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skeleton-card">
+          <div class="skeleton skeleton-image"></div>
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text-sm"></div>
+        </div>
+
+        <div class="skeleton-card">
+          <div class="skeleton skeleton-title"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text-sm"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button Loading States -->
+    <div class="demo-section">
+      <h2>Button Loading States</h2>
+      <p>Inline loaders for form submissions and actions</p>
+      
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <button class="btn">
+          <div class="btn-spinner"></div>
+          Loading...
+        </button>
+        <button class="btn" disabled>
+          <div class="btn-spinner"></div>
+          Processing
+        </button>
+        <button class="btn">
+          Save Changes
+        </button>
+      </div>
+    </div>
+
+    <!-- Inline Loaders -->
+    <div class="demo-section">
+      <h2>Inline Loaders</h2>
+      <p>Small loaders for inline content and lists</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <div class="inline-loader">
+          <div class="inline-spinner"></div>
+          <span>Fetching data...</span>
+        </div>
+        <div class="inline-loader">
+          <div class="inline-spinner"></div>
+          <span>Syncing changes...</span>
+        </div>
+        <div class="inline-loader">
+          <div class="inline-spinner"></div>
+          <span>Connecting to server...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Loading State -->
+    <div class="demo-section">
+      <h2>Card Loading State</h2>
+      <p>Full card loader for content sections</p>
+      
+      <div class="card-loading">
+        <div class="spinner spinner-lg card-loading-icon"></div>
+        <div class="card-loading-text">Loading your dashboard...</div>
+      </div>
+    </div>
+
+    <!-- Usage Examples -->
+    <div class="demo-section">
+      <h2>Usage Patterns</h2>
+      <p>Common loading states for different scenarios</p>
+      
+      <div style="display: grid; gap: 16px;">
+        <div style="padding: 20px; background: #f9fafb; border-radius: 8px;">
+          <strong>Initial Page Load:</strong> Use full-page spinner or skeleton screen
+        </div>
+        <div style="padding: 20px; background: #f9fafb; border-radius: 8px;">
+          <strong>Data Fetching:</strong> Use inline spinner or skeleton for content areas
+        </div>
+        <div style="padding: 20px; background: #f9fafb; border-radius: 8px;">
+          <strong>Form Submission:</strong> Disable button and show spinner inside
+        </div>
+        <div style="padding: 20px; background: #f9fafb; border-radius: 8px;">
+          <strong>File Upload:</strong> Use progress bar with percentage
+        </div>
+        <div style="padding: 20px; background: #f9fafb; border-radius: 8px;">
+          <strong>Infinite Scroll:</strong> Show spinner at bottom while loading more
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simulate progress
+    let progress = 0;
+    const progressFill = document.querySelector('.progress-fill');
+    const progressPercent = document.querySelector('.progress-percent');
+    
+    if (progressFill && progressPercent) {
+      setInterval(() => {
+        progress = (progress + 1) % 100;
+        progressFill.style.width = progress + '%';
+        progressPercent.textContent = progress + '%';
+      }, 50);
+    }
+
+    // Animate circular progress
+    const circleFill = document.querySelector('.progress-circle-fill');
+    if (circleFill) {
+      let offset = 201;
+      setInterval(() => {
+        offset = offset > 0 ? offset - 2 : 201;
+        circleFill.style.strokeDashoffset = offset;
+        const percent = Math.round((1 - offset / 201) * 100);
+        document.querySelector('.progress-circle-text').textContent = percent + '%';
+      }, 30);
+    }
+  </script>
+</body>
+</html>
