@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedCare Health Center</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-10: 40px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --success: #16a34a;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      color: #111827;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* Top bar */
+   .top-bar {
+      background: #f0f9ff;
+      border-bottom: 1px solid #e0f2fe;
+      padding: var(--space-2) 0;
+      font-size: 0.875rem;
+    }
+   .top-bar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+   .contact-info {
+      display: flex;
+      gap: var(--space-6);
+      color: #0369a1;
+    }
+   .contact-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+   .top-links {
+      display: flex;
+      gap: var(--space-4);
+    }
+   .top-links a {
+      color: #0369a1;
+      text-decoration: none;
+      font-weight: 500;
+    }
+   .top-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+     .top-bar-content { flex-direction: column; gap: var(--space-2); }
+     .contact-info { flex-direction: column; gap: var(--space-2); }
+    }
+
+    /* Header */
+   .header {
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+   .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) 0;
+      gap: var(--space-8);
+    }
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: #111827;
+    }
+   .nav {
+      display: flex;
+      gap: var(--space-8);
+      flex: 1;
+      justify-content: center;
+    }
+   .nav a {
+      color: #374151;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+   .nav a:hover, .nav a.active {
+      color: var(--primary);
+    }
+   .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+   .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: background 0.15s;
+    }
+   .btn:hover {
+      background: var(--primary-dark);
+    }
+   .btn-secondary {
+      background: #fff;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+   .btn-secondary:hover {
+      background: #f0f9ff;
+    }
+
+    @media (max-width: 1024px) {
+     .nav { display: none; }
+    }
+
+    /* Hero */
+   .hero {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      padding: var(--space-16) 0;
+    }
+   .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+   .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+      color: #0c4a6e;
+    }
+   .hero-content p {
+      font-size: 1.25rem;
+      color: #075985;
+      margin-bottom: var(--space-6);
+      line-height: 1.6;
+    }
+   .hero-features {
+      display: flex;
+      gap: var(--space-6);
+      margin: var(--space-6) 0;
+    }
+   .feature-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 600;
+      color: #0c4a6e;
+    }
+   .hero-image {
+      background: #fff;
+      border-radius: 16px;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+    @media (max-width: 1024px) {
+     .hero-grid { grid-template-columns: 1fr; }
+     .hero-content h1 { font-size: 2rem; }
+     .hero-features { flex-direction: column; gap: var(--space-3); }
+    }
+
+    /* Quick actions */
+   .quick-actions {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      padding: var(--space-8);
+      margin-top: -60px;
+      position: relative;
+      z-index: 10;
+    }
+   .action-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+   .action-card {
+      text-align: center;
+      padding: var(--space-5);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+   .action-card:hover {
+      background: #f0f9ff;
+    }
+   .action-icon {
+      width: 56px;
+      height: 56px;
+      background: #e0f2fe;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-3);
+      color: var(--primary);
+    }
+   .action-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+   .action-card p {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 1024px) {
+     .action-grid { grid-template-columns: repeat(2, 1fr); }
+     .quick-actions { margin-top: var(--space-8); }
+    }
+    @media (max-width: 640px) {
+     .action-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Section */
+   .section {
+      padding: var(--space-16) 0;
+    }
+   .section-white {
+      background: #fff;
+    }
+   .section-gray {
+      background: #f9fafb;
+    }
+   .section-header {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+   .section-header h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: var(--space-3);
+    }
+   .section-header p {
+      font-size: 1.125rem;
+      color: #6b7280;
+    }
+
+    /* Services grid */
+   .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+   .service-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: var(--space-6);
+      transition: all 0.2s;
+    }
+   .service-card:hover {
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+   .service-icon {
+      width: 56px;
+      height: 56px;
+      background: #e0f2fe;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+      color: var(--primary);
+    }
+   .service-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+   .service-card p {
+      color: #6b7280;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: var(--space-4);
+    }
+   .service-card a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+   .service-card a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+     .service-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+     .service-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Doctors */
+   .doctor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+   .doctor-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      text-align: center;
+    }
+   .doctor-image {
+      aspect-ratio: 1;
+      background: #f3f4f6;
+      overflow: hidden;
+    }
+   .doctor-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+   .doctor-info {
+      padding: var(--space-5);
+    }
+   .doctor-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+   .doctor-specialty {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: var(--space-3);
+    }
+   .doctor-meta {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: var(--space-4);
+    }
+   .doctor-card .btn {
+      width: 100%;
+      justify-content: center;
+      font-size: 0.875rem;
+      padding: 10px;
+    }
+
+    @media (max-width: 1024px) {
+     .doctor-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+     .doctor-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Appointment form */
+   .appointment-section {
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      color: #fff;
+      padding: var(--space-16) 0;
+      border-radius: 16px;
+      margin: var(--space-16) 0;
+    }
+   .appointment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+   .appointment-content h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-4);
+    }
+   .appointment-content p {
+      font-size: 1.125rem;
+      opacity: 0.95;
+      margin-bottom: var(--space-6);
+    }
+   .appointment-form {
+      background: #fff;
+      border-radius: 12px;
+      padding: var(--space-8);
+      color: #111827;
+    }
+   .form-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+   .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: var(--space-2);
+    }
+   .form-group input,
+   .form-group select,
+   .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+   .form-group input:focus,
+   .form-group select:focus,
+   .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgb(14 165 233 / 0.1);
+    }
+   .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 1024px) {
+     .appointment-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+     .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* Stats */
+   .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-8);
+      text-align: center;
+    }
+   .stat-card {
+      padding: var(--space-6);
+    }
+   .stat-value {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: var(--space-2);
+    }
+   .stat-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    @media (max-width: 1024px) {
+     .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Footer */
+   .footer {
+      background: #0c4a6e;
+      color: #e0f2fe;
+      padding: var(--space-12) 0 var(--space-8);
+    }
+   .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+   .footer h4 {
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+   .footer ul {
+      list-style: none;
+    }
+   .footer li {
+      margin-bottom: var(--space-3);
+    }
+   .footer a {
+      color: #bae6fd;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+   .footer a:hover {
+      color: #fff;
+    }
+   .footer-bottom {
+      border-top: 1px solid #075985;
+      padding-top: var(--space-6);
+      text-align: center;
+      font-size: 0.875rem;
+      color: #7dd3fc;
+    }
+
+    @media (max-width: 768px) {
+     .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-content">
+        <div class="contact-info">
+          <div class="contact-item">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+            Emergency: 911
+          </div>
+          <div class="contact-item">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+            (555) 123-4567
+          </div>
+        <div class="top-links">
+          <a href="#">Patient Portal</a>
+          <a href="#">Pay Bill</a>
+          <a href="#">Careers</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="#0ea5e9">
+            <path d="M18 3l15 9v15l-15 9-15-9V12l15-9z"/>
+          </svg>
+          MedCare
+        </a>
+        
+        <nav class="nav">
+          <a href="#" class="active">Home</a>
+          <a href="#">Services</a>
+          <a href="#">Doctors</a>
+          <a href="#">Patients</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#" class="btn">Book Appointment</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1>Your Health Is Our Priority</h1>
+          <p>Providing compassionate, comprehensive healthcare with state-of-the-art technology and a patient-first approach.</p>
+          <div style="display: flex; gap: 16px;">
+            <a href="#" class="btn" style="background: #fff; color: var(--primary);">Book Appointment</a>
+            <a href="#" class="btn btn-secondary">Find a Doctor</a>
+          </div>
+          <div class="hero-features">
+            <div class="feature-item">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span>24/7 Emergency Care</span>
+            </div>
+            <div class="feature-item">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span>Board Certified Doctors</span>
+            </div>
+          </div>
+        <div class="hero-image">
+          <svg width="200" height="200" fill="none" stroke="#0ea5e9" stroke-width="1" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 0 00-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Actions -->
+  <div class="container">
+    <div class="quick-actions">
+      <div class="action-grid">
+        <div class="action-card">
+          <div class="action-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <h3>Book Appointment</h3>
+          <p>Schedule online</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </div>
+          <h3>Find a Doctor</h3>
+          <p>Search specialists</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <h3>Patient Portal</h3>
+          <p>View records</p>
+        </div>
+        <div class="action-card">
+          <div class="action-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3>Pay Bill Online</h3>
+          <p>Secure payment</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Our Medical Services</h2>
+        <p>Comprehensive care across all specialties</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </div>
+          <h3>Cardiology</h3>
+          <p>Complete heart care from prevention to advanced surgical procedures.</p>
+          <a href="#">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3>Neurology</h3>
+          <p>Expert diagnosis and treatment for brain and nervous system disorders.</p>
+          <a href="#">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+            </svg>
+          </div>
+          <h3>Pediatrics</h3>
+          <p>Compassionate care for children from newborns to adolescents.</p>
+          <a href="#">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+            </svg>
+          </div>
+          <h3>Orthopedics</h3>
+          <p>Advanced treatment for bones, joints, and musculoskeletal conditions.</p>
+          <a href="#">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+          </div>
+          <h3>Ophthalmology</h3>
+          <p>Complete eye care including surgery, vision correction, and disease treatment.</p>
+          <a href="#">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="28" height="28" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <h3>Laboratory Services</h3>
+          <p>On-site lab testing with fast, accurate results for informed care.</p>
+          <a href="#">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doctors -->
+  <section class="section section-white">
+    <div class="container">
+      <div class="section-header">
+        <h2>Meet Our Doctors</h2>
+        <p>Board-certified physicians dedicated to your health</p>
+      </div>
+      <div class="doctor-grid">
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="https://i.pravatar.cc/300?img=12" alt="Doctor">
+          </div>
+          <div class="doctor-info">
+            <h3>Dr. Emily Johnson</h3>
+            <div class="doctor-specialty">Cardiology</div>
+            <div class="doctor-meta">15+ years experience</div>
+            <a href="#" class="btn btn-secondary">View Profile</a>
+          </div>
+        </div>
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="https://i.pravatar.cc/300?img=13" alt="Doctor">
+          </div>
+          <div class="doctor-info">
+            <h3>Dr. Michael Chen</h3>
+            <div class="doctor-specialty">Neurology</div>
+            <div class="doctor-meta">12+ years experience</div>
+            <a href="#" class="btn btn-secondary">View Profile</a>
+          </div>
+        </div>
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="https://i.pravatar.cc/300?img=5" alt="Doctor">
+          </div>
+          <div class="doctor-info">
+            <h3>Dr. Sarah Williams</h3>
+            <div class="doctor-specialty">Pediatrics</div>
+            <div class="doctor-meta">10+ years experience</div>
+            <a href="#" class="btn btn-secondary">View Profile</a>
+          </div>
+        </div>
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="https://i.pravatar.cc/300?img=14" alt="Doctor">
+          </div>
+          <div class="doctor-info">
+            <h3>Dr. Robert Davis</h3>
+            <div class="doctor-specialty">Orthopedics</div>
+            <div class="doctor-meta">18+ years experience</div>
+            <a href="#" class="btn btn-secondary">View Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Appointment -->
+  <div class="container">
+    <div class="appointment-section">
+      <div class="appointment-grid">
+        <div class="appointment-content">
+          <h2>Schedule Your Appointment Today</h2>
+          <p>Easy online booking with same-day availability. Our team is here to help you get the care you need.</p>
+          <div style="display: flex; gap: 32px
