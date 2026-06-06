@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Icon Set Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #6366f1;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #a855f7;
+      --gray-900: #111827;
+      --gray-600: #4b5563;
+      --gray-400: #9ca3af;
+      --gray-100: #f3f4f6;
+      --icon-stroke: 2;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--gray-900);
+      background: #f9fafb;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .header {
+      margin-bottom: 48px;
+    }
+
+   .header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      letter-spacing: -0.03em;
+    }
+
+   .header p {
+      color: var(--gray-600);
+      font-size: 1.125rem;
+    }
+
+   .icon-set {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    }
+
+   .icon-set-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+   .icon-set-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+   .icon-set-meta {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      font-weight: 600;
+    }
+
+   .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 24px;
+    }
+
+   .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 20px;
+      background: var(--gray-100);
+      border-radius: 12px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+   .icon-item:hover {
+      background: #fff;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      transform: translateY(-2px);
+    }
+
+   .icon-wrapper {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .icon-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* Base Icon Styles */
+   .icon {
+      width: 100%;
+      height: 100%;
+      stroke: var(--gray-900);
+      stroke-width: var(--icon-stroke);
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      transition: all 0.2s;
+    }
+
+   .icon-item:hover .icon {
+      stroke: var(--primary);
+      transform: scale(1.1);
+    }
+
+    /* Filled Variant */
+   .icon-filled {
+      fill: currentColor;
+      stroke: none;
+    }
+
+   .icon-filled:hover {
+      color: var(--primary);
+    }
+
+    /* Duotone Variant */
+   .icon-duotone {
+      color: var(--primary);
+    }
+
+   .icon-duotone .primary {
+      opacity: 1;
+    }
+
+   .icon-duotone .secondary {
+      opacity: 0.3;
+    }
+
+    /* Animated Icons */
+   .icon-animated {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+   .icon-item:hover .icon-animated {
+      transform: scale(1.15) rotate(5deg);
+    }
+
+    /* Pulse Animation */
+   .icon-pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(0.95); }
+    }
+
+    /* Spin Animation */
+   .icon-spin {
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Bounce Animation */
+   .icon-bounce {
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Draw Animation */
+   .icon-draw {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: draw 2s ease forwards;
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Size Variants */
+   .icon-xs { width: 16px; height: 16px; }
+   .icon-sm { width: 20px; height: 20px; }
+   .icon-md { width: 24px; height: 24px; }
+   .icon-lg { width: 32px; height: 32px; }
+   .icon-xl { width: 48px; height: 48px; }
+
+    /* Color Variants */
+   .icon-primary { stroke: var(--primary); color: var(--primary); }
+   .icon-success { stroke: var(--success); color: var(--success); }
+   .icon-warning { stroke: var(--warning); color: var(--warning); }
+   .icon-danger { stroke: var(--danger); color: var(--danger); }
+   .icon-purple { stroke: var(--purple); color: var(--purple); }
+
+    /* Icon Button */
+   .icon-btn {
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: var(--gray-100);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+   .icon-btn:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgb(99 102 241 / 0.3);
+    }
+
+   .icon-btn:hover .icon {
+      stroke: #fff;
+    }
+
+    /* Toolbar */
+   .toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    }
+
+    /* Code Export */
+   .code-block {
+      background: var(--gray-900);
+      color: #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.875rem;
+      overflow-x: auto;
+      margin-top: 16px;
+    }
+
+    /* Responsive */
+   @media (max-width: 768px) {
+     .icon-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 16px;
+      }
+     .icon-item {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Custom Icon Set Library</h1>
+      <p>Consistent, scalable SVG icons with micro-interactions. Outline, filled, and duotone styles.</p>
+    </div>
+
+    <!-- Navigation Icons -->
+    <div class="icon-set">
+      <div class="icon-set-header">
+        <h2 class="icon-set-title">Navigation</h2>
+        <span class="icon-set-meta">24px • 2px stroke</span>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+              <path d="M9 22V12h6v10"/>
+            </svg>
+          </div>
+          <span class="icon-label">Home</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Search</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M3 7h18M3 12h18M3 17h18"/>
+            </svg>
+          </div>
+          <span class="icon-label">Menu</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </div>
+          <span class="icon-label">Close</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+          </div>
+          <span class="icon-label">Chevron Left</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </div>
+          <span class="icon-label">Chevron Right</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M19 12H5m7 7l-7-7 7-7"/>
+            </svg>
+          </div>
+          <span class="icon-label">Arrow Left</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M5 12h14m-7-7l7 7-7 7"/>
+            </svg>
+          </div>
+          <span class="icon-label">Arrow Right</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Icons -->
+    <div class="icon-set">
+      <div class="icon-set-header">
+        <h2 class="icon-set-title">Actions</h2>
+        <span class="icon-set-meta">24px • 2px stroke</span>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M12 5v14m-7-7h14"/>
+            </svg>
+          </div>
+          <span class="icon-label">Plus</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1-4 9.5-9.5z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Edit</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+              <path d="M10 11v6M14 11v6"/>
+            </svg>
+          </div>
+          <span class="icon-label">Delete</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4 4M12 2v13"/>
+            </svg>
+          </div>
+          <span class="icon-label">Upload</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5-5M12 15V3"/>
+            </svg>
+          </div>
+          <span class="icon-label">Download</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+            </svg>
+          </div>
+          <span class="icon-label">Copy</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/>
+            </svg>
+          </div>
+          <span class="icon-label">Share</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+          <span class="icon-label">Send</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Icons -->
+    <div class="icon-set">
+      <div class="icon-set-header">
+        <h2 class="icon-set-title">Status & Feedback</h2>
+        <span class="icon-set-meta">Animated states</span>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-success" viewBox="0 0 24 24">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+              <path class="draw" d="M22 4L12 14.01l-3-3"/>
+            </svg>
+          </div>
+          <span class="icon-label">Success</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-warning" viewBox="0 0 24 24">
+              <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+              <path d="M12 9v4M12 17h.01"/>
+            </svg>
+          </div>
+          <span class="icon-label">Warning</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-danger" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M15 9l-6 6M9 9l6 6"/>
+            </svg>
+          </div>
+          <span class="icon-label">Error</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-primary" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4M12 8h.01"/>
+            </svg>
+          </div>
+          <span class="icon-label">Info</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-spin" viewBox="0 0 24 24">
+              <path d="M21 12a9 9 0 11-6.219-8.56"/>
+            </svg>
+          </div>
+          <span class="icon-label">Loading</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-pulse" viewBox="0 0 24 24">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <span class="icon-label">Activity</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filled Icons -->
+    <div class="icon-set">
+      <div class="icon-set-header">
+        <h2 class="icon-set-title">Filled Style</h2>
+        <span class="icon-set-meta">Solid fill variant</span>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-filled icon-primary" viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Heart</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-filled icon-warning" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Star</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-filled icon-purple" viewBox="0 0 24 24">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Bookmark</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-filled icon-success" viewBox="0 0 24 24">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+              <path d="M22 4L12 14.01l-3-3"/>
+            </svg>
+          </div>
+          <span class="icon-label">Check Circle</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Duotone Icons -->
+    <div class="icon-set">
+      <div class="icon-set-header">
+        <h2 class="icon-set-title">Duotone Style</h2>
+        <span class="icon-set-meta">Two-tone color scheme</span>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-duotone" viewBox="0 0 24 24">
+              <path class="secondary" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+              <path class="primary" d="M9 22V12h6v10"/>
+            </svg>
+          </div>
+          <span class="icon-label">Home</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-duotone" viewBox="0 0 24 24">
+              <path class="secondary" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+              <path class="primary" d="M12 7v6l4 2"/>
+            </svg>
+          </div>
+          <span class="icon-label">Bookmark</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-duotone" viewBox="0 0 24 24">
+              <path class="secondary" d="M12 2C6.48 2 6.48 2 12s4.48 10 10-4.48 10-10S17.52 2 12 2z"/>
+              <path class="primary" d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <span class="icon-label">Clock</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-duotone" viewBox="0 0 24 24">
+              <path class="secondary" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+              <circle class="primary" cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <span class="icon-label">User</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Animated Icons -->
+    <div class="icon-set">
+      <div class="icon-set-header">
+        <h2 class="icon-set-title">Animated Icons</h2>
+        <span class="icon-set-meta">Micro-interactions on hover</span>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-animated" viewBox="0 0 24 24">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </div>
+          <span class="icon-label">Like (Hover)</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-animated" viewBox="0 0 24 24">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5 5M12 3v12"/>
+            </svg>
+          </div>
+          <span class="icon-label">Upload (Hover)</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-animated" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <span class="icon-label">Clock (Hover)</span>
+        </div>
+
+        <div class="icon-item">
+          <div class="icon-wrapper">
+            <svg class="icon icon-animated" viewBox="0 0 24 24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <path d="M22 6l-10 7L2 6"/>
+            </svg>
+          </div>
+          <span class="icon-label">Mail (Hover)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon Toolbar Example -->
+    <div class="icon-set">
+      <div class="icon-set-header">
+        <h2 class="icon-set-title">Icon Toolbar</h2>
+        <span class="icon-set-meta">Grouped icon buttons</span>
+      </div>
+      <div class="toolbar">
+        <button class="icon-btn">
+          <svg class="icon icon-sm" viewBox="0 0 24 24">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg class="icon icon-sm" viewBox="0 0 24 24">
+            <path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg class="icon icon-sm" viewBox="0 0 24 24">
+            <path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg class="icon icon-sm" viewBox="0 0 24 24">
+            <path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
