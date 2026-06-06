@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Light Mode UI System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Light Mode Variables - Default */
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      
+      /* Brand Colors */
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #dbeafe;
+      --primary-dark: #1e40af;
+      --success: #16a34a;
+      --success-light: #dcfce7;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --purple: #9333ea;
+      --purple-light: #f3e8ff;
+      
+      /* Light Theme Palette */
+      --bg-base: #f8fafc;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f1f5f9;
+      --bg-tertiary: #e2e8f0;
+      --bg-hover: #f8fafc;
+      --bg-overlay: rgb(255 255 255 / 0.95);
+      
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #64748b;
+      --text-muted: #94a3b8;
+      --text-inverse: #ffffff;
+      
+      --border-light: #f1f5f9;
+      --border-default: #e2e8f0;
+      --border-strong: #cbd5e1;
+      
+      --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-base);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Header */
+   .header {
+      background: var(--bg-primary);
+      border-bottom: 1px solid var(--border-default);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-xs);
+      backdrop-filter: blur(8px);
+      background: var(--bg-overlay);
+    }
+
+   .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+   .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.5rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      padding: 18px 0;
+    }
+
+   .logo-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+      border-radius: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 900;
+      box-shadow: 0 4px 12px rgb(37 99 235 / 0.25);
+    }
+
+   .nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+    }
+
+   .nav-link {
+      padding: 10px 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+
+   .nav-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-secondary);
+    }
+
+   .nav-link.active {
+      color: var(--primary);
+      background: var(--primary-light);
+    }
+
+   .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Theme Toggle */
+   .theme-toggle {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-default);
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+   .theme-toggle:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--border-strong);
+      color: var(--text-primary);
+    }
+
+   .theme-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Main Layout */
+   .container {
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+   .page-header {
+      margin-bottom: 40px;
+    }
+
+   .page-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.025em;
+    }
+
+   .page-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.0625rem;
+    }
+
+    /* Cards */
+   .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+   .card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-default);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+   .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--border-strong);
+    }
+
+   .card-header {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+   .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+   .card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .card-icon.blue {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+   .card-icon.green {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+   .card-icon.orange {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+   .card-icon.purple {
+      background: var(--purple-light);
+      color: var(--purple);
+    }
+
+   .card-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.025em;
+    }
+
+   .card-label {
+      font-size: 0.9rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+    }
+
+   .card-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-top: 16px;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+   .card-change.positive {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+   .card-change.negative {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    /* Buttons */
+   .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+      box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+    }
+
+   .btn:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 4px 12px rgb(37 99 235 / 0.25);
+      transform: translateY(-1px);
+    }
+
+   .btn-secondary {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+      box-shadow: var(--shadow-xs);
+    }
+
+   .btn-secondary:hover {
+      background: var(--bg-secondary);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-sm);
+    }
+
+   .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-default);
+      box-shadow: none;
+    }
+
+   .btn-ghost:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    /* Form Elements */
+   .form-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-default);
+      border-radius: 14px;
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+   .form-group {
+      margin-bottom: 24px;
+    }
+
+   .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+   .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+   .form-input:hover {
+      border-color: var(--border-strong);
+    }
+
+   .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgb(37 99 235 / 0.1);
+    }
+
+   .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+   .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+   .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+   .input-group {
+      position: relative;
+    }
+
+   .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-tertiary);
+      pointer-events: none;
+    }
+
+   .input-group .form-input {
+      padding-left: 44px;
+    }
+
+    /* Toggle Switch */
+   .toggle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+   .toggle-input {
+      position: relative;
+      width: 52px;
+      height: 30px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-strong);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+   .toggle-input::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      background: #fff;
+      border-radius: 50%;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+
+   .toggle.active .toggle-input {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+   .toggle.active .toggle-input::after {
+      left: 25px;
+    }
+
+   .toggle-label {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Table */
+   .table-container {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-default);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+   .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+   .table th {
+      background: var(--bg-secondary);
+      padding: 16px 24px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-default);
+    }
+
+   .table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+   .table tbody tr {
+      transition: background 0.15s;
+    }
+
+   .table tbody tr:hover {
+      background: var(--bg-hover);
+    }
+
+   .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+   .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+   .badge.success {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+   .badge.warning {
+      background: var(--warning-light);
+      color: var(--warning);
+    }
+
+   .badge.danger {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    /* Alert */
+   .alert {
+      padding: 18px 22px;
+      border-radius: 12px;
+      display: flex;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 24px;
+      border: 1px solid;
+    }
+
+   .alert.info {
+      background: var(--primary-light);
+      border-color: rgb(37 99 235 / 0.3);
+      color: var(--primary-dark);
+    }
+
+   .alert.success {
+      background: var(--success-light);
+      border-color: rgb(22 163 74 / 0.3);
+      color: #15803d;
+    }
+
+   .alert.warning {
+      background: var(--warning-light);
+      border-color: rgb(245 158 11 / 0.3);
+      color: #b45309;
+    }
+
+   .alert-content {
+      flex: 1;
+    }
+
+   .alert-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+   .alert-text {
+      font-size: 0.9rem;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    /* Tabs */
+   .tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border-default);
+      margin-bottom: 28px;
+    }
+
+   .tab {
+      padding: 12px 20px;
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+      margin-bottom: -1px;
+    }
+
+   .tab:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+   .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* Stats Grid */
+   .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+   .stat-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-default);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+   .stat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+   .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .stat-value {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.025em;
+    }
+
+   .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+   .stat-trend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-top: 14px;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+   .stat-trend.up {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+   .stat-trend.down {
+      background: var(--danger-light);
+      color: var(--danger);
+    }
+
+    /* Settings Panel */
+   .settings-panel {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-default);
+      border-radius: 14px;
+      padding: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+
+   .settings-section {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+   .settings-section:first-child {
+      padding-top: 0;
+    }
+
+   .settings-section:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+   .settings-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+   .settings-desc {
+      color: var(--text-secondary);
+      font-size: 0.925rem;
+      margin-bottom: 24px;
+    }
+
+   .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+   .settings-row-info h4 {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 0.95rem;
+    }
+
+   .settings-row-info p {
+      font-size: 0.875rem;
+      color: var(--text-tertiary);
+    }
+
+    /* Code Block */
+   .code-block {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-default);
+      border-radius: 10px;
+      padding: 18px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.875rem;
+      overflow-x: auto;
+      margin: 18px 0;
+      line-height: 1.6;
+    }
+
+   .code-block code {
+      color: var(--text-primary);
+    }
+
+    /* Divider */
+   .divider {
+      height: 1px;
+      background: var(--border-default);
+      margin: 32px 0;
+    }
+
+    /* Mobile Responsive */
+   @media (max-width: 768px) {
+     .nav {
+        display: none;
+      }
+     .header-inner {
+        padding: 0 16px;
+      }
+     .container {
+        padding: 0 16px;
+        margin: 24px auto;
+      }
+     .page-title {
+        font-size: 1.875rem;
+      }
+     .grid {
+        grid-template-columns: 1fr;
+      }
+     .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">L</div>
+        LightUI
+      </a>
+      <nav class="nav">
+        <a href="#" class="nav-link active">Dashboard</a>
+        <a href="#" class="nav-link">Projects</a>
+        <a href="#" class="nav-link">Analytics</a>
+        <a href="#" class="nav-link">Team</a>
+        <a href="#" class="nav-link">Settings</a>
+      </nav>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+          <svg class="theme-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+        <button class="btn btn-secondary">Sign In</button>
+        <button class="btn">Get Started</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Welcome to Light Mode</h1>
+      <p class="page-subtitle">Clean, bright interface with soft shadows and clear hierarchy</p>
+    </div>
+
+    <!-- Alert -->
+    <div class="alert info">
+      <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div class="alert-content">
+        <div class="alert-title">Light mode active</div>
+        <div class="alert-text">This interface uses a bright, clean design with subtle shadows and high contrast for optimal readability. Click the moon icon to switch to dark mode.</div>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-header">
+          <div>
+            <div class="stat-value">$124,592</div>
+            <div class="stat-label">Monthly Revenue</div>
+          </div>
+          <div class="card-icon blue">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stat-trend up">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+          +18.2% from last month
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <div>
+            <div class="stat-value">24,891</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+          <div class="card-icon green">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stat-trend up">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+          +12.4% from last month
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <div>
+            <div class="stat-value">4.8%</div>
+            <div class="stat-label">Conversion Rate</div>
+          </div>
+          <div class="card-icon orange">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+            </svg>
+          </div>
+        <div class="stat-trend up">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+          +3.1% from last month
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-header">
+          <div>
+            <div class="stat-value">1,284</div>
+            <div class="stat-label">New Signups</div>
+          </div>
+          <div class="card-icon purple">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="stat-trend up">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+          +24.7% from last month
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active">Overview</button>
+      <button class="tab">Analytics</button>
+      <button class="tab">Reports</button>
+      <button class="tab">Notifications</button>
+    </div>
+
+    <!-- Form Example -->
+    <div class="form-card">
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 24px;">Create New Project</h3>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <div class="form-group">
+          <label class="form-label">Project Name</label>
+          <input type="text" class="form-input" placeholder="Enter project name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-input form-select">
+            <option>Web Development</option>
+            <option>Mobile App</option>
+            <option>Design</option>
+            <option>Marketing</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-input form-textarea" placeholder="Describe your project..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Project URL</label>
+        <div class="input-group">
+          <svg class="input-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+          </svg>
+          <input type="url" class="form-input" placeholder="https://example.com">
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 12px; margin-top: 32px;">
+        <button class="btn">Create Project</button>
+        <button class="btn btn-secondary">Save Draft</button>
+        <button class="btn btn-ghost">Cancel</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Table Example -->
+    <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 24px;">Recent Activity</h2>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Last Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Alex Johnson</strong></td>
+            <td>alex.johnson@company.com</td>
+            <td>Administrator</td>
+            <td><span class="badge success">Active</span></td>
+            <td>2 minutes ago</td>
+            <td><button class="btn btn-ghost">Edit</button></td>
+          </tr>
+          <tr>
+            <td><strong>Maria Garcia</strong></td>
+            <td>maria.garcia@company.com</td>
+            <td>Developer</td>
+            <td><span class="badge success">Active</span></td>
+            <td>1 hour ago</td>
+            <td><button class="btn btn-ghost">Edit</button></td>
+          </tr>
+          <tr>
+            <td><strong>James Wilson</strong></td>
+            <td>james.wilson@company.com</td>
+            <td>Designer</td>
+            <td><span class="badge warning">Pending</span></td>
+            <td>3 hours ago</td>
+            <td><button class="btn btn-ghost">Edit</button></td>
+          </tr>
+          <tr>
+            <td><strong>Lisa Chen</strong></td>
+            <td>lisa.chen@company.com</td>
+            <td>Manager</td>
+            <td><span class="badge success">Active</span></td>
+            <td>Yesterday</td>
+            <td><button class="btn btn-ghost">Edit</button></td>
+          </tr>
+          <tr>
+            <td><strong>Robert Taylor</strong></td>
+            <td>robert.taylor@company.com</td>
+            <td>Analyst</td>
+            <td><span class="badge danger">Inactive</span></td>
+            <td>1 week ago</td>
+            <td><button class="btn btn-ghost">Edit</button></td>
+          </tr>
+        </tbody
