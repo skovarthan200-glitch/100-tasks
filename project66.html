@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Thumbnail Templates</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --red: #ff0000;
+      --yellow: #ffcc00;
+      --green: #00ff00;
+      --blue: #00a8ff;
+      --purple: #a855f7;
+      --dark: #0f0f0f;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Impact', 'Arial Black', system-ui, sans-serif;
+      background: #0f0f0f;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+   .container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+   .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+   .page-header p {
+      color: #94a3b8;
+      font-size: 1.125rem;
+    }
+
+   .thumbnail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+   .thumbnail-wrapper {
+      position: relative;
+    }
+
+   .thumbnail-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #94a3b8;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Base Thumbnail 1280x720 */
+   .thumbnail {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+      transition: all 0.3s;
+    }
+
+   .thumbnail:hover {
+      transform: scale(1.02);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.7);
+    }
+
+   .thumbnail-content {
+      position: relative;
+      z-index: 2;
+      padding: 48px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Design 1: Bold Text + Face */
+   .thumb-face {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+   .thumb-face::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgb(99 102 241 / 0.3) 0%, transparent 50%);
+    }
+
+   .thumb-text {
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      text-shadow: 0 4px 12px rgb(0 0 0 / 0.5);
+      animation: slideInLeft 0.6s ease;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+   .thumb-subtext {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--yellow);
+      text-shadow: 0 2px 8px rgb(0 0 0 / 0.5);
+      animation: slideInLeft 0.6s ease 0.2s both;
+    }
+
+   .thumb-badge {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      padding: 12px 24px;
+      background: var(--red);
+      color: #fff;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 1.25rem;
+      box-shadow: 0 4px 12px rgb(255 0 0 / 0.4);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+   .thumb-face-img {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 45%;
+      height: 100%;
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+    }
+
+    /* Design 2: Split Screen Comparison */
+   .thumb-split {
+      background: #fff;
+      color: var(--dark);
+    }
+
+   .split-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 100%;
+    }
+
+   .split-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      position: relative;
+    }
+
+   .split-left {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+   .split-right {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+   .split-label {
+      font-size: 1.5rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+
+   .split-value {
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+   .split-desc {
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+   .split-vs {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.5rem;
+      z-index: 10;
+      box-shadow: 0 8px 16px rgb(0 0 0 / 0.3);
+    }
+
+    /* Design 3: Question Hook */
+   .thumb-question {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #fff;
+    }
+
+   .question-mark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20rem;
+      font-weight: 900;
+      opacity: 0.05;
+      line-height: 1;
+    }
+
+   .question-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 60px;
+    }
+
+   .question-text {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+   .question-subtext {
+      font-size: 1.5rem;
+      color: var(--yellow);
+      font-weight: 700;
+    }
+
+    /* Design 4: List/Tutorial */
+   .thumb-list {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      color: var(--dark);
+    }
+
+   .thumb-list .thumb-content {
+      justify-content: flex-start;
+      padding-top: 60px;
+    }
+
+   .list-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      background: var(--dark);
+      color: var(--yellow);
+      border-radius: 20px;
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 16px rgb(0 0 0 / 0.2);
+    }
+
+   .list-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+   .list-items {
+      list-style: none;
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.8;
+    }
+
+   .list-items li {
+      padding-left: 32px;
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+   .list-items li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 900;
+      font-size: 1.5rem;
+    }
+
+    /* Design 5: Before/After */
+   .thumb-before-after {
+      background: #fff;
+      color: var(--dark);
+    }
+
+   .ba-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 100%;
+    }
+
+   .ba-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+   .ba-before {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+   .ba-after {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+   .ba-label {
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      opacity: 0.7;
+    }
+
+   .ba-value {
+      font-size: 6rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+   .ba-desc {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+
+   .ba-arrow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: var(--dark);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      z-index: 10;
+      box-shadow: 0 8px 16px rgb(0 0 0 / 0.3);
+    }
+
+    /* Design 6: Shocking Stat */
+   .thumb-stat {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: #fff;
+    }
+
+   .thumb-stat .thumb-content {
+      justify-content: center;
+      text-align: center;
+    }
+
+   .stat-huge {
+      font-size: 10rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 24px;
+      text-shadow: 0 8px 24px rgb(0 0 0 / 0.3);
+      animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+   .stat-text {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    /* Design 7: Tutorial Step */
+   .thumb-tutorial {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: #fff;
+    }
+
+   .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      background: var(--primary);
+      border-radius: 12px;
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 16px rgb(99 102 241 / 0.4);
+    }
+
+   .tutorial-title {
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+   .tutorial-desc {
+      font-size: 1.5rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+   .tutorial-icon {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      font-size: 6rem;
+      opacity: 0.2;
+    }
+
+    /* Design 8: Reaction/Emoji */
+   .thumb-reaction {
+      background: var(--instagram);
+      color: #fff;
+    }
+
+   .reaction-emoji {
+      font-size: 12rem;
+      line-height: 1;
+      margin-bottom: 24px;
+      animation: bounce 2s ease-in-out infinite;
+      text-align: center;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.1); }
+    }
+
+   .reaction-text {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      text-align: center;
+      text-transform: uppercase;
+      text-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
+    }
+
+    /* Design 9: News/Breaking */
+   .thumb-news {
+      background: #dc2626;
+      color: #fff;
+    }
+
+   .news-banner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      padding: 16px 48px;
+      font-size: 1.25rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+
+   .news-content {
+      padding-top: 80px;
+    }
+
+   .news-headline {
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+   .news-subtext {
+      font-size: 1.5rem;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    /* Design 10: Minimal Text Only */
+   .thumb-minimal {
+      background: #fff;
+      color: var(--dark);
+    }
+
+   .thumb-minimal .thumb-content {
+      justify-content: center;
+      text-align: center;
+    }
+
+   .minimal-number {
+      font-size: 12rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+   .minimal-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    /* Decorative Elements */
+   .decorative-arrow {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      width: 80px;
+      height: 80px;
+      border: 4px solid var(--yellow);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+   .decorative-arrow::after {
+      content: '→';
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--yellow);
+    }
+
+    /* Responsive */
+   @media (max-width: 768px) {
+     .thumbnail-grid {
+        grid-template-columns: 1fr;
+      }
+     .thumb-text {
+        font-size: 3rem;
+      }
+     .thumb-subtext {
+        font-size: 1.125rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>YouTube Thumbnail Templates</h1>
+      <p>1280×720 high-CTR designs optimized for the algorithm</p>
+    </div>
+
+    <div class="thumbnail-grid">
+      <!-- Template 1: Face + Bold Text -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Bold Text + Face Hook</div>
+        <div class="thumbnail thumb-face">
+          <div class="thumb-badge">NEW</div>
+          <div class="thumb-face-img">😱</div>
+          <div class="thumbnail-content">
+            <h2 class="thumb-text">I Made<br>$10,000<br>In 30 Days</h2>
+            <p class="thumb-subtext">Here's exactly how I did it</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 2: Split Comparison -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Before vs After</div>
+        <div class="thumbnail thumb-split">
+          <div class="split-container">
+            <div class="split-side split-left">
+              <div class="split-label">Before</div>
+              <div class="split-value">2%</div>
+              <div class="split-desc">Conversion Rate</div>
+            </div>
+            <div class="split-side split-right">
+              <div class="split-label">After</div>
+              <div class="split-value">15%</div>
+              <div class="split-desc">Conversion Rate</div>
+            </div>
+            <div class="split-vs">VS</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 3: Question Hook -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Question Hook</div>
+        <div class="thumbnail thumb-question">
+          <div class="question-mark">?</div>
+          <div class="thumbnail-content">
+            <h2 class="question-text">Why 99% of<br>Startups Fail?</h2>
+            <p class="question-subtext">The #1 mistake everyone makes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 4: List/Tutorial -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">List/Tutorial</div>
+        <div class="thumbnail thumb-list">
+          <div class="thumbnail-content">
+            <div class="list-number">5</div>
+            <h2 class="list-title">Ways to Get<br>More Views</h2>
+            <ul class="list-items">
+              <li class="list-item">
+                <div class="list-number">1</div>
+                <div class="list-text">Hook in first 3 seconds</div>
+              </li>
+              <li class="list-item">
+                <div class="list-number">2</div>
+                <div class="list-text">Use pattern interrupts</div>
+              </li>
+              <li class="list-item">
+                <div class="list-number">3</div>
+                <div class="list-text">Add captions always</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 5: Shocking Stat -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Shocking Stat</div>
+        <div class="thumbnail thumb-stat">
+          <div class="thumbnail-content">
+            <div class="stat-huge">97%</div>
+            <h2 class="stat-text">Of YouTubers<br>Quit Within<br>1 Year</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 6: Tutorial Step -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Tutorial Step</div>
+        <div class="thumbnail thumb-tutorial">
+          <div class="thumbnail-content">
+            <div class="step-badge">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              Step 3 of 5
+            </div>
+            <h2 class="tutorial-title">Edit Your<br>First Video</h2>
+            <p class="tutorial-desc">Complete beginner's guide to video editing in 2026</p>
+            <div class="tutorial-icon">✂️</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 7: Reaction/Emoji -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Reaction/Emoji</div>
+        <div class="thumbnail thumb-reaction">
+          <div class="thumbnail-content">
+            <div class="reaction-emoji">🤯</div>
+            <h2 class="reaction-text">This AI Tool<br>Is Insane</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 8: Breaking News -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Breaking News</div>
+        <div class="thumbnail thumb-news">
+          <div class="news-banner">Breaking News</div>
+          <div class="thumbnail-content news-content">
+            <h2 class="news-headline">YouTube Just<br>Changed Everything</h2>
+            <p class="news-subtext">New algorithm update affects all creators</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template 9: Minimal Number -->
+      <div class="thumbnail-wrapper">
+        <div class="thumbnail-label">Minimal Number</div>
+        <div class="thumbnail thumb-minimal">
+          <div class="thumbnail-content">
+            <div class="minimal-number">3</div>
+            <h2 class="minimal-title">Secrets to<br>Viral Videos</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
