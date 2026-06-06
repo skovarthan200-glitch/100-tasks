@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hover Animation Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #a855f7;
+      --pink: #ec4899;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      color: #111827;
+      background: #f9fafb;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .demo-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    }
+
+   .demo-section h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+   .demo-section p {
+      color: #6b7280;
+      margin-bottom: 32px;
+      font-size: 1rem;
+    }
+
+   .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+   .grid-sm {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    /* Animation 1: Lift & Shadow */
+   .hover-lift {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+   .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
+
+    /* Animation 2: Scale Up */
+   .hover-scale {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+   .hover-scale:hover {
+      transform: scale(1.05);
+    }
+
+    /* Animation 3: Border Glow */
+   .hover-glow {
+      background: #fff;
+      border: 2px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+   .hover-glow:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgb(99 102 241 / 0.1), 0 0 30px rgb(99 102 241 / 0.2);
+    }
+
+    /* Animation 4: Slide Up Content */
+   .hover-slide {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+   .hover-slide-content {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+   .hover-slide:hover .hover-slide-content {
+      transform: translateY(-8px);
+    }
+
+   .hover-slide-arrow {
+      position: absolute;
+      bottom: 28px;
+      left: 28px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      color: var(--primary);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+   .hover-slide:hover .hover-slide-arrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animation 5: Tilt 3D */
+   .hover-tilt {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+   .hover-tilt:hover {
+      transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+    }
+
+    /* Animation 6: Gradient Border */
+   .hover-gradient-border {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      position: relative;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+   .hover-gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--primary), var(--purple), var(--pink));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+   .hover-gradient-border:hover::before {
+      opacity: 1;
+    }
+
+    /* Animation 7: Image Zoom */
+   .hover-zoom {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+   .hover-zoom-img {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+   .hover-zoom:hover .hover-zoom-img {
+      transform: scale(1.1);
+    }
+
+   .hover-zoom-content {
+      padding: 24px;
+    }
+
+    /* Animation 8: Underline Slide */
+   .hover-underline {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+   .hover-underline::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+   .hover-underline:hover::after {
+      width: 100%;
+    }
+
+    /* Animation 9: Icon Bounce */
+   .hover-icon-bounce {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+   .hover-icon-bounce svg {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+   .hover-icon-bounce:hover {
+      box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+   .hover-icon-bounce:hover svg {
+      transform: translateY(-8px);
+    }
+
+    /* Animation 10: Rotate */
+   .hover-rotate {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+   .hover-rotate-icon {
+      display: inline-block;
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+   .hover-rotate:hover .hover-rotate-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Animation 11: Shine Effect */
+   .hover-shine {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+   .hover-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.4), transparent);
+      transition: left 0.6s;
+    }
+
+   .hover-shine:hover::before {
+      left: 100%;
+    }
+
+    /* Animation 12: Fill Background */
+   .hover-fill {
+      background: #fff;
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      color: var(--primary);
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s;
+      z-index: 1;
+    }
+
+   .hover-fill::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--primary);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
+      z-index: -1;
+    }
+
+   .hover-fill:hover {
+      color: #fff;
+    }
+
+   .hover-fill:hover::before {
+      transform: scaleY(1);
+    }
+
+    /* Animation 13: Text Slide */
+   .hover-text-slide {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+    }
+
+   .hover-text-slide-text {
+      transition: transform 0.3s ease;
+    }
+
+   .hover-text-slide:hover .hover-text-slide-text {
+      transform: translateX(8px);
+    }
+
+    /* Animation 14: Ripple */
+   .hover-ripple {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 32px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+   .hover-ripple::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgb(255 255 255 / 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+   .hover-ripple:active::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* Animation 15: Skew */
+   .hover-skew {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+   .hover-skew:hover {
+      transform: skewX(-5deg);
+    }
+
+    /* Animation 16: Blur to Focus */
+   .hover-blur {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      filter: blur(2px);
+      transition: all 0.4s ease;
+    }
+
+   .hover-blur:hover {
+      filter: blur(0);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    }
+
+    /* Animation 17: Pulse */
+   .hover-pulse {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      cursor: pointer;
+      animation: none;
+    }
+
+   .hover-pulse:hover {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgb(99 102 241 / 0.4);
+      }
+      50% {
+        box-shadow: 0 0 0 20px rgb(99 102 241 / 0);
+      }
+    }
+
+    /* Animation 18: Flip Card */
+   .hover-flip {
+      background: transparent;
+      perspective: 1000px;
+      height: 240px;
+    }
+
+   .hover-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+
+   .hover-flip:hover .hover-flip-inner {
+      transform: rotateY(180deg);
+    }
+
+   .hover-flip-front,
+   .hover-flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+   .hover-flip-back {
+      background: var(--primary);
+      color: #fff;
+      transform: rotateY(180deg);
+    }
+
+    /* Buttons */
+   .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+   .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+   .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgb(99 102 241 / 0.3);
+    }
+
+    /* Link Examples */
+   .link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+   .demo-card {
+      margin-bottom: 16px;
+    }
+
+   .demo-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+   .demo-card p {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+   .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+   .icon-box.blue {
+      background: rgb(99 102 241 / 0.1);
+      color: var(--primary);
+    }
+
+   .icon-box.green {
+      background: rgb(16 185 129 / 0.1);
+      color: var(--success);
+    }
+
+   .icon-box.purple {
+      background: rgb(168 85 247 / 0.1);
+      color: var(--purple);
+    }
+
+   .icon-box.pink {
+      background: rgb(236 72 153 / 0.1);
+      color: var(--pink);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Transform Animations -->
+    <div class="demo-section">
+      <h2>Transform Animations</h2>
+      <p>Movement and scale effects using CSS transforms</p>
+      
+      <div class="grid">
+        <div class="hover-lift">
+          <div class="icon-box blue">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>Lift & Shadow</h3>
+            <p>Elevates with enhanced shadow on hover</p>
+          </div>
+        </div>
+
+        <div class="hover-scale">
+          <div class="icon-box green">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>Scale Up</h3>
+            <p>Grows 5% larger smoothly</p>
+          </div>
+        </div>
+
+        <div class="hover-tilt">
+          <div class="icon-box purple">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>3D Tilt</h3>
+            <p>Perspective rotation effect</p>
+          </div>
+        </div>
+
+        <div class="hover-skew">
+          <div class="icon-box pink">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>Skew Effect</h3>
+            <p>Skews horizontally on hover</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Border & Glow Effects -->
+    <div class="demo-section">
+      <h2>Border & Glow Effects</h2>
+      <p>Outline and shadow animations</p>
+      
+      <div class="grid">
+        <div class="hover-glow">
+          <div class="icon-box blue">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>Border Glow</h3>
+            <p>Animated glow ring appears</p>
+          </div>
+        </div>
+
+        <div class="hover-gradient-border">
+          <div class="icon-box purple">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>Gradient Border</h3>
+            <p>Animated gradient outline</p>
+          </div>
+        </div>
+
+        <div class="hover-pulse">
+          <div class="icon-box pink">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>Pulse Ring</h3>
+            <p>Expanding ring animation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Reveals -->
+    <div class="demo-section">
+      <h2>Content Reveal Animations</h2>
+      <p>Hidden content that appears on hover</p>
+      
+      <div class="grid">
+        <div class="hover-slide">
+          <div class="hover-slide-content">
+            <div class="icon-box blue">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+              </svg>
+            </div>
+            <div class="demo-card">
+              <h3>Slide Up</h3>
+              <p>Content slides up to reveal action</p>
+            </div>
+          </div>
+          <div class="hover-slide-arrow">
+            Learn More
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="hover-zoom">
+          <div class="hover-zoom-img"></div>
+          <div class="hover-zoom-content">
+            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 8px;">Image Zoom</h3>
+            <p style="color: #6b7280; font-size: 0.95rem;">Image scales up on hover</p>
+          </div>
+        </div>
+
+        <div class="hover-flip">
+          <div class="hover-flip-inner">
+            <div class="hover-flip-front">
+              <div class="icon-box purple">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                </svg>
+              </div>
+              <h3 style="font-size: 1.125rem; font-weight: 700;">Flip Card</h3>
+              <p style="color: #6b7280; font-size: 0.95rem; text-align: center;">Hover to flip</p>
+            </div>
+            <div class="hover-flip-back">
+              <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 12px;">Back Side</h3>
+              <p style="text-align: center; font-size: 0.95rem;">Additional content revealed on flip</p>
+              <button class="btn" style="margin-top: 16px; background: #fff; color: var(--primary);">Action</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icon Animations -->
+    <div class="demo-section">
+      <h2>Icon Animations</h2>
+      <p>Micro-interactions for icons and small elements</p>
+      
+      <div class="grid grid-sm">
+        <div class="hover-icon-bounce">
+          <svg width="32" height="32" fill="none" stroke="var(--primary)" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+          </svg>
+          <h4 style="margin-top: 12px; font-weight: 700;">Bounce Up</h4>
+        </div>
+
+        <div class="hover-rotate">
+          <div class="hover-rotate-icon">
+            <svg width="32" height="32" fill="none" stroke="var(--success)" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+          </div>
+          <h4 style="margin-top: 12px; font-weight: 700;">Rotate 180°</h4>
+        </div>
+
+        <div class="hover-shine">
+          <svg width="32" height="32" fill="none" stroke="var(--warning)" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
+          </svg>
+          <h4 style="margin-top: 12px; font-weight: 700;">Shine Sweep</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button Animations -->
+    <div class="demo-section">
+      <h2>Button Hover Effects</h2>
+      <p>Interactive button states and animations</p>
+      
+      <div class="button-group">
+        <button class="btn btn-primary">Lift Effect</button>
+        <button class="hover-fill">Fill Background</button>
+        <button class="hover-ripple">Ripple Click</button>
+        <button class="btn btn-primary hover-scale">Scale Button</button>
+      </div>
+    </div>
+
+    <!-- Link Animations -->
+    <div class="demo-section">
+      <h2>Link Animations</h2>
+      <p>Text link hover effects</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div>
+          <a href="#" class="hover-underline">Underline Slide Animation</a>
+        </div>
+        <div>
+          <a href="#" class="hover-text-slide">
+            <span class="hover-text-slide-text">Text Slide Right →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Blur & Focus -->
+    <div class="demo-section">
+      <h2>Blur & Focus Effects</h2>
+      <p>Focus states and blur transitions</p>
+      
+      <div class="grid">
+        <div class="hover-blur">
+          <div class="icon-box blue">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+          </div>
+          <div class="demo-card">
+            <h3>Blur to Focus</h3>
+            <p>Starts blurred, sharpens on hover</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tilt effect for cards
+    document.querySelectorAll('.hover-tilt').forEach(card => {
+      card.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 10;
+        const rotateY = (centerX - x) / 10;
+        
+        this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+      });
+    });
+  </script>
+</body>
+</html>
