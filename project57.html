@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parallax Sections Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #6366f1;
+      --purple: #a855f7;
+      --pink: #ec4899;
+      --cyan: #06b6d4;
+      --gray-900: #111827;
+      --gray-600: #4b5563;
+      --gray-100: #f3f4f6;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      color: var(--gray-900);
+      background: #000;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Parallax Container */
+   .parallax-section {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .parallax-bg {
+      position: absolute;
+      inset: -20%;
+      width: 140%;
+      height: 140%;
+      will-change: transform;
+    }
+
+   .parallax-layer {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
+    }
+
+    /* Pattern 1: Multi-Layer Depth */
+   .parallax-hero {
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    }
+
+   .layer-sky {
+      background: radial-gradient(circle at 50% 0%, rgb(99 102 241 / 0.3) 0%, transparent 50%);
+    }
+
+   .layer-mountains-back {
+      background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"%3E%3Cpath d="M0 600L300 300L600 500L900 200L1200 400V600Z" fill="%231e293b"/%3E%3C/svg%3E') bottom center/cover;
+      opacity: 0.4;
+    }
+
+   .layer-mountains-mid {
+      background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"%3E%3Cpath d="M0 600L200 400L500 550L800 300L1200 500V600Z" fill="%23334155"/%3E%3C/svg%3E') bottom center/cover;
+      opacity: 0.6;
+    }
+
+   .layer-mountains-front {
+      background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"%3E%3Cpath d="M0 600L400 350L700 500L1000 250L1200 450V600Z" fill="%23475569"/%3E%3C/svg%3E') bottom center/cover;
+    }
+
+   .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: #fff;
+      padding: 40px 20px;
+      max-width: 900px;
+    }
+
+   .hero-content h1 {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+    }
+
+   .hero-content p {
+      font-size: clamp(1.125rem, 3vw, 1.75rem);
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    /* Pattern 2: Mouse Parallax */
+   .parallax-mouse {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      perspective: 1000px;
+    }
+
+   .floating-element {
+      position: absolute;
+      border-radius: 50%;
+      background: rgb(255 255 255 / 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgb(255 255 255 / 0.2);
+      will-change: transform;
+      transition: transform 0.3s ease-out;
+    }
+
+   .float-1 {
+      width: 200px;
+      height: 200px;
+      top: 20%;
+      left: 15%;
+    }
+
+   .float-2 {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      right: 20%;
+    }
+
+   .float-3 {
+      width: 100px;
+      height: 100px;
+      bottom: 25%;
+      left: 30%;
+    }
+
+   .float-4 {
+      width: 180px;
+      height: 180px;
+      top: 40%;
+      right: 10%;
+    }
+
+    /* Pattern 3: Scroll Zoom */
+   .parallax-zoom {
+      background: #0f172a;
+      position: relative;
+    }
+
+   .zoom-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, var(--primary) 0%, transparent 70%);
+      opacity: 0.3;
+      will-change: transform;
+    }
+
+   .zoom-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      padding: 40px 20px;
+      will-change: transform, opacity;
+    }
+
+   .zoom-content h2 {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+    /* Pattern 4: Horizontal Layers */
+   .parallax-horizontal {
+      background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+      height: 300vh;
+      position: relative;
+    }
+
+   .horizontal-layer {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+   .layer-slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform;
+    }
+
+   .layer-slide-content {
+      text-align: center;
+      color: #fff;
+      max-width: 600px;
+      padding: 40px 20px;
+    }
+
+   .layer-slide h2 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.03em;
+    }
+
+   .layer-slide p {
+      font-size: 1.5rem;
+      opacity: 0.9;
+    }
+
+    /* Pattern 5: 3D Depth */
+   .parallax-3d {
+      background: #000;
+      perspective: 1000px;
+      height: 200vh;
+    }
+
+   .depth-layer {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+   .depth-card {
+      background: rgb(255 255 255 / 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgb(255 255 255 / 0.1);
+      border-radius: 24px;
+      padding: 60px;
+      color: #fff;
+      text-align: center;
+      max-width: 500px;
+      will-change: transform;
+    }
+
+   .depth-card h3 {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+   .depth-card p {
+      font-size: 1.25rem;
+      opacity: 0.8;
+      line-height: 1.8;
+    }
+
+    /* Pattern 6: Sticky Image Reveal */
+   .parallax-reveal {
+      background: var(--gray-100);
+      height: 400vh;
+    }
+
+   .reveal-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+   .reveal-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+      gap: 60px;
+      align-items: center;
+    }
+
+   .reveal-text h2 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.03em;
+    }
+
+   .reveal-text p {
+      font-size: 1.25rem;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+   .reveal-image {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 600px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+      will-change: transform;
+    }
+
+   .reveal-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--gray-900);
+      transform: scaleX(1);
+      transform-origin: right;
+      will-change: transform;
+    }
+
+    /* Content Section */
+   .content-section {
+      background: #fff;
+      padding: 120px 20px;
+      position: relative;
+      z-index: 5;
+    }
+
+   .content-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+   .content-inner h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+   .content-inner p {
+      font-size: 1.25rem;
+      color: var(--gray-600);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    /* Pattern 7: Scroll Video Effect */
+   .parallax-video {
+      background: #000;
+      height: 500vh;
+      position: relative;
+    }
+
+   .video-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+   .video-frame {
+      width: 80%;
+      max-width: 1000px;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 50%, var(--pink) 100%);
+      border-radius: 20px;
+      will-change: transform, opacity;
+      box-shadow: 0 50px 100px -20px rgb(0 0 0 / 0.5);
+    }
+
+   .video-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-weight: 900;
+      text-align: center;
+      padding: 40px;
+      will-change: transform, opacity;
+    }
+
+    /* Pattern 8: Clip Path Reveal */
+   .parallax-clip {
+      background: #fff;
+      height: 300vh;
+      position: relative;
+    }
+
+   .clip-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      clip-path: circle(0% at 50% 50%);
+      will-change: clip-path;
+    }
+
+   .clip-content {
+      text-align: center;
+      color: #fff;
+      max-width: 700px;
+      padding: 40px 20px;
+    }
+
+   .clip-content h2 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      margin-bottom: 24px;
+    }
+
+   .clip-content p {
+      font-size: 1.5rem;
+      opacity: 0.9;
+    }
+
+    /* Utility */
+   .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: #fff;
+      color: var(--gray-900);
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+   .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgb(0 0 0 / 0.15);
+    }
+
+    /* Responsive */
+   @media (max-width: 768px) {
+     .reveal-split {
+        grid-template-columns: 1fr;
+      }
+     .horizontal-card {
+        padding: 30px;
+      }
+     .depth-card {
+        padding: 40px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pattern 1: Multi-Layer Parallax Hero -->
+  <section class="parallax-section parallax-hero" id="hero">
+    <div class="parallax-bg">
+      <div class="parallax-layer layer-sky" data-speed="0.2"></div>
+      <div class="parallax-layer layer-mountains-back" data-speed="0.3"></div>
+      <div class="parallax-layer layer-mountains-mid" data-speed="0.5"></div>
+      <div class="parallax-layer layer-mountains-front" data-speed="0.7"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Parallax Depth</h1>
+      <p>Multiple layers move at different speeds creating 3D depth illusion</p>
+    </div>
+  </section>
+
+  <!-- Content Break -->
+  <section class="content-section">
+    <div class="content-inner">
+      <h2>Multi-Layer Parallax</h2>
+      <p>Each background layer has a different scroll speed. Back layers move slower, front layers move faster. This creates natural depth perception like looking through a window.</p>
+      <p>Key technique: Use <code>data-speed</code> attribute to control parallax intensity. Values 0.1-0.9 work best. Higher values = faster movement.</p>
+    </div>
+  </section>
+
+  <!-- Pattern 2: Mouse Parallax -->
+  <section class="parallax-section parallax-mouse" id="mouse">
+    <div class="floating-element float-1" data-depth="0.3"></div>
+    <div class="floating-element float-2" data-depth="0.6"></div>
+    <div class="floating-element float-3" data-depth="0.9"></div>
+    <div class="floating-element float-4" data-depth="0.5"></div>
+    <div class="hero-content">
+      <h1>Mouse Parallax</h1>
+      <p>Elements follow your cursor with different depths. Move your mouse to see the effect.</p>
+    </div>
+  </section>
+
+  <!-- Content Break -->
+  <section class="content-section">
+    <div class="content-inner">
+      <h2>Interactive Parallax</h2>
+      <p>Mouse movement drives parallax instead of scroll. Each element has a <code>data-depth</code> value determining how much it moves. Creates engaging, responsive backgrounds.</p>
+    </div>
+  </section>
+
+  <!-- Pattern 3: Scroll Zoom -->
+  <section class="parallax-section parallax-zoom" id="zoom">
+    <div class="zoom-bg" id="zoomBg"></div>
+    <div class="zoom-content" id="zoomContent">
+      <h2>Scroll to Zoom</h2>
+      <p>Background scales and content fades as you scroll</p>
+    </div>
+  </section>
+
+  <!-- Pattern 4: Horizontal Layers -->
+  <section class="parallax-horizontal" id="horizontal">
+    <div class="horizontal-layer">
+      <div class="layer-slide" data-index="0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div class="layer-slide-content">
+          <h2>Slide 1</h2>
+          <p>Horizontal parallax sections that slide in sequence</p>
+        </div>
+      <div class="layer-slide" data-index="1" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <div class="layer-slide-content">
+          <h2>Slide 2</h2>
+          <p>Each slide reveals as you continue scrolling down</p>
+        </div>
+      <div class="layer-slide" data-index="2" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+        <div class="layer-slide-content">
+          <h2>Slide 3</h2>
+          <p>Perfect for storytelling and product showcases</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 5: 3D Depth -->
+  <section class="parallax-3d" id="depth">
+    <div class="depth-layer">
+      <div class="depth-card" style="transform: translateZ(-200px);">
+        <h3>Layer 1</h3>
+        <p>Background layer with depth effect. Appears furthest away.</p>
+      </div>
+    </div>
+    <div class="depth-layer">
+      <div class="depth-card" style="transform: translateZ(-100px);">
+        <h3>Layer 2</h3>
+        <p>Middle layer creating sense of space and dimension.</p>
+      </div>
+    </div>
+    <div class="depth-layer">
+      <div class="depth-card" style="transform: translateZ(0px);">
+        <h3>Layer 3</h3>
+        <p>Front layer closest to viewer. Creates 3D stack effect.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 6: Sticky Image Reveal -->
+  <section class="parallax-reveal" id="reveal">
+    <div class="reveal-sticky">
+      <div class="reveal-split">
+        <div class="reveal-text">
+          <h2>Scroll Reveals</h2>
+          <p>Image wipes in from right as text stays fixed. Creates focus on the visual while maintaining context with copy.</p>
+          <p>This pattern works great for feature explanations, product showcases, and case studies where you want to pair imagery with narrative.</p>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+        <div class="reveal-image" id="revealImage">
+          <div class="reveal-image-overlay" id="revealOverlay"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 7: Clip Path Reveal -->
+  <section class="parallax-clip" id="clip">
+    <div class="clip-sticky" id="clipSticky">
+      <div class="clip-content">
+        <h2>Clip Path Magic</h2>
+        <p>Circle expands from center to reveal content. Creates dramatic entrance effect perfect for section transitions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pattern 8: Video Scroll -->
+  <section class="parallax-video" id="video">
+    <div class="video-sticky">
+      <div class="video-frame" id="videoFrame"></div>
+      <div class="video-text" id="videoText">
+        <div>
+          <h2>Scroll-Driven Animation</h2>
+          <p style="font-size: 1.5rem; margin-top: 20px; opacity: 0.9;">Frame scales and rotates with scroll</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Content -->
+  <section class="content-section">
+    <div class="content-inner">
+      <h2>Implementation Notes</h2>
+      <p><strong>Performance:</strong> Use <code>transform</code> and <code>opacity</code> only. Never animate <code>width</code>, <code>height</code>, or <code>top/left</code>. Add <code>will-change: transform</code> to animated elements.</p>
+      <p><strong>Smooth Scrolling:</strong> Use <code>scroll-behavior: smooth</code> on html for anchor links. For JS-driven scroll, use <code>requestAnimationFrame</code>.</p>
+      <p><strong>Mobile:</strong> Parallax can be janky on mobile. Consider disabling complex effects below 768px or reducing layer count.</p>
+      <p><strong>Accessibility:</strong> Respect <code>prefers-reduced-motion</code>. Provide static fallbacks for users who disable animations.</p>
+    </div>
+  </section>
+
+  <script>
+    // 1. Multi-Layer Parallax
+    const parallaxLayers = document.querySelectorAll('.parallax-layer[data-speed]');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      parallaxLayers.forEach(layer => {
+        const speed = parseFloat(layer.dataset.speed);
+        const yPos = scrolled * speed;
+        layer.style.transform = `translateY(${yPos}px)`;
+      });
+    });
+
+    // 2. Mouse Parallax
+    const mouseParallaxSection = document.querySelector('.parallax-mouse');
+    const floatingElements = document.querySelectorAll('.floating-element');
+    
+    if (mouseParallaxSection) {
+      mouseParallaxSection.addEventListener('mousemove', (e) => {
+        const rect = mouseParallaxSection.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        
+        floatingElements.forEach(el => {
+          const depth = parseFloat(el.dataset.depth);
+          const moveX = x * depth * 100;
+          const moveY = y * depth * 100;
+          el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+      });
+    }
+
+    // 3. Scroll Zoom Effect
+    const zoomBg = document.getElementById('zoomBg');
+    const zoomContent = document.getElementById('zoomContent');
+    const zoomSection = document.querySelector('.parallax-zoom');
+    
+    window.addEventListener('scroll', () => {
+      if (!zoomSection) return;
+      const rect = zoomSection.getBoundingClientRect();
+      const scrollPercent = Math.max(0, Math.min(1, -rect.top / rect.height));
+      
+      if (zoomBg) {
+        zoomBg.style.transform = `scale(${1 + scrollPercent * 0.5})`;
+        zoomBg.style.opacity = 0.3 - scrollPercent * 0.2;
+      }
+      
+      if (zoomContent) {
+        zoomContent.style.transform = `scale(${1 - scrollPercent * 0.3})`;
+        zoomContent.style.opacity = 1 - scrollPercent * 0.8;
+      }
+    });
+
+    // 4. Horizontal Layers
+    const horizontalSection = document.querySelector('.parallax-horizontal');
+    const layerSlides = document.querySelectorAll('.layer-slide');
+    
+    window.addEventListener('scroll', () => {
+      if (!horizontalSection) return;
+      const rect = horizontalSection.getBoundingClientRect();
+      const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+      
+      layerSlides.forEach((slide, index) => {
+        const slideProgress = Math.max(0, Math.min(1, (scrollProgress * layerSlides.length) - index));
+        const translateX = (1 - slideProgress) * 100;
+        slide.style.transform = `translateX(${translateX}%)`;
+        slide.style.opacity = slideProgress;
+      });
+    });
+
+    // 5. Sticky Image Reveal
+    const revealSection = document.querySelector('.parallax-reveal');
+    const revealOverlay = document.getElementById('revealOverlay');
+    
+    window.addEventListener('scroll', () => {
+      if (!revealSection || !revealOverlay) return;
+      const rect = revealSection.getBoundingClientRect();
+      const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+      revealOverlay.style.transform = `scaleX(${1 - scrollProgress})`;
+    });
+
+    // 6. Clip Path Reveal
+    const clipSection = document.querySelector('.parallax-clip');
+    const clipSticky = document.getElementById('clipSticky');
+    
+    window.addEventListener('scroll', () => {
+      if (!clipSection || !clipSticky) return;
+      const rect = clipSection.getBoundingClientRect();
+      const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+      const radius = scrollProgress * 150;
+      clipSticky.style.clipPath = `circle(${radius}% at 50% 50%)`;
+    });
+
+    // 7. Video Scroll Effect
+    const videoSection = document.querySelector('.parallax-video');
+    const videoFrame = document.getElementById('videoFrame');
+    const videoText = document.getElementById('videoText');
+    
+    window.addEventListener('scroll', () => {
+      if (!videoSection || !videoFrame) return;
+      const rect = videoSection.getBoundingClientRect();
+      const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+      
+      const scale = 0.5 + scrollProgress * 0.5;
+      const rotate = scrollProgress * 360;
+      videoFrame.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+      
+      if (videoText) {
+        videoText.style.opacity = 1 - scrollProgress;
+        videoText.style.transform = `scale(${1 + scrollProgress * 0.5})`;
+      }
+    });
+
+    // 8. 3D Depth Layers
+    const depthSection = document.querySelector('.parallax-3d');
+    const depthCards = document.querySelectorAll('.depth-card');
+    
+    window.addEventListener('scroll', () => {
+      if (!depthSection) return;
+      const rect = depthSection.getBoundingClientRect();
+      const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+      
+      depthCards.forEach((card, index) => {
+        const zOffset = (index - 1) * 100;
+        const translateZ = zOffset + scrollProgress * 200;
+        const opacity = 1 - Math.abs(scrollProgress - index * 0.33) * 2;
+        card.style.transform = `translateZ(${translateZ}px)`;
+        card.style.opacity = Math.max(0, Math.min(1, opacity));
+      });
+    });
+
+    // Respect reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      document.querySelectorAll('.parallax-layer, .floating-element').forEach(el => {
+        el.style.transform = 'none';
+      });
+    }
+  </script>
+</body>
+</html>
