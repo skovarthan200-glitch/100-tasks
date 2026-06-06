@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Illustration Library</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f9fafb;
+      padding: 40px 20px;
+      color: #111827;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .demo-section {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 32px;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+    }
+
+   .demo-section h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+   .demo-section p {
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+
+   .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 32px;
+    }
+
+   .svg-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+   .svg-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #4b5563;
+    }
+
+   .svg-container {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Animation 1: Floating */
+   .float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Animation 2: Pulse */
+   .pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    /* Animation 3: Rotate */
+   .rotate {
+      animation: rotate 20s linear infinite;
+      transform-origin: center;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Animation 4: Draw Line */
+   .draw {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: draw 3s ease forwards;
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Animation 5: Morph */
+   .morph {
+      animation: morph 4s ease-in-out infinite;
+    }
+
+    @keyframes morph {
+      0%, 100% { d: path("M50,250 Q250,100 450,250 T850,250"); }
+      50% { d: path("M50,250 Q250,400 450,250 T850,250"); }
+    }
+
+    /* Animation 6: Bounce */
+   .bounce {
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* Animation 7: Gradient Shift */
+   .gradient-shift stop {
+      animation: gradientMove 3s ease infinite;
+    }
+
+   .gradient-shift stop:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+   .gradient-shift stop:nth-child(2) {
+      animation-delay: 1.5s;
+    }
+
+    @keyframes gradientMove {
+      0%, 100% { stop-color: #6366f1; }
+      50% { stop-color: #a855f7; }
+    }
+
+    /* Animation 8: Scale In */
+   .scale-in {
+      animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Animation 9: Fade Stagger */
+   .stagger-1 { animation: fadeIn 0.6s ease 0.1s forwards; opacity: 0; }
+   .stagger-2 { animation: fadeIn 0.6s ease 0.2s forwards; opacity: 0; }
+   .stagger-3 { animation: fadeIn 0.6s ease 0.3s forwards; opacity: 0; }
+   .stagger-4 { animation: fadeIn 0.6s ease 0.4s forwards; opacity: 0; }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Responsive */
+   @media (max-width: 768px) {
+     .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="font-size: 2.5rem; font-weight: 900; margin-bottom: 12px;">SVG Illustration Library</h1>
+    <p style="color: #6b7280; font-size: 1.125rem; margin-bottom: 48px;">Scalable, animated, and lightweight vector graphics for web</p>
+
+    <!-- Abstract Shapes -->
+    <div class="demo-section">
+      <h2>Abstract Shapes & Blobs</h2>
+      <p>Organic morphing shapes with gradients and animation</p>
+      
+      <div class="grid">
+        <div class="svg-card">
+          <h3>Morphing Blob</h3>
+          <div class="svg-container">
+            <svg width="300" height="300" viewBox="0 0 300 300">
+              <defs>
+                <linearGradient id="blobGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <path class="morph" fill="url(#blobGrad1)" d="M60,150 Q50,50 150,60 Q250,70 240,150 Q230,250 150,240 Q70,230 60,150 Z">
+                <animate attributeName="d" 
+                  dur="8s" 
+                  repeatCount="indefinite"
+                  values="M60,150 Q50,50 150,60 Q250,70 240,150 Q230,250 150,240 Q70,230 60,150 Z;
+                          M80,140 Q70,80 140,70 Q220,60 250,140 Q260,220 160,230 Q60,240 80,140 Z;
+                          M60,150 Q50,50 150,60 Q250,70 240,150 Q230,250 150,240 Q70,230 60,150 Z"/>
+              </path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Floating Orbs</h3>
+          <div class="svg-container">
+            <svg width="300" height="300" viewBox="0 0 300 300">
+              <defs>
+                <radialGradient id="orb1">
+                  <stop offset="0%" style="stop-color:#818cf8;stop-opacity:0.8" />
+                  <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.2" />
+                </radialGradient>
+                <radialGradient id="orb2">
+                  <stop offset="0%" style="stop-color:#c084fc;stop-opacity:0.8" />
+                  <stop offset="100%" style="stop-color:#a855f7;stop-opacity:0.2" />
+                </radialGradient>
+                <radialGradient id="orb3">
+                  <stop offset="0%" style="stop-color:#f472b6;stop-opacity:0.8" />
+                  <stop offset="100%" style="stop-color:#ec4899;stop-opacity:0.2" />
+                </radialGradient>
+              </defs>
+              <circle class="float" cx="80" cy="100" r="40" fill="url(#orb1)" style="animation-delay: 0s;"/>
+              <circle class="float" cx="220" cy="150" r="50" fill="url(#orb2)" style="animation-delay: 1s;"/>
+              <circle class="float" cx="150" cy="220" r="35" fill="url(#orb3)" style="animation-delay: 0.5s;"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Icons & UI Elements -->
+    <div class="demo-section">
+      <h2>Animated Icons</h2>
+      <p>Micro-interactions for UI elements and feature illustrations</p>
+      
+      <div class="grid">
+        <div class="svg-card">
+          <h3>Loading Spinner</h3>
+          <div class="svg-container">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" stroke="#e5e7eb" stroke-width="8" fill="none"/>
+              <circle class="rotate" cx="50" cy="50" r="40" stroke="#6366f1" stroke-width="8" fill="none"
+                stroke-dasharray="251" stroke-dashoffset="188" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Check Mark</h3>
+          <div class="svg-container">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="45" fill="#10b981" opacity="0.1"/>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#10b981" stroke-width="3" class="scale-in"/>
+              <path class="draw" d="M30 50 L45 65 L70 35" stroke="#10b981" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" style="animation-delay: 0.3s;"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Pulse Icon</h3>
+          <div class="svg-container">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="20" fill="#a855f7" class="pulse"/>
+              <circle cx="50" cy="50" r="35" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.3" class="pulse" style="animation-delay: 0.5s;"/>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.1" class="pulse" style="animation-delay: 1s;"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Bounce Arrow</h3>
+          <div class="svg-container">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <path class="bounce" d="M50 20 L50 70 M50 70 L35 55 M50 70 L65 55" stroke="#6366f1" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts & Data -->
+    <div class="demo-section">
+      <h2>Data Visualizations</h2>
+      <p>Animated charts and graphs for dashboards</p>
+      
+      <div class="grid">
+        <div class="svg-card">
+          <h3>Animated Bar Chart</h3>
+          <div class="svg-container">
+            <svg width="300" height="250" viewBox="0 0 300 250">
+              <rect class="scale-in" x="40" y="150" width="40" height="0" fill="#6366f1" rx="4">
+                <animate attributeName="height" from="0" to="80" dur="0.8s" fill="freeze" begin="0.1s"/>
+                <animate attributeName="y" from="230" to="150" dur="0.8s" fill="freeze" begin="0.1s"/>
+              </rect>
+              <rect class="scale-in" x="100" y="100" width="40" height="0" fill="#8b5cf6" rx="4">
+                <animate attributeName="height" from="0" to="130" dur="0.8s" fill="freeze" begin="0.2s"/>
+                <animate attributeName="y" from="230" to="100" dur="0.8s" fill="freeze" begin="0.2s"/>
+              </rect>
+              <rect class="scale-in" x="160" y="70" width="40" height="0" fill="#a855f7" rx="4">
+                <animate attributeName="height" from="0" to="160" dur="0.8s" fill="freeze" begin="0.3s"/>
+                <animate attributeName="y" from="230" to="70" dur="0.8s" fill="freeze" begin="0.3s"/>
+              </rect>
+              <rect class="scale-in" x="220" y="120" width="40" height="0" fill="#ec4899" rx="4">
+                <animate attributeName="height" from="0" to="110" dur="0.8s" fill="freeze" begin="0.4s"/>
+                <animate attributeName="y" from="230" to="120" dur="0.8s" fill="freeze" begin="0.4s"/>
+              </rect>
+              <line x1="30" y1="230" x2="270" y2="230" stroke="#e5e7eb" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Donut Chart</h3>
+          <div class="svg-container">
+            <svg width="250" height="250" viewBox="0 0 250 250">
+              <circle cx="125" cy="125" r="90" fill="none" stroke="#f3f4f6" stroke-width="20"/>
+              <circle class="draw" cx="125" cy="125" r="90" fill="none" stroke="#6366f1" stroke-width="20"
+                stroke-dasharray="565" stroke-dashoffset="565" stroke-linecap="round"
+                transform="rotate(-90 125 125)" style="animation-delay: 0.2s;">
+                <animate attributeName="stroke-dashoffset" from="565" to="141" dur="1.5s" fill="freeze" begin="0.2s"/>
+              </circle>
+              <text x="125" y="125" text-anchor="middle" dominant-baseline="middle" font-size="32" font-weight="800" fill="#111827">75%</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Line Chart</h3>
+          <div class="svg-container">
+            <svg width="300" height="200" viewBox="0 0 300 200">
+              <defs>
+                <linearGradient id="lineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6366f1;stop-opacity:0.3" />
+                  <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0" />
+                </linearGradient>
+              </defs>
+              <path class="draw" d="M 20 150 Q 70 100, 120 T 220 80 T 280 100" 
+                stroke="#6366f1" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M 20 150 Q 70 100, 120 120 T 220 80 T 280 100 L 280 180 L 20 180 Z" 
+                fill="url(#lineGrad)" opacity="0" style="animation: fadeIn 1s ease 2s forwards;"/>
+              <circle class="scale-in" cx="20" cy="150" r="4" fill="#6366f1" style="animation-delay: 0.5s;"/>
+              <circle class="scale-in" cx="120" cy="120" r="4" fill="#6366f1" style="animation-delay: 1s;"/>
+              <circle class="scale-in" cx="220" cy="80" r="4" fill="#6366f1" style="animation-delay: 1.5s;"/>
+              <circle class="scale-in" cx="280" cy="100" r="4" fill="#6366f1" style="animation-delay: 2s;"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decorative Patterns -->
+    <div class="demo-section">
+      <h2>Decorative Patterns</h2>
+      <p>Background patterns and ornamental elements</p>
+      
+      <div class="grid">
+        <div class="svg-card">
+          <h3>Animated Grid</h3>
+          <div class="svg-container">
+            <svg width="300" height="300" viewBox="0 0 300 300">
+              <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.2"/>
+                </pattern>
+              </defs>
+              <rect width="300" height="300" fill="url(#grid)" class="pulse"/>
+              <circle class="stagger-1" cx="150" cy="150" r="8" fill="#6366f1"/>
+              <circle class="stagger-2" cx="80" cy="100" r="6" fill="#8b5cf6"/>
+              <circle class="stagger-3" cx="220" cy="200" r="7" fill="#a855f7"/>
+              <circle class="stagger-4" cx="180" cy="80" r="5" fill="#ec4899"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Wave Pattern</h3>
+          <div class="svg-container">
+            <svg width="300" height="300" viewBox="0 0 300 300">
+              <defs>
+                <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <path d="M0,150 Q75,100 150,150 T300,150" stroke="url(#waveGrad)" stroke-width="3" fill="none" opacity="0.3">
+                <animate attributeName="d" 
+                  dur="4s" 
+                  repeatCount="indefinite"
+                  values="M0,150 Q75,100 150,150 T300,150;
+                          M0,150 Q75,200 150,150 T300,150;
+                          M0,150 Q75,100 150,150 T300,150"/>
+              </path>
+              <path d="M0,170 Q75,120 150,170 T300,170" stroke="url(#waveGrad)" stroke-width="3" fill="none" opacity="0.5">
+                <animate attributeName="d" 
+                  dur="4s" 
+                  repeatCount="indefinite"
+                  values="M0,170 Q75,120 150,170 T300,170;
+                          M0,170 Q75,220 150,170 T300,170;
+                          M0,170 Q75,120 150,170 T300,170"/>
+              </path>
+              <path d="M0,190 Q75,140 150,190 T300,190" stroke="url(#waveGrad)" stroke-width="3" fill="none" opacity="0.7">
+                <animate attributeName="d" 
+                  dur="4s" 
+                  repeatCount="indefinite"
+                  values="M0,190 Q75,140 150,190 T300,190;
+                          M0,190 Q75,240 150,190 T300,190;
+                          M0,190 Q75,140 150,190 T300,190"/>
+              </path>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Geometric Pattern</h3>
+          <div class="svg-container">
+            <svg width="300" height="300" viewBox="0 0 300 300">
+              <polygon points="150,50 200,150 150,250 100,150" fill="#6366f1" opacity="0.1" class="rotate"/>
+              <polygon points="150,80 180,150 150,220 120,150" fill="#8b5cf6" opacity="0.2" class="rotate" style="animation-direction: reverse; animation-duration: 15s;"/>
+              <polygon points="150,110 160,150 150,190 140,150" fill="#a855f7" opacity="0.3" class="rotate" style="animation-duration: 10s;"/>
+              <circle cx="150" cy="150" r="10" fill="#6366f1" class="pulse"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Isometric Illustrations -->
+    <div class="demo-section">
+      <h2>Isometric Illustrations</h2>
+      <p>3D-style vector graphics with depth</p>
+      
+      <div class="grid">
+        <div class="svg-card">
+          <h3>Isometric Cube</h3>
+          <div class="svg-container">
+            <svg width="250" height="250" viewBox="0 0 250 250">
+              <defs>
+                <linearGradient id="cube1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#818cf8;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="cube2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="cube3" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#c4b5fd;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <g class="float">
+                <polygon points="125,50 200,90 125,130 50,90" fill="url(#cube1)"/>
+                <polygon points="50,90 125,130 125,210 50,170" fill="url(#cube2)"/>
+                <polygon points="125,130 200,90 200,170 125,210" fill="url(#cube3)"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="svg-card">
+          <h3>Stacked Cards</h3>
+          <div class="svg-container">
+            <svg width="250" height="250" viewBox="0 0 250 250">
+              <g class="float" style="animation-delay: 0s;">
+                <rect x="60" y="100" width="130" height="80" rx="8" fill="#e0e7ff" opacity="0.5"/>
+              </g>
+              <g class="float" style="animation-delay: 0.3s;">
+                <rect x="70" y="85" width="130" height="80" rx="8" fill="#c7d2fe" opacity="0.7"/>
+              </g>
+              <g class="float" style="animation-delay: 0.6s;">
+                <rect x="80" y="70" width="130" height="80" rx="8" fill="#a5b4fc"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Add stagger animation to elements
+    const staggerElements = document.querySelectorAll('.stagger-1, .stagger-2, .stagger-3, .stagger-4');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    staggerElements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
