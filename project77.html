@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card Templates - DataFlow</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Brand Tokens */
+    :root {
+      --brand-primary: #6366f1;
+      --brand-primary-dark: #4f46e5;
+      --brand-secondary: #a855f7;
+      --brand-accent: #ec4899;
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --font-brand: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Monaco', monospace;
+    }
+
+    /* Import fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    /* Base */
+    body {
+      font-family: var(--font-brand);
+      background: var(--neutral-100);
+      padding: 40px 20px;
+      color: var(--neutral-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+   .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+   .page-header p {
+      font-size: 1.125rem;
+      color: var(--neutral-600);
+    }
+
+    /* Card Grid */
+   .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+   .card-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+   .card-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    /* ID Card Base - CR80 3.375x2.125 inch */
+   .id-card {
+      width: 3.375in;
+      height: 2.125in;
+      background: var(--neutral-0);
+      border-radius: 12px;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* With Bleed - 3.5x2.25 inch */
+   .with-bleed {
+      width: 3.5in;
+      height: 2.25in;
+      padding: 0.0625in;
+      background: #ff0000;
+      border-radius: 16px;
+    }
+
+   .with-bleed .id-card {
+      box-shadow: none;
+    }
+
+    /* Employee ID Card - Horizontal */
+   .card-employee {
+      display: grid;
+      grid-template-columns: 1.1in 1fr;
+      height: 100%;
+    }
+
+   .card-employee .photo-section {
+      background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+      padding: 0.2in;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+   .card-employee .photo {
+      width: 0.75in;
+      height: 0.75in;
+      background: var(--neutral-0);
+      border-radius: 50%;
+      border: 3px solid var(--neutral-0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.3in;
+      font-weight: 800;
+      color: var(--brand-primary);
+      margin-bottom: 0.1in;
+    }
+
+   .card-employee .logo {
+      font-size: 0.15in;
+      font-weight: 900;
+      color: var(--neutral-0);
+      letter-spacing: 0.05em;
+    }
+
+   .card-employee .info-section {
+      padding: 0.2in 0.25in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+   .card-employee .company {
+      font-size: 0.09in;
+      font-weight: 700;
+      color: var(--brand-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.15in;
+    }
+
+   .card-employee .name {
+      font-size: 0.22in;
+      font-weight: 800;
+      color: var(--neutral-900);
+      line-height: 1.2;
+      margin-bottom: 0.05in;
+      letter-spacing: -0.01em;
+    }
+
+   .card-employee .title {
+      font-size: 0.11in;
+      font-weight: 500;
+      color: var(--neutral-600);
+      margin-bottom: 0.2in;
+    }
+
+   .card-employee .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.1in;
+      margin-bottom: 0.15in;
+    }
+
+   .card-employee .detail-item {
+      font-size: 0.08in;
+    }
+
+   .card-employee .detail-label {
+      color: var(--neutral-500);
+      margin-bottom: 0.02in;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+
+   .card-employee .detail-value {
+      color: var(--neutral-900);
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+   .card-employee .barcode {
+      height: 0.25in;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--neutral-900) 0px,
+        var(--neutral-900) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      margin-top: auto;
+    }
+
+    /* Student ID Card - Vertical */
+   .card-student {
+      display: flex;
+      flex-direction: column;
+    }
+
+   .card-student .header {
+      background: var(--brand-primary);
+      color: var(--neutral-0);
+      padding: 0.15in 0.2in;
+      text-align: center;
+    }
+
+   .card-student .school {
+      font-size: 0.14in;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+   .card-student .type {
+      font-size: 0.09in;
+      opacity: 0.9;
+      margin-top: 0.02in;
+    }
+
+   .card-student .body {
+      padding: 0.2in;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+   .card-student .photo {
+      width: 0.9in;
+      height: 0.9in;
+      background: var(--neutral-200);
+      border-radius: 8px;
+      border: 2px solid var(--neutral-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.35in;
+      font-weight: 800;
+      color: var(--neutral-400);
+      margin-bottom: 0.15in;
+    }
+
+   .card-student .name {
+      font-size: 0.2in;
+      font-weight: 800;
+      color: var(--neutral-900);
+      margin-bottom: 0.05in;
+    }
+
+   .card-student .id-number {
+      font-size: 0.11in;
+      font-weight: 600;
+      color: var(--neutral-600);
+      font-family: var(--font-mono);
+      margin-bottom: 0.15in;
+    }
+
+   .card-student .info {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.1in;
+      font-size: 0.09in;
+      margin-bottom: 0.15in;
+    }
+
+   .card-student .info-item {
+      text-align: left;
+    }
+
+   .card-student .info-label {
+      color: var(--neutral-500);
+      margin-bottom: 0.02in;
+    }
+
+   .card-student .info-value {
+      color: var(--neutral-900);
+      font-weight: 600;
+    }
+
+   .card-student .qr {
+      width: 0.5in;
+      height: 0.5in;
+      background: var(--neutral-100);
+      border: 1px dashed var(--neutral-300);
+      border-radius: 4px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.07in;
+      color: var(--neutral-400);
+    }
+
+   .card-student .footer {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 0.12in 0.2in;
+      text-align: center;
+      font-size: 0.08in;
+      font-weight: 600;
+    }
+
+    /* Event Badge - Vertical */
+   .card-event {
+      background: linear-gradient(180deg, var(--neutral-0) 0%, var(--neutral-50) 100%);
+      display: flex;
+      flex-direction: column;
+      border: 2px solid var(--brand-primary);
+    }
+
+   .card-event .event-header {
+      background: var(--brand-primary);
+      color: var(--neutral-0);
+      padding: 0.2in;
+      text-align: center;
+    }
+
+   .card-event .event-name {
+      font-size: 0.16in;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.03in;
+    }
+
+   .card-event .event-year {
+      font-size: 0.11in;
+      opacity: 0.9;
+    }
+
+   .card-event .body {
+      padding: 0.25in 0.2in;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+   .card-event .photo {
+      width: 1in;
+      height: 1in;
+      background: var(--neutral-200);
+      border-radius: 50%;
+      border: 4px solid var(--neutral-0);
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.4in;
+      font-weight: 800;
+      color: var(--neutral-400);
+      margin-bottom: 0.15in;
+    }
+
+   .card-event .name {
+      font-size: 0.22in;
+      font-weight: 800;
+      color: var(--neutral-900);
+      margin-bottom: 0.05in;
+    }
+
+   .card-event .company {
+      font-size: 0.12in;
+      font-weight: 600;
+      color: var(--neutral-600);
+      margin-bottom: 0.2in;
+    }
+
+   .card-event .role-badge {
+      background: var(--brand-primary);
+      color: var(--neutral-0);
+      padding: 0.08in 0.2in;
+      border-radius: 999px;
+      font-size: 0.1in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.2in;
+    }
+
+   .card-event .qr {
+      width: 0.6in;
+      height: 0.6in;
+      background: var(--neutral-100);
+      border: 1px dashed var(--neutral-300);
+      border-radius: 4px;
+      margin: auto 0 0.15in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.07in;
+      color: var(--neutral-400);
+    }
+
+   .card-event .footer {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 0.12in;
+      text-align: center;
+      font-size: 0.09in;
+      font-weight: 600;
+    }
+
+    /* Access Card - Horizontal Modern */
+   .card-access {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 0.25in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+   .card-access::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, var(--brand-primary) 0%, transparent 70%);
+      opacity: 0.2;
+    }
+
+   .card-access .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      position: relative;
+      z-index: 1;
+    }
+
+   .card-access .logo {
+      font-size: 0.25in;
+      font-weight: 900;
+    }
+
+   .card-access .chip {
+      width: 0.4in;
+      height: 0.3in;
+      background: linear-gradient(135deg, #d4af37 0%, #f4e4a8 100%);
+      border-radius: 6px;
+      position: relative;
+    }
+
+   .card-access .chip::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.1) 3px,
+        rgba(0,0,0,0.1) 4px
+      );
+    }
+
+   .card-access .info {
+      position: relative;
+      z-index: 1;
+    }
+
+   .card-access .name {
+      font-size: 0.2in;
+      font-weight: 700;
+      margin-bottom: 0.08in;
+    }
+
+   .card-access .id-number {
+      font-size: 0.12in;
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+      margin-bottom: 0.15in;
+    }
+
+   .card-access .details {
+      display: flex;
+      gap: 0.3in;
+      font-size: 0.09in;
+    }
+
+   .card-access .detail-label {
+      opacity: 0.6;
+      margin-bottom: 0.02in;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+   .card-access .detail-value {
+      font-weight: 600;
+    }
+
+   .card-access .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      position: relative;
+      z-index: 1;
+    }
+
+   .card-access .level {
+      background: var(--brand-primary);
+      padding: 0.06in 0.15in;
+      border-radius: 4px;
+      font-size: 0.09in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+   .card-access .valid {
+      text-align: right;
+      font-size: 0.08in;
+      opacity: 0.7;
+    }
+
+    /* Specs Section */
+   .specs {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      padding: 48px;
+      margin-top: 60px;
+    }
+
+   .specs h2 {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: 32px;
+    }
+
+   .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+   .spec-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--neutral-900);
+    }
+
+   .spec-item ul {
+      list-style: none;
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--neutral-600);
+    }
+
+   .spec-item li::before {
+      content: '•';
+      color: var(--brand-primary);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+     .page-header, .specs, .card-label {
+        display: none;
+      }
+     .id-card {
+        box-shadow: none;
+        page-break-inside: avoid;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+     .id-card {
+        transform: scale(0.9);
+        transform-origin: top center;
+      }
+    }
+
+    @media (max-width: 768px) {
+     .card-grid {
+        grid-template-columns: 1fr;
+      }
+     .id-card {
+        transform: scale(0.85);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>ID Card Template System</h1>
+      <p>Print-ready CR80 3.375" × 2.125" with 0.0625" bleed. 300 DPI. Employee, Student & Event badges.</p>
+    </div>
+
+    <div class="card-grid">
+      <!-- Card 1: Employee ID -->
+      <div class="card-wrapper">
+        <div class="card-label">Employee ID - Horizontal</div>
+        <div class="id-card card-employee">
+          <div class="photo-section">
+            <div class="photo">SC</div>
+            <div class="logo">DF</div>
+          </div>
+          <div class="info-section">
+            <div>
+              <div class="company">DataFlow Inc.</div>
+              <div class="name">Sarah Chen</div>
+              <div class="title">Head of Product Design</div>
+              <div class="details">
+                <div class="detail-item">
+                  <div class="detail-label">ID Number</div>
+                  <div class="detail-value">DF-4821</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Department</div>
+                  <div class="detail-value">Product</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Issue Date</div>
+                  <div class="detail-value">01/15/26</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Expires</div>
+                  <div class="detail-value">01/15/29</div>
+                </div>
+              </div>
+            <div class="barcode"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Student ID -->
+      <div class="card-wrapper">
+        <div class="card-label">Student ID - Vertical</div>
+        <div class="id-card card-student">
+          <div class="header">
+            <div class="school">DataFlow University</div>
+            <div class="type">Student Identification</div>
+          </div>
+          <div class="body">
+            <div class="photo">JM</div>
+            <div class="name">Jordan Martinez</div>
+            <div class="id-number">ID: 2026-48219</div>
+            <div class="info">
+              <div class="info-item">
+                <div class="info-label">Program</div>
+                <div class="info-value">MS Computer Science</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Year</div>
+                <div class="info-value">2026</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Campus</div>
+                <div class="info-value">San Francisco</div>
+              </div>
+              <div class="info-item">
+                <div class="info-label">Expires</div>
+                <div class="info-value">05/31/26</div>
+              </div>
+            <div class="qr">QR Code</div>
+          </div>
+          <div class="footer">Valid for academic year 2025-2026</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Event Badge -->
+      <div class="card-wrapper">
+        <div class="card-label">Event Badge - Vertical</div>
+        <div class="id-card card-event">
+          <div class="event-header">
+            <div class="event-name">DataFlow Summit</div>
+            <div class="event-year">2026</div>
+          </div>
+          <div class="body">
+            <div class="photo">TK</div>
+            <div class="name">Taylor Kim</div>
+            <div class="company">Stripe Inc.</div>
+            <div class="role-badge">Speaker</div>
+            <div class="qr">QR Code</div>
+          </div>
+          <div class="footer">All Access • March 15-17, 2026</div>
+        </div>
+      </div>
+
+      <!-- Card 4: Access Card -->
+      <div class="card-wrapper">
+        <div class="card-label">Access Card - Modern Horizontal</div>
+        <div class="id-card card-access">
+          <div class="header">
+            <div class="logo">DataFlow</div>
+            <div class="chip"></div>
+          </div>
+          <div class="info">
+            <div class="name">Alexandra Chen</div>
+            <div class="id-number">4821 8293 4756 0123</div>
+            <div class="details">
+              <div>
+                <div class="detail-label">Department</div>
+                <div class="detail-value">Engineering</div>
+              </div>
+              <div>
+                <div class="detail-label">Level</div>
+                <div class="detail-value">L5 Senior</div>
+              </div>
+              <div>
+                <div class="detail-label">Location</div>
+                <div class="detail-value">SF HQ</div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="level">Full Access</div>
+            <div class="valid">
+              Valid Thru<br>
+              <strong>12/29</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="specs">
+      <h2>Print Specifications</h2>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <h3>Dimensions</h3>
+          <ul>
+            <li><strong>Final size:</strong> 3.375" × 2.125" (CR80)</li>
+            <li><strong>With bleed:</strong> 3.5" × 2.25"</li>
+            <li><strong>Safe area:</strong> 3.125" × 1.875"</li>
+            <li><strong>Resolution:</strong> 300 DPI minimum</li>
+            <li><strong>File size:</strong> 1012 × 638px at 300 DPI</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Color Mode</h3>
+          <ul>
+            <li><strong>Print:</strong> CMYK</li>
+            <li><strong>Primary:</strong> C:75 M:65 Y:0 K:0</li>
+            <li><strong>Black:</strong> Rich black C:60 M:40 Y:40 K:100</li>
+            <li><strong>Digital:</strong> RGB (#6366F1)</li>
+            <li><strong>Pantone:</strong> 2726 C (closest)</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Typography</h3>
+          <ul>
+            <li><strong>Name:</strong> 16-22pt, ExtraBold</li>
+            <li><strong>Title:</strong> 10-12pt, Medium</li>
+            <li><strong>Details:</strong> 8-10pt, Regular</li>
+            <li><strong>ID Numbers:</strong> 9-11pt, Mono</li>
+            <li><strong>Line height:</strong> 1.2-1.4</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>File Setup</h3>
+          <ul>
+            <li><strong>Format:</strong> PDF/X-1a:2001</li>
+            <li><strong>Bleed:</strong> 0.0625" all sides</li>
+            <li><strong>Crop marks:</strong> Include</li>
+            <li><strong>Fonts:</strong> Outline or embed all</li>
+            <li><strong>Images:</strong> 300 DPI, CMYK</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin: 48px 0 24px;">Design Best Practices</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+        <div style="background: #f0fdf4; border: 2px solid var(--success); border-radius: 12px; padding: 24px;">
+          <div style="font-size: 1.125rem; font-weight: 700; color: var(--success); margin-bottom: 16px;">✓ Do</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Keep text 0.125" from edges</li>
+            <li>Use high contrast for readability</li>
+            <li>Include photo, name, ID number</li>
+            <li>Add expiration date for security</li>
+            <li>Use QR code for verification</li>
+            <li>Laminate for durability</li>
+          </ul>
+        </div>
+        <div style="background: #fef2f2; border: 2px solid var(--error); border-radius: 12px; padding: 24px;">
+          <div style="font-size: 1.125rem; font-weight: 700; color: var(--error); margin-bottom: 16px;">✗ Don't</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Use fonts smaller than 7pt</li>
+            <li>Place text in bleed area</li>
+            <li>Use low-res photos under 300 DPI</li>
+            <li>Forget magnetic stripe/chip space</li>
+            <li>Overcrowd with too much info</li>
+            <li>Use more than 2-3 colors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
