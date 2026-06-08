@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flyer Templates - DataFlow</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Brand Tokens */
+    :root {
+      --brand-primary: #6366f1;
+      --brand-primary-dark: #4f46e5;
+      --brand-secondary: #a855f7;
+      --brand-accent: #ec4899;
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --font-brand: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Monaco', monospace;
+    }
+
+    /* Base */
+    body {
+      font-family: var(--font-brand);
+      background: var(--neutral-100);
+      padding: 40px 20px;
+      color: var(--neutral-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+   .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+   .page-header p {
+      font-size: 1.125rem;
+      color: var(--neutral-600);
+    }
+
+    /* Flyer Grid */
+   .flyer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 48px;
+      margin-bottom: 60px;
+    }
+
+   .flyer-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+   .flyer-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    /* Flyer Base - 8.5x11 inch at 96dpi = 816x1056px */
+   .flyer {
+      width: 8.5in;
+      height: 11in;
+      background: var(--neutral-0);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* With Bleed - 8.75x11.25 inch */
+   .with-bleed {
+      width: 8.75in;
+      height: 11.25in;
+      padding: 0.125in;
+      background: #ff0000;
+    }
+
+   .with-bleed .flyer {
+      box-shadow: none;
+    }
+
+    /* Flyer 1: Event */
+   .flyer-event {
+      display: flex;
+      flex-direction: column;
+    }
+
+   .flyer-event .hero {
+      background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+      color: var(--neutral-0);
+      padding: 0.8in 0.6in;
+      position: relative;
+      overflow: hidden;
+    }
+
+   .flyer-event .hero::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+
+   .flyer-event .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 0.1in 0.2in;
+      border-radius: 999px;
+      font-size: 0.12in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25in;
+    }
+
+   .flyer-event .headline {
+      font-size: 0.65in;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.2in;
+      position: relative;
+      z-index: 1;
+    }
+
+   .flyer-event .subhead {
+      font-size: 0.18in;
+      line-height: 1.5;
+      opacity: 0.9;
+      margin-bottom: 0.3in;
+      position: relative;
+      z-index: 1;
+    }
+
+   .flyer-event .date-box {
+      background: var(--neutral-0);
+      color: var(--brand-primary);
+      padding: 0.2in;
+      border-radius: 12px;
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+    }
+
+   .flyer-event .date-month {
+      font-size: 0.11in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+    }
+
+   .flyer-event .date-day {
+      font-size: 0.4in;
+      font-weight: 900;
+      line-height: 1;
+      margin: 0.05in 0;
+    }
+
+   .flyer-event .date-time {
+      font-size: 0.12in;
+      font-weight: 600;
+    }
+
+   .flyer-event .content {
+      padding: 0.6in;
+      flex: 1;
+    }
+
+   .flyer-event .section-title {
+      font-size: 0.22in;
+      font-weight: 800;
+      color: var(--neutral-900);
+      margin-bottom: 0.2in;
+      letter-spacing: -0.01em;
+    }
+
+   .flyer-event .body-text {
+      font-size: 0.13in;
+      line-height: 1.7;
+      color: var(--neutral-600);
+      margin-bottom: 0.25in;
+    }
+
+   .flyer-event .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.2in;
+      margin: 0.3in 0;
+    }
+
+   .flyer-event .feature {
+      display: flex;
+      gap: 0.12in;
+      align-items: start;
+    }
+
+   .flyer-event .feature-icon {
+      width: 0.3in;
+      height: 0.3in;
+      background: var(--brand-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.16in;
+      color: var(--neutral-0);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+   .flyer-event .feature-text {
+      font-size: 0.11in;
+      font-weight: 600;
+      color: var(--neutral-900);
+      line-height: 1.4;
+    }
+
+   .flyer-event .cta {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 0.2in 0.4in;
+      border-radius: 8px;
+      font-size: 0.14in;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 0.3in;
+    }
+
+   .flyer-event .footer {
+      padding: 0.4in 0.6in;
+      background: var(--neutral-50);
+      border-top: 1px solid var(--neutral-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+   .flyer-event .footer-logo {
+      font-size: 0.25in;
+      font-weight: 900;
+      color: var(--brand-primary);
+    }
+
+   .flyer-event .footer-contact {
+      font-size: 0.1in;
+      color: var(--neutral-600);
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    /* Flyer 2: Promo */
+   .flyer-promo {
+      padding: 0.6in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--neutral-0);
+      position: relative;
+    }
+
+   .flyer-promo::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 3in;
+      height: 3in;
+      background: radial-gradient(circle, var(--brand-primary) 0%, transparent 70%);
+      opacity: 0.1;
+      border-radius: 50%;
+    }
+
+   .flyer-promo .header {
+      position: relative;
+      z-index: 1;
+    }
+
+   .flyer-promo .logo {
+      font-size: 0.4in;
+      font-weight: 900;
+      color: var(--brand-primary);
+      margin-bottom: 0.4in;
+    }
+
+   .flyer-promo .offer-badge {
+      display: inline-block;
+      background: var(--brand-accent);
+      color: var(--neutral-0);
+      padding: 0.12in 0.25in;
+      border-radius: 999px;
+      font-size: 0.13in;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3in;
+    }
+
+   .flyer-promo .headline {
+      font-size: 0.7in;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--neutral-900);
+      margin-bottom: 0.2in;
+    }
+
+   .flyer-promo .discount {
+      font-size: 1.2in;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--brand-primary);
+      margin-bottom: 0.15in;
+    }
+
+   .flyer-promo .subhead {
+      font-size: 0.18in;
+      line-height: 1.5;
+      color: var(--neutral-600);
+      margin-bottom: 0.4in;
+      max-width: 4in;
+    }
+
+   .flyer-promo .benefits {
+      list-style: none;
+      margin-bottom: 0.4in;
+    }
+
+   .flyer-promo .benefit {
+      display: flex;
+      align-items: center;
+      gap: 0.12in;
+      margin-bottom: 0.15in;
+      font-size: 0.13in;
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+
+   .flyer-promo .benefit::before {
+      content: '✓';
+      width: 0.25in;
+      height: 0.25in;
+      background: var(--success);
+      color: var(--neutral-0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.14in;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+   .flyer-promo .cta-section {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 0.4in;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+   .flyer-promo .cta-text {
+      font-size: 0.14in;
+      font-weight: 600;
+      margin-bottom: 0.15in;
+    }
+
+   .flyer-promo .cta-button {
+      display: inline-block;
+      background: var(--neutral-0);
+      color: var(--neutral-900);
+      padding: 0.15in 0.4in;
+      border-radius: 8px;
+      font-size: 0.13in;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+   .flyer-promo .footer {
+      text-align: center;
+      margin-top: 0.3in;
+      padding-top: 0.3in;
+      border-top: 1px solid var(--neutral-200);
+    }
+
+   .flyer-promo .footer-text {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+      line-height: 1.6;
+    }
+
+    /* Flyer 3: Real Estate */
+   .flyer-realestate {
+      display: flex;
+      flex-direction: column;
+    }
+
+   .flyer-realestate .image-section {
+      height: 5in;
+      background: linear-gradient(135deg, var(--neutral-200) 0%, var(--neutral-300) 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .flyer-realestate .image-placeholder {
+      font-size: 0.12in;
+      color: var(--neutral-500);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+   .flyer-realestate .price-badge {
+      position: absolute;
+      top: 0.4in;
+      right: 0.4in;
+      background: var(--neutral-0);
+      padding: 0.2in 0.3in;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+   .flyer-realestate .price {
+      font-size: 0.35in;
+      font-weight: 900;
+      color: var(--brand-primary);
+      line-height: 1;
+    }
+
+   .flyer-realestate .price-label {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.03in;
+    }
+
+   .flyer-realestate .content {
+      padding: 0.6in;
+      flex: 1;
+    }
+
+   .flyer-realestate .address {
+      font-size: 0.28in;
+      font-weight: 800;
+      color: var(--neutral-900);
+      margin-bottom: 0.15in;
+      line-height: 1.2;
+    }
+
+   .flyer-realestate .location {
+      font-size: 0.14in;
+      color: var(--neutral-600);
+      margin-bottom: 0.3in;
+    }
+
+   .flyer-realestate .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.2in;
+      padding: 0.3in 0;
+      border-top: 1px solid var(--neutral-200);
+      border-bottom: 1px solid var(--neutral-200);
+      margin-bottom: 0.3in;
+    }
+
+   .flyer-realestate .stat {
+      text-align: center;
+    }
+
+   .flyer-realestate .stat-value {
+      font-size: 0.22in;
+      font-weight: 800;
+      color: var(--neutral-900);
+      line-height: 1;
+      margin-bottom: 0.05in;
+    }
+
+   .flyer-realestate .stat-label {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+   .flyer-realestate .description {
+      font-size: 0.12in;
+      line-height: 1.7;
+      color: var(--neutral-600);
+      margin-bottom: 0.3in;
+    }
+
+   .flyer-realestate .features-title {
+      font-size: 0.13in;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.15in;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+   .flyer-realestate .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.1in;
+      font-size: 0.11in;
+      color: var(--neutral-700);
+    }
+
+   .flyer-realestate .feature {
+      display: flex;
+      align-items: center;
+      gap: 0.08in;
+    }
+
+   .flyer-realestate .feature::before {
+      content: '•';
+      color: var(--brand-primary);
+      font-weight: 700;
+    }
+
+   .flyer-realestate .agent {
+      background: var(--neutral-50);
+      padding: 0.3in;
+      border-radius: 8px;
+      margin-top: 0.3in;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+   .flyer-realestate .agent-info {
+      flex: 1;
+    }
+
+   .flyer-realestate .agent-name {
+      font-size: 0.14in;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.03in;
+    }
+
+   .flyer-realestate .agent-title {
+      font-size: 0.1in;
+      color: var(--neutral-600);
+      margin-bottom: 0.1in;
+    }
+
+   .flyer-realestate .agent-contact {
+      font-size: 0.1in;
+      color: var(--neutral-700);
+      line-height: 1.6;
+    }
+
+   .flyer-realestate .agent-photo {
+      width: 0.7in;
+      height: 0.7in;
+      background: var(--neutral-300);
+      border-radius: 50%;
+    }
+
+    /* Specs Section */
+   .specs {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      padding: 48px;
+      margin-top: 60px;
+    }
+
+   .specs h2 {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: 32px;
+    }
+
+   .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+   .spec-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--neutral-900);
+    }
+
+   .spec-item ul {
+      list-style: none;
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--neutral-600);
+    }
+
+   .spec-item li::before {
+      content: '•';
+      color: var(--brand-primary);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+     .page-header, .specs, .flyer-label {
+        display: none;
+      }
+     .flyer {
+        box-shadow: none;
+        page-break-after: always;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+     .flyer {
+        transform: scale(0.7);
+        transform-origin: top center;
+      }
+    }
+
+    @media (max-width: 768px) {
+     .flyer {
+        transform: scale(0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Flyer Template System</h1>
+      <p>Print-ready 8.5" × 11" with 0.125" bleed. 300 DPI. Event, Promo & Real Estate layouts.</p>
+    </div>
+
+    <div class="flyer-grid">
+      <!-- Flyer 1: Event -->
+      <div class="flyer-wrapper">
+        <div class="flyer-label">Template 1: Event Announcement</div>
+        <div class="flyer flyer-event">
+          <div class="hero">
+            <div class="badge">Live Event</div>
+            <div class="headline">Product Launch<br>Summit 2026</div>
+            <div class="subhead">Join 500+ founders and product leaders for a day of insights, networking, and hands-on workshops.</div>
+            <div class="date-box">
+              <div class="date-month">March</div>
+              <div class="date-day">15</div>
+              <div class="date-time">9AM - 6PM PT</div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="section-title">What You'll Learn</div>
+            <div class="body-text">Discover how top companies build products that scale. Get tactical frameworks you can implement tomorrow.</div>
+            <div class="features">
+              <div class="feature">
+                <div class="feature-icon">🎤</div>
+                <div class="feature-text">Keynotes from Stripe, Notion, Linear CEOs</div>
+              </div>
+              <div class="feature">
+                <div class="feature-icon">🛠</div>
+                <div class="feature-text">Hands-on workshops with PM experts</div>
+              </div>
+              <div class="feature">
+                <div class="feature-icon">🤝</div>
+                <div class="feature-text">Networking with 500+ product leaders</div>
+              </div>
+              <div class="feature">
+                <div class="feature-icon">📊</div>
+                <div class="feature-text">Exclusive data & benchmark reports</div>
+              </div>
+            </div>
+            <a href="#" class="cta">Reserve Your Spot →</a>
+          </div>
+          <div class="footer">
+            <div class="footer-logo">DataFlow</div>
+            <div class="footer-contact">
+              dataflow.com/summit<br>
+              events@dataflow.com<br>
+              Moscone Center, SF
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flyer 2: Promo -->
+      <div class="flyer-wrapper">
+        <div class="flyer-label">Template 2: Promotional Offer</div>
+        <div class="flyer flyer-promo">
+          <div class="header">
+            <div class="logo">DataFlow</div>
+            <div class="offer-badge">Limited Time</div>
+            <div class="headline">Automate Your<br>Workflow Today</div>
+            <div class="discount">50% OFF</div>
+            <div class="subhead">Save 20+ hours per week. Connect 100+ tools. No code required. Join 50,000+ teams already using DataFlow.</div>
+            <ul class="benefits">
+              <li class="benefit">Unlimited workflows & automations</li>
+              <li class="benefit">100+ app integrations included</li>
+              <li class="benefit">Priority support & onboarding</li>
+              <li class="benefit">SOC 2 compliant & 99.9% uptime</li>
+            </ul>
+          </div>
+          <div class="cta-section">
+            <div class="cta-text">Offer ends March 31st. Start your free trial today.</div>
+            <a href="#" class="cta-button">Claim 50% Off →</a>
+          </div>
+          <div class="footer">
+            <div class="footer-text">dataflow.com • hello@dataflow.com • +1 (415) 555-0123<br>*Discount applies to annual Pro plans. New customers only.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flyer 3: Real Estate -->
+      <div class="flyer-wrapper">
+        <div class="flyer-label">Template 3: Real Estate Listing</div>
+        <div class="flyer flyer-realestate">
+          <div class="image-section">
+            <div class="image-placeholder">Property Image</div>
+            <div class="price-badge">
+              <div class="price">$1,495,000</div>
+              <div class="price-label">List Price</div>
+            </div>
+          </div>
+          <div class="content">
+            <div class="address">1234 Market Street</div>
+            <div class="location">SoMa, San Francisco, CA 94105</div>
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Beds</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">2.5</div>
+                <div class="stat-label">Baths</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">1,850</div>
+                <div class="stat-label">Sq Ft</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value">2024</div>
+                <div class="stat-label">Built</div>
+              </div>
+            </div>
+            <div class="description">
+              Stunning modern condo in the heart of SoMa. Floor-to-ceiling windows, gourmet kitchen with quartz counters, and private balcony with city views. Building amenities include rooftop deck, fitness center, and 24/7 concierge.
+            </div>
+            <div class="features-title">Features</div>
+            <div class="features-grid">
+              <div class="feature">Hardwood floors</div>
+              <div class="feature">In-unit laundry</div>
+              <div class="feature">Stainless appliances</div>
+              <div class="feature">Central A/C</div>
+              <div class="feature">1 parking space</div>
+              <div class="feature">Storage unit</div>
+            </div>
+            <div class="agent">
+              <div class="agent-info">
+                <div class="agent-name">Michael Rodriguez</div>
+                <div class="agent-title">Senior Real Estate Agent</div>
+                <div class="agent-contact">
+                  michael@dataflowrealty.com<br>
+                  +1 (415) 555-0189<br>
+                  DRE #01234567
+                </div>
+              </div>
+              <div class="agent-photo"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="specs">
+      <h2>Print Specifications</h2>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <h3>Dimensions</h3>
+          <ul>
+            <li><strong>Final size:</strong> 8.5" × 11" (portrait)</li>
+            <li><strong>With bleed:</strong> 8.75" × 11.25"</li>
+            <li><strong>Safe area:</strong> 8" × 10.5"</li>
+            <li><strong>Resolution:</strong> 300 DPI minimum</li>
+            <li><strong>File size:</strong> 2550 × 3300px at 300 DPI</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Color Mode</h3>
+          <ul>
+            <li><strong>Print:</strong> CMYK</li>
+            <li><strong>Primary:</strong> C:75 M:65 Y:0 K:0</li>
+            <li><strong>Black:</strong> Rich black C:60 M:40 Y:40 K:100</li>
+            <li><strong>Digital:</strong> RGB (#6366F1)</li>
+            <li><strong>Pantone:</strong> 2726 C (closest match)</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Typography</h3>
+          <ul>
+            <li><strong>Headlines:</strong> 36-72pt, Black/ExtraBold</li>
+            <li><strong>Subheads:</strong> 18-24pt, Bold/Semibold</li>
+            <li><strong>Body:</strong> 10-13pt, Regular/Medium</li>
+            <li><strong>Captions:</strong> 8-9pt, Regular</li>
+            <li><strong>Line height:</strong> 1.4-1.6 for body</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>File Setup</h3>
+          <ul>
+            <li><strong>Format:</strong> PDF/X-1a:2001</li>
+            <li><strong>Bleed:</strong> 0.125" all sides</li>
+            <li><strong>Crop marks:</strong> Include</li>
+            <li><strong>Fonts:</strong> Outline or embed all</li>
+            <li><strong>Images:</strong> 300 DPI, CMYK</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin: 48px 0 24px;">Design Best Practices</h3>
+      <div class="grid-2">
+        <div class="card" style="border-color: var(--success);">
+          <div class="card-title" style="color: var(--success);">✓ Do</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Keep critical content 0.25" from edges</li>
+            <li>Use high contrast for readability</li>
+            <li>Limit to 2-3 fonts maximum</li>
+            <li>Include clear call-to-action</li>
+            <li>Use hierarchy: size, weight, color</li>
+            <li>Test print on actual stock</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color: var(--error);">
+          <div class="card-title" style="color: var(--error);">✗ Don't</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Place text in bleed area</li>
+            <li>Use fonts smaller than 7pt</li>
+            <li>Cram too much information</li>
+            <li>Use low-res images under 300 DPI</li>
+            <li>Forget contact information</li>
+            <li>Use more than 3-4 colors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
