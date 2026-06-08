@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo Presentation - DataFlow</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      /* Brand */
+      --brand-primary: #6366f1;
+      --brand-primary-dark: #4f46e5;
+      --brand-secondary: #a855f7;
+      --brand-accent: #ec4899;
+      
+      /* Neutrals */
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      /* Semantic */
+      --success: #22c55e;
+      --error: #ef4444;
+      
+      /* Type */
+      --font-brand: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Monaco', monospace;
+      
+      /* Spacing */
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+      
+      /* Radius */
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-2xl: 1.5rem;
+    }
+
+    /* Base */
+    body {
+      font-family: var(--font-brand);
+      background: var(--neutral-50);
+      color: var(--neutral-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+   .deck {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--neutral-0);
+    }
+
+    /* Slide */
+   .slide {
+      min-height: 100vh;
+      padding: var(--space-20) var(--space-12);
+      border-bottom: 1px solid var(--neutral-200);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+   .slide:last-child {
+      border-bottom: none;
+    }
+
+   .slide-cover {
+      background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+      color: var(--neutral-0);
+      text-align: center;
+      justify-content: center;
+    }
+
+   .slide-header {
+      margin-bottom: var(--space-12);
+    }
+
+   .slide-num {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--brand-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-3);
+    }
+
+   .slide-title {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: var(--space-4);
+    }
+
+   .slide-desc {
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: var(--neutral-600);
+      max-width: 720px;
+    }
+
+    /* Cover Specific */
+   .cover-logo {
+      width: 120px;
+      height: 120px;
+      background: var(--neutral-0);
+      border-radius: var(--radius-2xl);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--brand-primary);
+      margin-bottom: var(--space-8);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+    }
+
+   .cover h1 {
+      font-size: 5rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+    }
+
+   .cover-subtitle {
+      font-size: 1.5rem;
+      font-weight: 500;
+      opacity: 0.9;
+      margin-bottom: var(--space-12);
+    }
+
+   .cover-meta {
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    /* Logo Displays */
+   .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-8);
+    }
+
+   .logo-card {
+      background: var(--neutral-50);
+      border: 2px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      text-align: center;
+    }
+
+   .logo-card-dark {
+      background: var(--neutral-900);
+      border-color: var(--neutral-800);
+    }
+
+   .logo-display-box {
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-6);
+    }
+
+   .logo-mark {
+      font-size: 5rem;
+      font-weight: 900;
+      color: var(--brand-primary);
+    }
+
+   .logo-card-dark .logo-mark {
+      color: var(--neutral-0);
+    }
+
+   .logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+   .logo-lockup .logo-mark {
+      font-size: 3.5rem;
+    }
+
+   .logo-text {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      color: var(--neutral-900);
+    }
+
+   .logo-card-dark .logo-text {
+      color: var(--neutral-0);
+    }
+
+   .logo-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--neutral-500);
+    }
+
+    /* Clear Space Demo */
+   .clearspace-demo {
+      background: var(--neutral-50);
+      border: 2px dashed var(--neutral-300);
+      border-radius: var(--radius-xl);
+      padding: var(--space-16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin: var(--space-8) 0;
+    }
+
+   .clearspace-logo {
+      background: var(--neutral-0);
+      padding: var(--space-8);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+   .clearspace-guide {
+      position: absolute;
+      border: 1px dashed var(--brand-primary);
+      pointer-events: none;
+    }
+
+   .clearspace-guide::after {
+      content: 'Clear Space = Height of "D"';
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--brand-primary);
+      background: var(--neutral-0);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    /* Size Comparison */
+   .size-demo {
+      display: flex;
+      align-items: end;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      margin-top: var(--space-8);
+    }
+
+   .size-item {
+      text-align: center;
+    }
+
+   .size-logo {
+      background: var(--neutral-100);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-3);
+      padding: var(--space-4);
+    }
+
+   .size-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--neutral-500);
+    }
+
+    /* Do/Don't Grid */
+   .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-8);
+    }
+
+   .rule-card {
+      border: 2px solid;
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+   .rule-do {
+      background: #f0fdf4;
+      border-color: var(--success);
+    }
+
+   .rule-dont {
+      background: #fef2f2;
+      border-color: var(--error);
+    }
+
+   .rule-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+      font-size: 1.125rem;
+    }
+
+   .rule-do .rule-header {
+      color: var(--success);
+    }
+
+   .rule-dont .rule-header {
+      color: var(--error);
+    }
+
+   .rule-demo {
+      background: var(--neutral-0);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      margin-bottom: var(--space-4);
+    }
+
+   .rule-text {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--neutral-700);
+    }
+
+    /* Color Usage */
+   .color-usage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+   .color-usage-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--neutral-200);
+    }
+
+   .color-usage-box {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+    }
+
+   .color-usage-info {
+      padding: var(--space-4);
+      background: var(--neutral-0);
+    }
+
+   .color-usage-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: var(--space-1);
+    }
+
+   .color-usage-desc {
+      font-size: 0.75rem;
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+
+    /* Mockups */
+   .mockup-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-8);
+      margin-top: var(--space-8);
+    }
+
+   .mockup {
+      background: var(--neutral-100);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+    }
+
+   .mockup-card {
+      background: var(--neutral-0);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-lg);
+      width: 200px;
+      text-align: center;
+    }
+
+   .mockup-logo {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--brand-primary);
+      margin-bottom: var(--space-2);
+    }
+
+   .mockup-text {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+     .slide {
+        padding: var(--space-12) var(--space-6);
+        min-height: auto;
+      }
+     .slide-title {
+        font-size: 2rem;
+      }
+     .cover h1 {
+        font-size: 3rem;
+      }
+     .logo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Print */
+    @media print {
+     .slide {
+        page-break-after: always;
+        min-height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="deck">
+    <!-- Slide 1: Cover -->
+    <section class="slide slide-cover">
+      <div class="cover-logo">DF</div>
+      <h1>DataFlow</h1>
+      <p class="cover-subtitle">Logo & Brand Identity Guidelines</p>
+      <div class="cover-meta">Version 2.0 • January 2026</div>
+    </section>
+
+    <!-- Slide 2: Brand Story -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">01</div>
+        <h2 class="slide-title">Brand Essence</h2>
+        <p class="slide-desc">DataFlow empowers teams to automate workflows and focus on meaningful work. Our brand reflects clarity, speed, and trust.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Mission</div>
+          <div class="card-text">Make automation accessible to every team. Remove friction from work so humans can focus on creation, not repetition.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Personality</div>
+          <div class="card-text"><strong>Confident</strong> but not arrogant.<br><strong>Technical</strong> but approachable.<br><strong>Helpful</strong> not salesy.<br>We speak like smart humans.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Values</div>
+          <div class="card-text"><strong>Clarity:</strong> Simple beats clever.<br><strong>Speed:</strong> Ship fast, iterate faster.<br><strong>Trust:</strong> Security and reliability first.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Promise</div>
+          <div class="card-text">Save 20+ hours per week. Connect 100+ tools. Zero code required. Enterprise-grade security from day one.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Logo Variations -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">02</div>
+        <h2 class="slide-title">Logo System</h2>
+        <p class="slide-desc">Our logo represents data flowing seamlessly. The mark symbolizes connection and momentum. Use the full lockup when space allows.</p>
+      </div>
+
+      <div class="logo-grid">
+        <div class="logo-card">
+          <div class="logo-display-box">
+            <div class="logo-lockup">
+              <div class="logo-mark">DF</div>
+              <div class="logo-text">DataFlow</div>
+            </div>
+          <div class="logo-label">Primary Lockup - Full Color</div>
+        </div>
+
+        <div class="logo-card">
+          <div class="logo-display-box">
+            <div class="logo-mark">DF</div>
+          </div>
+          <div class="logo-label">Logo Mark - Icon Only</div>
+        </div>
+
+        <div class="logo-card logo-card-dark">
+          <div class="logo-display-box">
+            <div class="logo-lockup">
+              <div class="logo-mark" style="color: var(--neutral-0);">DF</div>
+              <div class="logo-text" style="color: var(--neutral-0);">DataFlow</div>
+            </div>
+          </div>
+          <div class="logo-label" style="color: var(--neutral-400);">Reversed - On Dark</div>
+        </div>
+
+        <div class="logo-card">
+          <div class="logo-display-box">
+            <div class="logo-lockup">
+              <div class="logo-mark" style="color: var(--neutral-900);">DF</div>
+              <div class="logo-text" style="color: var(--neutral-900);">DataFlow</div>
+            </div>
+          </div>
+          <div class="logo-label">Monochrome - Single Color</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Clear Space -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">03</div>
+        <h2 class="slide-title">Clear Space & Sizing</h2>
+        <p class="slide-desc">Maintain minimum clear space equal to the height of "D" on all sides. This ensures visual impact and prevents crowding.</p>
+      </div>
+
+      <div class="clearspace-demo">
+        <div class="clearspace-logo">
+          <div class="logo-lockup">
+            <div class="logo-mark" style="font-size: 2.5rem;">DF</div>
+            <div class="logo-text" style="font-size: 1.75rem;">DataFlow</div>
+          </div>
+        </div>
+        <div class="clearspace-guide" style="width: calc(100% + 120px); height: calc(100% + 120px); top: -60px; left: -60px;"></div>
+      </div>
+
+      <div class="grid-3" style="margin-top: 48px;">
+        <div class="card">
+          <div class="card-title">Minimum Size Digital</div>
+          <div class="card-text"><strong>Lockup:</strong> 120px wide<br><strong>Mark:</strong> 32px × 32px<br>Below this, use mark only</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Minimum Size Print</div>
+          <div class="card-text"><strong>Lockup:</strong> 1 inch wide<br><strong>Mark:</strong> 0.25 inch<br>Ensures legibility in print</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Maximum Size</div>
+          <div class="card-text">No maximum. Scale proportionally. Maintain aspect ratio at all sizes.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Color Usage -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">04</div>
+        <h2 class="slide-title">Logo Color Usage</h2>
+        <p class="slide-desc">Use full-color logo on white or light backgrounds. Use white logo on dark or brand colors. Maintain 4.5:1 contrast minimum.</p>
+      </div>
+
+      <div class="color-usage-grid">
+        <div class="color-usage-card">
+          <div class="color-usage-box" style="background: var(--neutral-0); border: 2px solid var(--neutral-200);">
+            <div class="logo-lockup">
+              <div class="logo-mark" style="font-size: 2rem;">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem;">DataFlow</div>
+            </div>
+          </div>
+          <div class="color-usage-info">
+            <div class="color-usage-name">On White/Light</div>
+            <div class="color-usage-desc">Primary: Full color logo<br>Contrast: 8.6:1 ✓</div>
+          </div>
+        </div>
+
+        <div class="color-usage-card">
+          <div class="color-usage-box" style="background: var(--brand-primary);">
+            <div class="logo-lockup">
+              <div class="logo-mark" style="font-size: 2rem; color: var(--neutral-0);">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem; color: var(--neutral-0);">DataFlow</div>
+            </div>
+          </div>
+          <div class="color-usage-info">
+            <div class="color-usage-name">On Brand Color</div>
+            <div class="color-usage-desc">Use white logo only<br>Contrast: 4.5:1 ✓</div>
+          </div>
+        </div>
+
+        <div class="color-usage-card">
+          <div class="color-usage-box" style="background: var(--neutral-900);">
+            <div class="logo-lockup">
+              <div class="logo-mark" style="font-size: 2rem; color: var(--neutral-0);">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem; color: var(--neutral-0);">DataFlow</div>
+            </div>
+          </div>
+          <div class="color-usage-info">
+            <div class="color-usage-name">On Dark</div>
+            <div class="color-usage-desc">Use white logo only<br>Contrast: 15.8:1 ✓</div>
+          </div>
+        </div>
+
+        <div class="color-usage-card">
+          <div class="color-usage-box" style="background: var(--neutral-100);">
+            <div class="logo-lockup">
+              <div class="logo-mark" style="font-size: 2rem; color: var(--neutral-900);">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem; color: var(--neutral-900);">DataFlow</div>
+            </div>
+          </div>
+          <div class="color-usage-info">
+            <div class="color-usage-name">Monochrome</div>
+            <div class="color-usage-desc">Single color when needed<br>Use neutral-900</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Incorrect Usage -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">05</div>
+        <h2 class="slide-title">Logo Misuse</h2>
+        <p class="slide-desc">Protect brand integrity. Never alter, distort, or modify the logo. These examples show what not to do.</p>
+      </div>
+
+      <div class="rules-grid">
+        <div class="rule-card rule-dont">
+          <div class="rule-header">
+            <span>✗</span>
+            <span>Don't Stretch</span>
+          </div>
+          <div class="rule-demo">
+            <div class="logo-lockup" style="transform: scaleX(1.5);">
+              <div class="logo-mark" style="font-size: 2rem;">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem;">DataFlow</div>
+            </div>
+          </div>
+          <div class="rule-text">Never distort the aspect ratio. Always scale proportionally.</div>
+        </div>
+
+        <div class="rule-card rule-dont">
+          <div class="rule-header">
+            <span>✗</span>
+            <span>Don't Recolor</span>
+          </div>
+          <div class="rule-demo">
+            <div class="logo-lockup">
+              <div class="logo-mark" style="font-size: 2rem; color: #10b981;">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem; color: #10b981;">DataFlow</div>
+            </div>
+          </div>
+          <div class="rule-text">Don't change logo colors. Use only approved brand colors or monochrome.</div>
+        </div>
+
+        <div class="rule-card rule-dont">
+          <div class="rule-header">
+            <span>✗</span>
+            <span>Don't Add Effects</span>
+          </div>
+          <div class="rule-demo">
+            <div class="logo-lockup" style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));">
+              <div class="logo-mark" style="font-size: 2rem;">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem;">DataFlow</div>
+            </div>
+          </div>
+          <div class="rule-text">No drop shadows, outlines, gradients, or glow effects on the logo.</div>
+        </div>
+
+        <div class="rule-card rule-dont">
+          <div class="rule-header">
+            <span>✗</span>
+            <span>Don't Rotate</span>
+          </div>
+          <div class="rule-demo">
+            <div class="logo-lockup" style="transform: rotate(-15deg);">
+              <div class="logo-mark" style="font-size: 2rem;">DF</div>
+              <div class="logo-text" style="font-size: 1.5rem;">DataFlow</div>
+            </div>
+          </div>
+          <div class="rule-text">Keep the logo horizontal. Never rotate or tilt the lockup.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Brand Colors -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">06</div>
+        <h2 class="slide-title">Brand Color Palette</h2>
+        <p class="slide-desc">Our colors convey trust, innovation, and energy. Primary indigo builds recognition. Use the 60-30-10 rule: 60% neutral, 30% primary, 10% accent.</p>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 24px;">Primary Colors</h3>
+      <div class="grid-3">
+        <div class="color-swatch">
+          <div class="color-box" style="background: var(--brand-primary); color: white;">Primary</div>
+          <div class="color-info">
+            <div class="color-name">Brand Primary</div>
+            <div class="color-value">#6366F1</div>
+            <div class="color-usage">CTAs, links, active states, key brand moments</div>
+          </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background: var(--brand-secondary); color: white;">Secondary</div>
+          <div class="color-info">
+            <div class="color-name">Brand Secondary</div>
+            <div class="color-value">#A855F7</div>
+            <div class="color-usage">Gradients, illustrations, supporting elements</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background: var(--brand-accent); color: white;">Accent</div>
+          <div class="color-info">
+            <div class="color-name">Brand Accent</div>
+            <div class="color-value">#EC4899</div>
+            <div class="color-usage">Highlights, badges, special callouts, data viz</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin: 48px 0 24px;">Neutral Scale</h3>
+      <div class="grid-4">
+        <div class="color-swatch">
+          <div class="color-box" style="background: var(--neutral-900); color: white;">900</div>
+          <div class="color-info">
+            <div class="color-name">Neutral 900</div>
+            <div class="color-value">#0F172A</div>
+            <div class="color-usage">Headings, primary text</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background: var(--neutral-600); color: white;">600</div>
+          <div class="color-info">
+            <div class="color-name">Neutral 600</div>
+            <div class="color-value">#475569</div>
+            <div class="color-usage">Body text, labels</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background: var(--neutral-300); color: var(--neutral-900);">300</div>
+          <div class="color-info">
+            <div class="color-name">Neutral 300</div>
+            <div class="color-value">#CBD5E1</div>
+            <div class="color-usage">Borders, dividers</div>
+          </div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-box" style="background: var(--neutral-100); color: var(--neutral-900);">100</div>
+          <div class="color-info">
+            <div class="color-name">Neutral 100</div>
+            <div class="color-value">#F1F5F9</div>
+            <div class="color-usage">Backgrounds, hover states</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 8: Typography -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">07</div>
+        <h2 class="slide-title">Typography System</h2>
+        <p class="slide-desc">Inter is our brand typeface. Clean, modern, and highly legible. Use the modular scale for consistent hierarchy across all touchpoints.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Primary Font: Inter</div>
+          <div class="card-text" style="margin-bottom: 16px;">Weights: 400 Regular, 500 Medium, 600 Semibold, 700 Bold, 800 Extrabold, 900 Black</div>
+          <div style="font-family: var(--font-brand); font-size: 3rem; font-weight: 900; margin-bottom: 8px; letter-spacing: -0.025em;">Aa Bb Cc</div>
+          <div style="font-family: var(--font-brand); font-size: 1.5rem; font-weight: 600;">0123456789</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Monospace: SF Mono</div>
+          <div class="card-text" style="margin-bottom: 16px;">For code, data, and technical content</div>
+          <div style="font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; margin-bottom: 8px;">Aa Bb Cc</div>
+          <div style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 600;">0123456789</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin: 48px 0 24px;">Type Scale</h3>
+      <div class="type-spec">
+        <div>
+          <div class="type-label">Display</div>
+          <div class="type-details">96px / 900 / -0.05em</div>
+        </div>
+        <div style="font-size: 6rem; font-weight: 900; letter-spacing: -0.05em; line-height: 1;">Build Better</div>
+      </div>
+      <div class="type-spec">
+        <div>
+          <div class="type-label">H1</div>
+          <div class="type-details">60px / 800 / -0.025em</div>
+        </div>
+        <div style="font-size: 3.75rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.25;">Heading One</div>
+      </div>
+      <div class="type-spec">
+        <div>
+          <div class="type-label">H2</div>
+          <div class="type-details">48px / 700 / -0.025em</div>
+        </div>
+        <div style="font-size: 3rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.25;">Heading Two</div>
+      </div>
+      <div class="type-spec">
+        <div>
+          <div class="type-label">Body Large</div>
+          <div class="type-details">18px / 1.625 / 400</div>
+        </div>
+        <div style="font-size: 1.125rem; line-height: 1.625;">Large body text for introductions and important content that needs more presence and readability.</div>
+      </div>
+      <div class="type-spec">
+        <div>
+          <div class="type-label">Body</div>
+          <div class="type-details">16px / 1.5 / 400</div>
+        </div>
+        <div style="font-size: 1rem; line-height: 1.5;">Default body text. Optimized for readability across all devices. Use this for most content.</div>
+      </div>
+    </section>
+
+    <!-- Slide 9: Voice & Tone -->
+    <section class="slide">
+      <div class="slide-header">
+        <div class="slide-num">08</div>
+        <h2 class="slide-title">Voice & Tone</h2>
+        <p class="slide-desc">How we sound. We're confident but not arrogant, technical but approachable. We talk like smart humans helping other smart humans.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="voice-example">
+          <div class="voice-label">We Are</div>
+          <div class="voice-text"><strong>Clear:</strong> "Automate your workflow in 5 minutes" not "Leverage synergistic paradigms"<br><br><strong>Helpful:</strong> "Here's how to fix it" not "Contact support"<br><br><strong>Confident:</strong> "The fastest way to ship" not "We think this might help"</div>
+        </div>
+        <div class="voice-example">
+          <div class="voice-label">We Are Not</div>
+          <div class="voice-text"><strong>Jargony:</strong> Avoid "utilize", "leverage", "synergy"<br><br><strong>Salesy:</strong> No "revolutionary", "game-changing", "unprecedented"<br><br><strong>Robotic:</strong> Don't say "Your request has been processed"</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin: 48px 0 24px;">Writing Examples</h3>
+      <div class="grid-2">
+        <div class="card" style="border-color: var(--success);">
+          <div class="card-title" style="color: var(--success);">✓ Do: Be Direct</div>
+          <div class="card-text"><strong>Good:</strong> "Connect Slack in one click"<br><strong>Better:</strong> "One click connects Slack"<br><strong>Why:</strong> Active voice, fewer words, same meaning</div>
+        </div>
+        <div class="card" style="border-color: var(--error);">
+          <div class="card-title" style="color: var(--error);">✗ Don't: Be Vague</div>
+          <div class="card-text"><strong>Bad:</strong> "Streamline your productivity workflow"<br><strong>Why:</strong> Means nothing. What specifically gets better?</
