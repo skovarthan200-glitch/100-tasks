@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Templates - DataFlow</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Brand Tokens */
+    :root {
+      --brand-primary: #6366f1;
+      --brand-primary-dark: #4f46e5;
+      --brand-secondary: #a855f7;
+      --brand-accent: #ec4899;
+      --gold: #d4af37;
+      --gold-light: #f4e4a8;
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --font-display: 'Playfair Display', 'Georgia', serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-script: 'Brush Script MT', cursive;
+    }
+
+    /* Import fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+
+    /* Base */
+    body {
+      font-family: var(--font-body);
+      background: var(--neutral-100);
+      padding: 40px 20px;
+      color: var(--neutral-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+   .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+   .page-header p {
+      font-size: 1.125rem;
+      color: var(--neutral-600);
+    }
+
+    /* Certificate Grid */
+   .cert-grid {
+      display: grid;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+   .cert-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+   .cert-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    /* Certificate Base - 11x8.5 inch landscape */
+   .certificate {
+      width: 11in;
+      height: 8.5in;
+      background: var(--neutral-0);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Certificate 1: Formal Classic */
+   .cert-formal {
+      padding: 0.75in;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+      position: relative;
+    }
+
+   .cert-formal::before {
+      content: '';
+      position: absolute;
+      inset: 0.4in;
+      border: 3px double var(--brand-primary);
+      pointer-events: none;
+    }
+
+   .cert-formal::after {
+      content: '';
+      position: absolute;
+      inset: 0.5in;
+      border: 1px solid var(--brand-primary);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+   .cert-formal .ornament-top {
+      width: 2in;
+      height: 0.15in;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-bottom: 0.3in;
+    }
+
+   .cert-formal .header {
+      margin-bottom: 0.4in;
+    }
+
+   .cert-formal .title {
+      font-family: var(--font-display);
+      font-size: 0.5in;
+      font-weight: 900;
+      color: var(--brand-primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.15in;
+    }
+
+   .cert-formal .subtitle {
+      font-size: 0.16in;
+      color: var(--neutral-600);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+   .cert-formal .body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 7in;
+    }
+
+   .cert-formal .presented {
+      font-size: 0.14in;
+      color: var(--neutral-600);
+      margin-bottom: 0.25in;
+      font-style: italic;
+    }
+
+   .cert-formal .recipient {
+      font-family: var(--font-script);
+      font-size: 0.6in;
+      color: var(--neutral-900);
+      margin-bottom: 0.3in;
+      line-height: 1.2;
+      border-bottom: 2px solid var(--neutral-300);
+      padding-bottom: 0.1in;
+    }
+
+   .cert-formal .description {
+      font-size: 0.14in;
+      line-height: 1.8;
+      color: var(--neutral-700);
+      margin-bottom: 0.4in;
+      max-width: 6in;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+   .cert-formal .signatures {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      max-width: 6in;
+      margin-top: auto;
+    }
+
+   .cert-formal .signature {
+      text-align: center;
+      flex: 1;
+    }
+
+   .cert-formal .signature-line {
+      width: 2in;
+      height: 1px;
+      background: var(--neutral-400);
+      margin: 0 auto 0.1in;
+    }
+
+   .cert-formal .signature-name {
+      font-size: 0.11in;
+      font-weight: 600;
+      color: var(--neutral-900);
+      margin-bottom: 0.03in;
+    }
+
+   .cert-formal .signature-title {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+    }
+
+   .cert-formal .date-seal {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      width: 100%;
+      margin-top: 0.4in;
+    }
+
+   .cert-formal .date {
+      text-align: left;
+    }
+
+   .cert-formal .date-label {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+      margin-bottom: 0.03in;
+    }
+
+   .cert-formal .date-value {
+      font-size: 0.12in;
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+
+   .cert-formal .seal {
+      width: 1in;
+      height: 1in;
+      border: 3px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.4in;
+      color: var(--gold);
+      background: radial-gradient(circle, var(--gold-light) 0%, transparent 70%);
+    }
+
+    /* Certificate 2: Modern Gradient */
+   .cert-modern {
+      background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+      color: var(--neutral-0);
+      padding: 0.75in;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+   .cert-modern::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+
+   .cert-modern .content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+   .cert-modern .badge {
+      display: inline-block;
+      background: rgba(255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 0.1in 0.25in;
+      border-radius: 999px;
+      font-size: 0.11in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      align-self: flex-start;
+      margin-bottom: 0.4in;
+    }
+
+   .cert-modern .title {
+      font-size: 0.55in;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3in;
+    }
+
+   .cert-modern .recipient-box {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 16px;
+      padding: 0.4in;
+      margin-bottom: 0.4in;
+    }
+
+   .cert-modern .presented {
+      font-size: 0.12in;
+      opacity: 0.9;
+      margin-bottom: 0.15in;
+    }
+
+   .cert-modern .recipient {
+      font-size: 0.45in;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+   .cert-modern .description {
+      font-size: 0.14in;
+      line-height: 1.7;
+      opacity: 0.9;
+      max-width: 5in;
+      margin-bottom: 0.5in;
+    }
+
+   .cert-modern .footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+    }
+
+   .cert-modern .date-block {
+      text-align: left;
+    }
+
+   .cert-modern .date-label {
+      font-size: 0.09in;
+      opacity: 0.7;
+      margin-bottom: 0.03in;
+    }
+
+   .cert-modern .date-value {
+      font-size: 0.13in;
+      font-weight: 700;
+    }
+
+   .cert-modern .logo {
+      font-size: 0.35in;
+      font-weight: 900;
+      opacity: 0.9;
+    }
+
+    /* Certificate 3: Achievement Minimal */
+   .cert-minimal {
+      background: var(--neutral-0);
+      padding: 0.75in;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+   .cert-minimal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0.08in;
+      background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary), var(--brand-accent));
+    }
+
+   .cert-minimal .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 0.6in;
+    }
+
+   .cert-minimal .logo {
+      font-size: 0.35in;
+      font-weight: 900;
+      color: var(--brand-primary);
+    }
+
+   .cert-minimal .cert-number {
+      text-align: right;
+    }
+
+   .cert-minimal .cert-label {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+      margin-bottom: 0.03in;
+    }
+
+   .cert-minimal .cert-value {
+      font-size: 0.11in;
+      font-weight: 600;
+      color: var(--neutral-900);
+      font-family: var(--font-mono);
+    }
+
+   .cert-minimal .body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      max-width: 7in;
+      margin: 0 auto;
+    }
+
+   .cert-minimal .title {
+      font-size: 0.45in;
+      font-weight: 900;
+      color: var(--neutral-900);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3in;
+    }
+
+   .cert-minimal .presented {
+      font-size: 0.13in;
+      color: var(--neutral-500);
+      margin-bottom: 0.25in;
+    }
+
+   .cert-minimal .recipient {
+      font-size: 0.5in;
+      font-weight: 800;
+      color: var(--brand-primary);
+      margin-bottom: 0.3in;
+      line-height: 1.2;
+    }
+
+   .cert-minimal .description {
+      font-size: 0.14in;
+      line-height: 1.8;
+      color: var(--neutral-600);
+      margin-bottom: 0.5in;
+    }
+
+   .cert-minimal .skills {
+      display: flex;
+      justify-content: center;
+      gap: 0.15in;
+      flex-wrap: wrap;
+      margin-bottom: 0.5in;
+    }
+
+   .cert-minimal .skill-badge {
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      padding: 0.08in 0.2in;
+      border-radius: 999px;
+      font-size: 0.11in;
+      font-weight: 600;
+      color: var(--neutral-700);
+    }
+
+   .cert-minimal .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      padding-top: 0.4in;
+      border-top: 1px solid var(--neutral-200);
+    }
+
+   .cert-minimal .signature {
+      text-align: center;
+    }
+
+   .cert-minimal .signature-line {
+      width: 1.8in;
+      height: 1px;
+      background: var(--neutral-300);
+      margin: 0 auto 0.1in;
+    }
+
+   .cert-minimal .signature-name {
+      font-size: 0.11in;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.03in;
+    }
+
+   .cert-minimal .signature-title {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+    }
+
+   .cert-minimal .date-issued {
+      text-align: right;
+    }
+
+   .cert-minimal .date-label {
+      font-size: 0.09in;
+      color: var(--neutral-500);
+      margin-bottom: 0.03in;
+    }
+
+   .cert-minimal .date-value {
+      font-size: 0.12in;
+      font-weight: 600;
+      color: var(--neutral-900);
+    }
+
+    /* Specs Section */
+   .specs {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      padding: 48px;
+      margin-top: 60px;
+    }
+
+   .specs h2 {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: 32px;
+    }
+
+   .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+   .spec-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--neutral-900);
+    }
+
+   .spec-item ul {
+      list-style: none;
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--neutral-600);
+    }
+
+   .spec-item li::before {
+      content: '•';
+      color: var(--brand-primary);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+     .page-header, .specs, .cert-label {
+        display: none;
+      }
+     .certificate {
+        box-shadow: none;
+        page-break-after: always;
+      }
+     .cert-grid {
+        gap: 0;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+     .certificate {
+        transform: scale(0.7);
+        transform-origin: top center;
+      }
+    }
+
+    @media (max-width: 768px) {
+     .certificate {
+        transform: scale(0.5);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Certificate Templates</h1>
+      <p>Print-ready 11" × 8.5" landscape. 300 DPI with bleed. Formal, Modern & Minimal styles.</p>
+    </div>
+
+    <div class="cert-grid">
+      <!-- Certificate 1: Formal Classic -->
+      <div class="cert-wrapper">
+        <div class="cert-label">Template 1: Formal Classic - Traditional</div>
+        <div class="certificate cert-formal">
+          <div class="ornament-top"></div>
+          <div class="header">
+            <div class="title">Certificate</div>
+            <div class="subtitle">Of Achievement</div>
+          </div>
+          <div class="body">
+            <div class="presented">This is to certify that</div>
+            <div class="recipient">Alexandra Chen</div>
+            <div class="description">
+              has successfully completed the requirements and demonstrated excellence in the<br>
+              <strong>Advanced Product Management Certification Program</strong><br>
+              and is hereby awarded this certificate of completion with all the rights and privileges pertaining thereto.
+            </div>
+          </div>
+          <div class="signatures">
+            <div class="signature">
+              <div class="signature-line"></div>
+              <div class="signature-name">Dr. Sarah Williams</div>
+              <div class="signature-title">Program Director</div>
+            </div>
+            <div class="signature">
+              <div class="signature-line"></div>
+              <div class="signature-name">Michael Rodriguez</div>
+              <div class="signature-title">Chief Executive Officer</div>
+            </div>
+          <div class="date-seal">
+            <div class="date">
+              <div class="date-label">Date Issued</div>
+              <div class="date-value">January 15, 2026</div>
+            </div>
+            <div class="seal">★</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certificate 2: Modern Gradient -->
+      <div class="cert-wrapper">
+        <div class="cert-label">Template 2: Modern Gradient - Contemporary</div>
+        <div class="certificate cert-modern">
+          <div class="content">
+            <div class="badge">Certified Professional</div>
+            <div class="title">UX Design<br>Mastery</div>
+            <div class="recipient-box">
+              <div class="presented">Awarded to</div>
+              <div class="recipient">Jordan Martinez</div>
+            </div>
+            <div class="description">
+              For demonstrating exceptional proficiency in user experience design, completing 120 hours of coursework, and delivering a portfolio of outstanding work that meets industry standards.
+            </div>
+            <div class="footer">
+              <div class="date-block">
+                <div class="date-label">Issued</div>
+                <div class="date-value">Jan 15, 2026</div>
+              </div>
+              <div class="logo">DataFlow</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certificate 3: Minimal Achievement -->
+      <div class="cert-wrapper">
+        <div class="cert-label">Template 3: Minimal Achievement - Clean</div>
+        <div class="certificate cert-minimal">
+          <div class="header">
+            <div class="logo">DataFlow</div>
+            <div class="cert-number">
+              <div class="cert-label">Certificate ID</div>
+              <div class="cert-value">DF-2026-0115-4821</div>
+            </div>
+          </div>
+          <div class="body">
+            <div class="title">Certificate of Completion</div>
+            <div class="presented">This certifies that</div>
+            <div class="recipient">Taylor Kim</div>
+            <div class="description">
+              has successfully completed the DataFlow Automation Specialist Program, demonstrating mastery of workflow automation, API integration, and process optimization across 100+ business applications.
+            </div>
+            <div class="skills">
+              <div class="skill-badge">Workflow Design</div>
+              <div class="skill-badge">API Integration</div>
+              <div class="skill-badge">Process Automation</div>
+              <div class="skill-badge">Data Pipeline</div>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="signature">
+              <div class="signature-line"></div>
+              <div class="signature-name">Priya Patel</div>
+              <div class="signature-title">Head of Education</div>
+            </div>
+            <div class="date-issued">
+              <div class="date-label">Date Issued</div>
+              <div class="date-value">January 15, 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="specs">
+      <h2>Print Specifications</h2>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <h3>Dimensions</h3>
+          <ul>
+            <li><strong>Final size:</strong> 11" × 8.5" landscape</li>
+            <li><strong>With bleed:</strong> 11.25" × 8.75"</li>
+            <li><strong>Safe area:</strong> 10.5" × 8"</li>
+            <li><strong>Resolution:</strong> 300 DPI minimum</li>
+            <li><strong>File size:</strong> 3300 × 2550px at 300 DPI</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Color Mode</h3>
+          <ul>
+            <li><strong>Print:</strong> CMYK</li>
+            <li><strong>Primary:</strong> C:75 M:65 Y:0 K:0</li>
+            <li><strong>Gold accent:</strong> C:20 M:30 Y:80 K:0</li>
+            <li><strong>Black:</strong> Rich black C:60 M:40 Y:40 K:100</li>
+            <li><strong>Pantone:</strong> 2726 C for primary</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Typography</h3>
+          <ul>
+            <li><strong>Titles:</strong> 36-60pt, Playfair Display Black</li>
+            <li><strong>Names:</strong> 42-60pt, Script or Bold</li>
+            <li><strong>Body:</strong> 12-14pt, Inter Regular</li>
+            <li><strong>Captions:</strong> 9-11pt, Inter Medium</li>
+            <li><strong>Line height:</strong> 1.4-1.8 for body</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>File Setup</h3>
+          <ul>
+            <li><strong>Format:</strong> PDF/X-1a:2001</li>
+            <li><strong>Bleed:</strong> 0.125" all sides</li>
+            <li><strong>Crop marks:</strong> Include</li>
+            <li><strong>Fonts:</strong> Outline or embed all</li>
+            <li><strong>Images:</strong> 300 DPI, CMYK</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin: 48px 0 24px;">Design Best Practices</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+        <div style="background: #f0fdf4; border: 2px solid var(--success); border-radius: 12px; padding: 24px;">
+          <div style="font-size: 1.125rem; font-weight: 700; color: var(--success); margin-bottom: 16px;">✓ Do</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Use high-quality 300 DPI images</li>
+            <li>Keep text 0.5" from edges</li>
+            <li>Maintain visual hierarchy</li>
+            <li>Include signature lines</li>
+            <li>Add certificate number/ID</li>
+            <li>Use premium paper stock 80lb+</li>
+          </ul>
+        </div>
+        <div style="background: #fef2f2; border: 2px solid var(--error); border-radius: 12px; padding: 24px;">
+          <div style="font-size: 1.125rem; font-weight: 700; color: var(--error); margin-bottom: 16px;">✗ Don't</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Use fonts smaller than 9pt</li>
+            <li>Place text in bleed area</li>
+            <li>Use low-res images under 300 DPI</li>
+            <li>Forget date or signatures</li>
+            <li>Overcrowd with too much text</li>
+            <li>Use more than 3 fonts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
