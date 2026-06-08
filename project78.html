@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Poster Templates - DataFlow</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Brand Tokens */
+    :root {
+      --brand-primary: #6366f1;
+      --brand-primary-dark: #4f46e5;
+      --brand-secondary: #a855f7;
+      --brand-accent: #ec4899;
+      --brand-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Import fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    /* Base */
+    body {
+      font-family: var(--font-body);
+      background: var(--neutral-100);
+      padding: 40px 20px;
+      color: var(--neutral-900);
+      -webkit-font-smoothing: antialiased;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+   .page-header h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+   .page-header p {
+      font-size: 1.125rem;
+      color: var(--neutral-600);
+    }
+
+    /* Poster Grid */
+   .poster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+   .poster-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+   .poster-label {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    /* Poster Base - 18x24 inch at 72dpi = 1296x1728px */
+   .poster {
+      width: 18in;
+      height: 24in;
+      background: var(--neutral-0);
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Poster 1: Tech Conference */
+   .poster-conference {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+   .poster-conference::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: var(--brand-gradient);
+      opacity: 0.9;
+    }
+
+   .poster-conference::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(168,85,247,0.2) 0%, transparent 50%);
+    }
+
+   .poster-conference .content {
+      position: relative;
+      z-index: 1;
+      padding: 1in;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+   .poster-conference .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.15in 0.35in;
+      border-radius: 999px;
+      font-size: 0.18in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      align-self: flex-start;
+      margin-bottom: 0.5in;
+    }
+
+   .poster-conference .headline {
+      font-size: 1.1in;
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.3in;
+      text-transform: uppercase;
+    }
+
+   .poster-conference .subhead {
+      font-size: 0.25in;
+      font-weight: 500;
+      line-height: 1.4;
+      opacity: 0.9;
+      max-width: 6in;
+      margin-bottom: 0.6in;
+    }
+
+   .poster-conference .date-box {
+      background: var(--neutral-0);
+      color: var(--neutral-900);
+      padding: 0.4in;
+      border-radius: 16px;
+      display: inline-block;
+      margin-bottom: 0.5in;
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3);
+    }
+
+   .poster-conference .date-month {
+      font-size: 0.18in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-primary);
+    }
+
+   .poster-conference .date-day {
+      font-size: 0.8in;
+      font-weight: 900;
+      line-height: 1;
+      margin: 0.05in 0;
+    }
+
+   .poster-conference .date-time {
+      font-size: 0.16in;
+      font-weight: 600;
+      color: var(--neutral-600);
+    }
+
+   .poster-conference .speakers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.3in;
+      margin-top: auto;
+      margin-bottom: 0.4in;
+    }
+
+   .poster-conference .speaker {
+      text-align: center;
+    }
+
+   .poster-conference .speaker-photo {
+      width: 0.9in;
+      height: 0.9in;
+      background: rgba(255,255,255,0.2);
+      border: 3px solid var(--neutral-0);
+      border-radius: 50%;
+      margin: 0 auto 0.1in;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.35in;
+      font-weight: 800;
+    }
+
+   .poster-conference .speaker-name {
+      font-size: 0.14in;
+      font-weight: 700;
+      margin-bottom: 0.03in;
+    }
+
+   .poster-conference .speaker-title {
+      font-size: 0.11in;
+      opacity: 0.8;
+    }
+
+   .poster-conference .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.3in;
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+   .poster-conference .location {
+      font-size: 0.13in;
+      font-weight: 600;
+    }
+
+   .poster-conference .cta {
+      background: var(--neutral-0);
+      color: var(--neutral-900);
+      padding: 0.15in 0.4in;
+      border-radius: 8px;
+      font-size: 0.14in;
+      font-weight: 800;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Poster 2: Workshop Minimal */
+   .poster-workshop {
+      background: var(--neutral-0);
+      padding: 1in;
+      display: flex;
+      flex-direction: column;
+    }
+
+   .poster-workshop .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 0.8in;
+    }
+
+   .poster-workshop .logo {
+      font-size: 0.4in;
+      font-weight: 900;
+      color: var(--brand-primary);
+    }
+
+   .poster-workshop .date-badge {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 0.2in 0.3in;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+   .poster-workshop .date-month {
+      font-size: 0.12in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.8;
+    }
+
+   .poster-workshop .date-day {
+      font-size: 0.45in;
+      font-weight: 900;
+      line-height: 1;
+      margin: 0.03in 0;
+    }
+
+   .poster-workshop .headline {
+      font-size: 0.85in;
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--neutral-900);
+      margin-bottom: 0.3in;
+    }
+
+   .poster-workshop .headline .accent {
+      color: var(--brand-primary);
+    }
+
+   .poster-workshop .subhead {
+      font-size: 0.22in;
+      line-height: 1.5;
+      color: var(--neutral-600);
+      max-width: 5.5in;
+      margin-bottom: 0.6in;
+    }
+
+   .poster-workshop .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3in;
+      margin-bottom: 0.6in;
+    }
+
+   .poster-workshop .feature {
+      display: flex;
+      gap: 0.15in;
+      align-items: start;
+    }
+
+   .poster-workshop .feature-icon {
+      width: 0.4in;
+      height: 0.4in;
+      background: var(--brand-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.2in;
+      color: var(--neutral-0);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+   .poster-workshop .feature-text {
+      flex: 1;
+    }
+
+   .poster-workshop .feature-title {
+      font-size: 0.16in;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 0.05in;
+    }
+
+   .poster-workshop .feature-desc {
+      font-size: 0.12in;
+      line-height: 1.5;
+      color: var(--neutral-600);
+    }
+
+   .poster-workshop .cta-section {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 0.4in;
+      border-radius: 16px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+   .poster-workshop .cta-title {
+      font-size: 0.2in;
+      font-weight: 800;
+      margin-bottom: 0.1in;
+    }
+
+   .poster-workshop .cta-text {
+      font-size: 0.13in;
+      opacity: 0.8;
+      margin-bottom: 0.25in;
+    }
+
+   .poster-workshop .cta-button {
+      display: inline-block;
+      background: var(--neutral-0);
+      color: var(--neutral-900);
+      padding: 0.15in 0.5in;
+      border-radius: 8px;
+      font-size: 0.14in;
+      font-weight: 800;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+   .poster-workshop .footer {
+      margin-top: 0.4in;
+      padding-top: 0.3in;
+      border-top: 1px solid var(--neutral-200);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.11in;
+      color: var(--neutral-500);
+    }
+
+    /* Poster 3: Music Festival Bold */
+   .poster-festival {
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      position: relative;
+      overflow: hidden;
+    }
+
+   .poster-festival::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, var(--brand-accent) 0%, transparent 70%);
+      opacity: 0.3;
+    }
+
+   .poster-festival::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -20%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, var(--brand-primary) 0%, transparent 70%);
+      opacity: 0.3;
+    }
+
+   .poster-festival .content {
+      position: relative;
+      z-index: 1;
+      padding: 0.8in;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+   .poster-festival .presented {
+      font-size: 0.13in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0.6;
+      margin-bottom: 0.3in;
+    }
+
+   .poster-festival .headline {
+      font-size: 1.3in;
+      font-weight: 900;
+      line-height: 0.85;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.3in;
+      background: linear-gradient(135deg, var(--neutral-0) 0%, var(--brand-accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+   .poster-festival .lineup {
+      margin-bottom: 0.5in;
+    }
+
+   .poster-festival .lineup-label {
+      font-size: 0.12in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 0.2in;
+    }
+
+   .poster-festival .headliner {
+      font-size: 0.35in;
+      font-weight: 900;
+      margin-bottom: 0.15in;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+   .poster-festival .support {
+      font-size: 0.18in;
+      font-weight: 600;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+   .poster-festival .details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.3in;
+      margin-top: auto;
+      padding-top: 0.4in;
+      border-top: 2px solid rgba(255,255,255,0.2);
+    }
+
+   .poster-festival .detail-item {
+      text-align: center;
+    }
+
+   .poster-festival .detail-label {
+      font-size: 0.1in;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: 0.08in;
+    }
+
+   .poster-festival .detail-value {
+      font-size: 0.18in;
+      font-weight: 800;
+    }
+
+   .poster-festival .footer {
+      margin-top: 0.3in;
+      text-align: center;
+    }
+
+   .poster-festival .cta {
+      display: inline-block;
+      background: var(--neutral-0);
+      color: var(--neutral-900);
+      padding: 0.18in 0.6in;
+      border-radius: 999px;
+      font-size: 0.16in;
+      font-weight: 900;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Specs Section */
+   .specs {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      padding: 48px;
+      margin-top: 60px;
+    }
+
+   .specs h2 {
+      font-size: 1.875rem;
+      font-weight: 800;
+      margin-bottom: 32px;
+    }
+
+   .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+   .spec-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--neutral-900);
+    }
+
+   .spec-item ul {
+      list-style: none;
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--neutral-600);
+    }
+
+   .spec-item li::before {
+      content: '•';
+      color: var(--brand-primary);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    /* Print */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+     .page-header, .specs, .poster-label {
+        display: none;
+      }
+     .poster {
+        box-shadow: none;
+        page-break-after: always;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 1400px) {
+     .poster {
+        transform: scale(0.6);
+        transform-origin: top center;
+      }
+    }
+
+    @media (max-width: 768px) {
+     .poster-grid {
+        grid-template-columns: 1fr;
+      }
+     .poster {
+        transform: scale(0.45);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Event Poster Templates</h1>
+      <p>Print-ready 18" × 24" + 24" × 36" + A3. 300 DPI. Conference, Workshop & Festival layouts.</p>
+    </div>
+
+    <div class="poster-grid">
+      <!-- Poster 1: Tech Conference -->
+      <div class="poster-wrapper">
+        <div class="poster-label">Template 1: Tech Conference - Bold Gradient</div>
+        <div class="poster poster-conference">
+          <div class="content">
+            <div class="badge">Annual Summit 2026</div>
+            <div class="headline">Future of<br>Product</div>
+            <div class="subhead">Join 2,000+ product leaders, designers, and engineers for 3 days of insights, workshops, and networking.</div>
+            <div class="date-box">
+              <div class="date-month">March</div>
+              <div class="date-day">15-17</div>
+              <div class="date-time">San Francisco, CA</div>
+            </div>
+            <div class="speakers">
+              <div class="speaker">
+                <div class="speaker-photo">SM</div>
+                <div class="speaker-name">Sarah Miller</div>
+                <div class="speaker-title">CEO, Stripe</div>
+              </div>
+              <div class="speaker">
+                <div class="speaker-photo">JK</div>
+                <div class="speaker-name">James Kim</div>
+                <div class="speaker-title">CPO, Notion</div>
+              </div>
+              <div class="speaker">
+                <div class="speaker-photo">AL</div>
+                <div class="speaker-name">Alex Lee</div>
+                <div class="speaker-title">Founder, Linear</div>
+              </div>
+            </div>
+            <div class="footer">
+              <div class="location">Moscone Center<br>747 Howard St, SF</div>
+              <a href="#" class="cta">Get Tickets →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Poster 2: Workshop Minimal -->
+      <div class="poster-wrapper">
+        <div class="poster-label">Template 2: Workshop - Clean Minimal</div>
+        <div class="poster poster-workshop">
+          <div class="header">
+            <div class="logo">DataFlow</div>
+            <div class="date-badge">
+              <div style="font-size: 0.1in; opacity: 0.8;">Mar</div>
+              <div style="font-size: 0.35in; font-weight: 900; line-height: 1;">22</div>
+              <div style="font-size: 0.1in; opacity: 0.8;">2026</div>
+            </div>
+          <div class="headline">Master<br>Workflow<br><span class="accent">Automation</span></div>
+          <div class="subhead">A hands-on workshop for product teams. Learn to build automated workflows that save 20+ hours per week. No coding required.</div>
+          <div class="features">
+            <div class="feature">
+              <div class="feature-icon">⚡</div>
+              <div class="feature-text">
+                <div class="feature-title">Live Building</div>
+                <div class="feature-desc">Build 3 workflows from scratch with expert guidance</div>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🎯</div>
+              <div class="feature-text">
+                <div class="feature-title">Templates</div>
+                <div class="feature-desc">Get 50+ proven templates for your team</div>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">👥</div>
+              <div class="feature-text">
+                <div class="feature-title">Networking</div>
+                <div class="feature-desc">Connect with 100+ product leaders</div>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🏆</div>
+              <div class="feature-text">
+                <div class="feature-title">Certificate</div>
+                <div class="feature-desc">Earn automation specialist certification</div>
+              </div>
+            </div>
+          </div>
+          <div class="cta-section">
+            <div class="cta-title">Limited to 50 Seats</div>
+            <div class="cta-text">Early bird pricing ends March 1st</div>
+            <a href="#" class="cta-button">Reserve Your Spot</a>
+          </div>
+          <div class="footer">
+            <div>dataflow.com/workshop</div>
+            <div>workshop@dataflow.com • +1 (415) 555-0123</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Poster 3: Music Festival -->
+      <div class="poster-wrapper">
+        <div class="poster-label">Template 3: Music Festival - Bold Type</div>
+        <div class="poster poster-festival">
+          <div class="content">
+            <div class="presented">DataFlow Presents</div>
+            <div class="headline">Sound<br>Wave<br>2026</div>
+            <div class="lineup">
+              <div class="lineup-label">Featuring</div>
+              <div class="headliner">The Midnight</div>
+              <div class="headliner">Tycho</div>
+              <div class="headliner">ODESZA</div>
+              <div class="support">
+                + Bonobo • Four Tet • Caribou<br>
+                + Floating Points • Jon Hopkins • Rival Consoles<br>
+                + 20+ More Artists
+              </div>
+            </div>
+            <div class="details">
+              <div class="detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">July 15-17</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Location</div>
+                <div class="detail-value">Golden Gate Park</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Tickets</div>
+                <div class="detail-value">On Sale Now</div>
+              </div>
+            <div class="footer">
+              <a href="#" class="cta">Buy Tickets</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="specs">
+      <h2>Print Specifications</h2>
+      <div class="specs-grid">
+        <div class="spec-item">
+          <h3>Dimensions</h3>
+          <ul>
+            <li><strong>Standard:</strong> 18" × 24" (portrait)</li>
+            <li><strong>Large:</strong> 24" × 36" (portrait)</li>
+            <li><strong>A3:</strong> 11.7" × 16.5" (297×420mm)</li>
+            <li><strong>Bleed:</strong> 0.125" all sides</li>
+            <li><strong>Resolution:</strong> 300 DPI minimum</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Color Mode</h3>
+          <ul>
+            <li><strong>Print:</strong> CMYK</li>
+            <li><strong>Primary:</strong> C:75 M:65 Y:0 K:0</li>
+            <li><strong>Black:</strong> Rich black C:60 M:40 Y:40 K:100</li>
+            <li><strong>Digital:</strong> RGB (#6366F1)</li>
+            <li><strong>Pantone:</strong> 2726 C (closest)</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>Typography</h3>
+          <ul>
+            <li><strong>Headlines:</strong> 72-130pt, Black/ExtraBold</li>
+            <li><strong>Subheads:</strong> 24-36pt, Bold/Semibold</li>
+            <li><strong>Body:</strong> 14-18pt, Regular/Medium</li>
+            <li><strong>Captions:</strong> 10-12pt, Regular</li>
+            <li><strong>Line height:</strong> 1.1-1.5</li>
+          </ul>
+        </div>
+        <div class="spec-item">
+          <h3>File Setup</h3>
+          <ul>
+            <li><strong>Format:</strong> PDF/X-1a:2001</li>
+            <li><strong>Bleed:</strong> 0.125" all sides</li>
+            <li><strong>Crop marks:</strong> Include</li>
+            <li><strong>Fonts:</strong> Outline or embed all</li>
+            <li><strong>Images:</strong> 300 DPI, CMYK</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin: 48px 0 24px;">Design Best Practices</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+        <div style="background: #f0fdf4; border: 2px solid var(--success); border-radius: 12px; padding: 24px;">
+          <div style="font-size: 1.125rem; font-weight: 700; color: var(--success); margin-bottom: 16px;">✓ Do</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Use hierarchy: 1 main message</li>
+            <li>Keep text 0.5" from edges</li>
+            <li>High contrast for readability</li>
+            <li>Include date, time, location</li>
+            <li>Clear call-to-action</li>
+            <li>Test print at 100% scale</li>
+          </ul>
+        </div>
+        <div style="background: #fef2f2; border: 2px solid var(--error); border-radius: 12px; padding: 24px;">
+          <div style="font-size: 1.125rem; font-weight: 700; color: var(--error); margin-bottom: 16px;">✗ Don't</div>
+          <ul style="font-size: 0.875rem; line-height: 1.8; color: var(--neutral-700); padding-left: 20px;">
+            <li>Use fonts smaller than 12pt</li>
+            <li>Place text in bleed area</li>
+            <li>Use low-res images under 300 DPI</li>
+            <li>Forget contact information</li>
+            <li>Overcrowd with too much text</li>
+            <li>Use more than 3 font families</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
