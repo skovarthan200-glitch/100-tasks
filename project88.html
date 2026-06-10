@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenFlow - Onboarding</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-1: #0ea5e9;
+      --bg-2: #06b6d4;
+      --bg-3: #14b8a6;
+      --bg-4: #10b981;
+      --text: #0f172a;
+      --text-light: #64748b;
+      --white: #ffffff;
+      --font: 'Inter', system-ui, sans-serif;
+      --ease: 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+    body {
+      font-family: var(--font);
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+ .device {
+      width: 393px;
+      height: 852px;
+      background: #0f172a;
+      border-radius: 40px;
+      padding: 10px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+ .app {
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+ .status-bar {
+      height: 44px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 600;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      color: var(--text);
+    }
+
+ .slider {
+      display: flex;
+      width: 400%;
+      height: 100%;
+      transition: transform var(--ease);
+    }
+
+ .slide {
+      width: 25%;
+      height: 100%;
+      padding: 80px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Background shapes */
+ .slide::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -30%;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+
+ .slide-1 { background: var(--bg-1); }
+ .slide-1::before { background: var(--white); }
+ .slide-2 { background: var(--bg-2); }
+ .slide-2::before { background: var(--white); }
+ .slide-3 { background: var(--bg-3); }
+ .slide-3::before { background: var(--white); }
+ .slide-4 { background: var(--bg-4); }
+ .slide-4::before { background: var(--white); }
+
+    /* Card */
+ .card {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 32px 24px;
+      margin-top: auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      transform: translateY(40px);
+      opacity: 0;
+      animation: cardIn 600ms ease-out 300ms forwards;
+    }
+
+    @keyframes cardIn {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+ .icon-wrap {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, rgba(14,165,233,0.1) 0%, rgba(14,165,233,0.2) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-bottom: 24px;
+    }
+
+ .slide-2.icon-wrap { background: linear-gradient(135deg, rgba(6,182,212,0.1) 0%, rgba(6,182,212,0.2) 100%); }
+ .slide-3.icon-wrap { background: linear-gradient(135deg, rgba(20,184,166,0.1) 0%, rgba(20,184,166,0.2) 100%); }
+ .slide-4.icon-wrap { background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(16,185,129,0.2) 100%); }
+
+ .title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+ .desc {
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Pager */
+ .pager {
+      position: absolute;
+      bottom: 160px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 10;
+    }
+
+ .page {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transition: all 300ms ease;
+      cursor: pointer;
+    }
+
+ .page.active {
+      width: 28px;
+      border-radius: 4px;
+      background: var(--white);
+    }
+
+    /* Footer */
+ .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 32px 50px;
+      z-index: 10;
+    }
+
+ .btn {
+      width: 100%;
+      padding: 18px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font);
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      transition: all 200ms ease;
+    }
+
+ .btn:active { transform: scale(0.97); }
+
+ .btn-primary {
+      background: var(--text);
+      color: var(--white);
+    }
+
+ .btn-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+ .btn-text {
+      background: none;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 12px 0;
+    }
+
+ .btn-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--text);
+      color: var(--white);
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.2);
+      transition: all 200ms ease;
+    }
+
+ .btn-circle:active { transform: scale(0.92); }
+
+    /* Illustration area */
+ .illustration {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 120px;
+      margin: 20px 0;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    }
+
+ .home-bar {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: rgba(15,23,42,0.2);
+      border-radius: 100px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div class="device">
+    <div class="app">
+      <div class="status-bar">
+        <span>9:41</span>
+        <span>●●●</span>
+      </div>
+
+      <div class="slider" id="slider">
+        <!-- Slide 1 -->
+        <div class="slide slide-1">
+          <div class="illustration">🧘</div>
+          <div class="card">
+            <div class="icon-wrap">✨</div>
+            <div class="title">Welcome to<br>ZenFlow</div>
+            <div class="desc">Find your focus and build better habits. Track your mindfulness journey with zero friction.</div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide slide-2">
+          <div class="illustration">🎯</div>
+          <div class="card">
+            <div class="icon-wrap">📈</div>
+            <div class="title">Track Progress<br>Effortlessly</div>
+            <div class="desc">Beautiful charts and insights help you understand your patterns and celebrate small wins daily.</div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide slide-3">
+          <div class="illustration">🔔</div>
+          <div class="card">
+            <div class="icon-wrap">⏰</div>
+            <div class="title">Gentle<br>Reminders</div>
+            <div class="desc">Smart notifications that respect your time. We nudge you only when it matters most.</div>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide slide-4">
+          <div class="illustration">🌱</div>
+          <div class="card">
+            <div class="icon-wrap">🚀</div>
+            <div class="title">Start Your<br>Journey Today</div>
+            <div class="desc">Join 50k+ people building mindful habits. Your future self will thank you.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pager">
+        <div class="page active" onclick="goTo(0)"></div>
+        <div class="page" onclick="goTo(1)"></div>
+        <div class="page" onclick="goTo(2)"></div>
+        <div class="page" onclick="goTo(3)"></div>
+      </div>
+
+      <div class="footer" id="footer">
+        <div class="btn-group">
+          <button class="btn-text" onclick="goTo(3)">Skip</button>
+          <button class="btn-circle" onclick="next()">→</button>
+        </div>
+      </div>
+
+      <div class="home-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    let index = 0;
+    const slider = document.getElementById('slider');
+    const pages = document.querySelectorAll('.page');
+    const footer = document.getElementById('footer');
+
+    function update() {
+      slider.style.transform = `translateX(-${index * 25}%)`;
+      pages.forEach((p, i) => p.classList.toggle('active', i === index));
+
+      if (index === 3) {
+        footer.innerHTML = '<button class="btn btn-primary" onclick="start()">Get Started</button>';
+      } else {
+        footer.innerHTML = `
+          <div class="btn-group">
+            <button class="btn-text" onclick="goTo(3)">Skip</button>
+            <button class="btn-circle" onclick="next()">→</button>
+          </div>
+        `;
+      }
+    }
+
+    function next() {
+      if (index < 3) {
+        index++;
+        update();
+      }
+    }
+
+    function goTo(i) {
+      index = i;
+      update();
+    }
+
+    function start() {
+      alert('Onboarding complete! 🎉\n\nNext step: Sign Up or Permissions screen\n\nIn Adobe XD: Link "Get Started" to your main flow');
+    }
+
+    // Swipe
+    let startX = 0;
+    slider.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    slider.addEventListener('touchend', e => {
+      let endX = e.changedTouches[0].clientX;
+      if (startX - endX > 50 && index < 3) next();
+      if (endX - startX > 50 && index > 0) { index--; update(); }
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); if(index > 0) { index--; update(); } }
+    });
+
+    update();
+  </script>
+</body>
+</html>
