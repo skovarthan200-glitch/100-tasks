@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenFlow - Voice Assistant</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #a855f7;
+      --accent: #ec4899;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --gradient-idle: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      --gradient-listening: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+      --gradient-speaking: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --font: 'Inter', system-ui, sans-serif;
+      --ease: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-bounce: 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    body {
+      font-family: var(--font);
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+ .phone {
+      width: 393px;
+      height: 852px;
+      background: #0f172a;
+      border-radius: 40px;
+      padding: 10px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+ .screen {
+      width: 100%;
+      height: 100%;
+      background: var(--neutral-900);
+      border-radius: 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Status Bar */
+ .status {
+      height: 44px;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      position: relative;
+      z-index: 20;
+    }
+
+    /* Main Container */
+ .voice-ui {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 32px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated Background */
+ .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      animation: orbFloat 20s ease-in-out infinite;
+    }
+
+ .bg-orb-1 {
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      top: -100px;
+      left: -100px;
+      animation-delay: 0s;
+    }
+
+ .bg-orb-2 {
+      width: 250px;
+      height: 250px;
+      background: var(--secondary);
+      bottom: -80px;
+      right: -80px;
+      animation-delay: 5s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
+    /* State Label */
+ .state-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--neutral-400);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeIn 400ms ease-out 200ms forwards;
+    }
+
+ .state-label.listening {
+      color: var(--success);
+    }
+
+ .state-label.speaking {
+      color: var(--warning);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Voice Orb */
+ .orb-container {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+ .orb {
+      width: 120px;
+      height: 120px;
+      background: var(--gradient-idle);
+      border-radius: 50%;
+      position: relative;
+      transition: all var(--ease);
+      box-shadow: 0 0 60px rgba(99,102,241,0.4);
+      animation: orbIdle 3s ease-in-out infinite;
+    }
+
+    @keyframes orbIdle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+ .orb.listening {
+      background: var(--gradient-listening);
+      box-shadow: 0 0 80px rgba(34,197,94,0.6);
+      animation: orbPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+ .orb.speaking {
+      background: var(--gradient-speaking);
+      box-shadow: 0 0 80px rgba(245,158,11,0.6);
+      animation: orbSpeak 0.8s ease-in-out infinite;
+    }
+
+    @keyframes orbSpeak {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.15); }
+      75% { transform: scale(0.95); }
+    }
+
+    /* Waveform Rings */
+ .wave {
+      position: absolute;
+      inset: 0;
+      border: 2px solid;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+ .orb.listening .wave {
+      border-color: rgba(34,197,94,0.4);
+      animation: waveExpand 2s ease-out infinite;
+    }
+
+ .orb.listening .wave:nth-child(2) { animation-delay: 0.5s; }
+ .orb.listening .wave:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes waveExpand {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* Waveform Bars */
+ .waveform {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 4px;
+      align-items: flex-end;
+      height: 40px;
+      opacity: 0;
+      transition: opacity var(--ease);
+    }
+
+ .orb.listening + .waveform,
+ .orb.speaking + .waveform {
+      opacity: 1;
+    }
+
+ .bar {
+      width: 3px;
+      background: var(--white);
+      border-radius: 2px;
+      animation: barDance 1s ease-in-out infinite;
+    }
+
+ .bar:nth-child(1) { height: 20px; animation-delay: 0s; }
+ .bar:nth-child(2) { height: 30px; animation-delay: 0.1s; }
+ .bar:nth-child(3) { height: 25px; animation-delay: 0.2s; }
+ .bar:nth-child(4) { height: 35px; animation-delay: 0.3s; }
+ .bar:nth-child(5) { height: 28px; animation-delay: 0.4s; }
+ .bar:nth-child(6) { height: 32px; animation-delay: 0.5s; }
+ .bar:nth-child(7) { height: 22px; animation-delay: 0.6s; }
+
+    @keyframes barDance {
+      0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    /* Transcript */
+ .transcript {
+      width: 100%;
+      max-width: 320px;
+      min-height: 120px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 400ms ease-out 400ms forwards;
+    }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+ .transcript-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+ .transcript-text {
+      font-size: 16px;
+      color: var(--white);
+      line-height: 1.5;
+      min-height: 24px;
+    }
+
+ .transcript-text.user {
+      color: var(--primary-light);
+    }
+
+ .transcript-text.placeholder {
+      color: var(--neutral-600);
+      font-style: italic;
+    }
+
+    /* Controls */
+ .controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+ .control-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 24px;
+      cursor: pointer;
+      transition: all var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+ .control-btn:active {
+      transform: scale(0.92);
+      background: rgba(255,255,255,0.15);
+    }
+
+ .control-btn.primary {
+      width: 72px;
+      height: 72px;
+      background: var(--gradient);
+      box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+      font-size: 32px;
+    }
+
+ .control-btn.primary.listening {
+      background: var(--gradient-listening);
+      animation: btnPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes btnPulse {
+      0%, 100% { box-shadow: 0 8px 24px rgba(34,197,94,0.4); }
+      50% { box-shadow: 0 8px 32px rgba(34,197,94,0.6); }
+    }
+
+    /* Suggestions */
+ .suggestions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+ .suggestion {
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+      cursor: pointer;
+      transition: all var(--ease);
+      white-space: nowrap;
+    }
+
+ .suggestion:active {
+      transform: scale(0.96);
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Home Indicator */
+ .home-bar {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 100px;
+    }
+
+    /* Close Button */
+ .close-btn {
+      position: absolute;
+      top: 56px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--ease);
+      z-index: 30;
+    }
+
+ .close-btn:active {
+      transform: scale(0.92);
+      background: rgba(255,255,255,0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="screen">
+      <div class="status">
+        <span>9:41</span>
+        <span>●●●</span>
+      </div>
+
+      <button class="close-btn" onclick="reset()">×</button>
+
+      <div class="voice-ui">
+        <div class="bg-orb bg-orb-1"></div>
+        <div class="bg-orb bg-orb-2"></div>
+
+        <div class="state-label" id="stateLabel">Tap to speak</div>
+
+        <div class="orb-container">
+          <div class="orb" id="orb">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+          </div>
+          <div class="waveform" id="waveform">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+          </div>
+        </div>
+
+        <div class="transcript">
+          <div class="transcript-label" id="transcriptLabel">Listening...</div>
+          <div class="transcript-text placeholder" id="transcriptText">Say something like "Set a timer for 10 minutes"</div>
+        </div>
+
+        <div class="controls">
+          <button class="control-btn" onclick="toggleMute()" id="muteBtn">🔊</button>
+          <button class="control-btn primary" onclick="toggleListening()" id="micBtn">🎤</button>
+          <button class="control-btn" onclick="sendText()">⌨️</button>
+        </div>
+
+        <div class="suggestions" id="suggestions">
+          <div class="suggestion" onclick="quickCommand('What\'s the weather?')">Weather</div>
+          <div class="suggestion" onclick="quickCommand('Set a timer')">Timer</div>
+          <div class="suggestion" onclick="quickCommand('Play music')">Music</div>
+          <div class="suggestion" onclick="quickCommand('Send a message')">Message</div>
+        </div>
+      </div>
+
+      <div class="home-bar"></div>
+    </div>
+  </div>
+
+  <script>
+    let state = 'idle'; // idle, listening, processing, speaking
+    let isMuted = false;
+    let transcript = '';
+
+    const orb = document.getElementById('orb');
+    const stateLabel = document.getElementById('stateLabel');
+    const transcriptLabel = document.getElementById('transcriptLabel');
+    const transcriptText = document.getElementById('transcriptText');
+    const micBtn = document.getElementById('micBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const suggestions = document.getElementById('suggestions');
+
+    const responses = {
+      'weather': "It's 72° and sunny in San Francisco. Perfect weather for a walk!",
+      'timer': "Timer set for 10 minutes. I'll let you know when it's done.",
+      'music': "Playing your Chill Vibes playlist on Spotify.",
+      'message': "Who would you like to message?",
+      'default': "I can help you with weather, timers, music, messages, and more. What would you like to do?"
+    };
+
+    function updateState(newState) {
+      state = newState;
+      orb.className = 'orb ' + newState;
+      micBtn.className = 'control-btn primary ' + newState;
+      
+      switch(newState) {
+        case 'idle':
+          stateLabel.textContent = 'Tap to speak';
+          stateLabel.className = 'state-label';
+          transcriptLabel.textContent = 'Ready';
+          transcriptText.textContent = 'Say something like "Set a timer for 10 minutes"';
+          transcriptText.className = 'transcript-text placeholder';
+          micBtn.textContent = '🎤';
+          suggestions.style.display = 'flex';
+          break;
+        case 'listening':
+          stateLabel.textContent = 'Listening...';
+          stateLabel.className = 'state-label listening';
+          transcriptLabel.textContent = 'You said';
+          transcriptText.textContent = '';
+          transcriptText.className = 'transcript-text user';
+          micBtn.textContent = '⏸';
+          suggestions.style.display = 'none';
+          simulateListening();
+          break;
+        case 'processing':
+          stateLabel.textContent = 'Thinking...';
+          stateLabel.className = 'state-label';
+          transcriptLabel.textContent = 'Processing';
+          micBtn.textContent = '⏳';
+          break;
+        case 'speaking':
+          stateLabel.textContent = 'Speaking...';
+          stateLabel.className = 'state-label speaking';
+          transcriptLabel.textContent = 'ZenFlow AI';
+          transcriptText.className = 'transcript-text';
+          micBtn.textContent = '⏹';
+          break;
+      }
+    }
+
+    function toggleListening() {
+      if (state === 'idle') {
+        updateState('listening');
+      } else if (state === 'listening') {
+        processSpeech();
+      } else if (state === 'speaking') {
+        updateState('idle');
+      }
+    }
+
+    function simulateListening() {
+      const phrases = [
+        "What's the weather?",
+        "Set a timer for 10 minutes",
+        "Play some music",
+        "Send a message to Alex"
+      ];
+      const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+      
+      // Simulate typing effect
+      let i = 0;
+      const typeInterval = setInterval(() => {
+        if (i < randomPhrase.length && state === 'listening') {
+          transcriptText.textContent = randomPhrase.substring(0, i + 1);
+          i++;
+        } else {
+          clearInterval(typeInterval);
+          if (state === 'listening') {
+            setTimeout(() => processSpeech(randomPhrase), 500);
+          }
+        }
+      }, 50);
+    }
+
+    function processSpeech(text = transcriptText.textContent) {
+      if (!text || state !== 'listening') return;
+      
+      updateState('processing');
+      
+      setTimeout(() => {
+        updateState('speaking');
+        const lower = text.toLowerCase();
+        let response = responses.default;
+        
+        if (lower.includes('weather')) response = responses.weather;
+        else if (lower.includes('timer')) response = responses.timer;
+        else if (lower.includes('music')) response = responses.music;
+        else if (lower.includes('message')) response = responses.message;
+        
+        transcriptText.textContent = response;
+        
+        // Simulate speaking duration
+        setTimeout(() => {
+          updateState('idle');
+        }, 3000);
+      }, 1000);
+    }
+
+    function quickCommand(cmd) {
+      if (state !== 'idle') return;
+      transcriptText.textContent = cmd;
+      transcriptText.className = 'transcript-text user';
+      updateState('processing');
+      
+      setTimeout(() => {
+        updateState('speaking');
+        const lower = cmd.toLowerCase();
+        let response = responses.default;
+        
+        if (lower.includes('weather')) response = responses.weather;
+        else if (lower.includes('timer')) response = responses.timer;
+        else if (lower.includes('music')) response = responses.music;
+        else if (lower.includes('message')) response = responses.message;
+        
+        transcriptText.textContent = response;
+        
+        setTimeout(() => {
+          updateState('idle');
+        }, 3000);
+      }, 1000);
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      muteBtn.textContent = isMuted ? '🔇' : '🔊';
+    }
+
+    function sendText() {
+      const text = prompt('Type your message:');
+      if (text) {
+        transcriptText.textContent = text;
+        transcriptText.className = 'transcript-text user';
+        updateState('processing');
+        setTimeout(() => processSpeech(text), 1000);
+      }
+    }
+
+    function reset() {
+      updateState('idle');
+      transcriptText.textContent = 'Say something like "Set a timer for 10 minutes"';
+      transcriptText.className = 'transcript-text placeholder';
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', (e) => {
+      if (e.key === ' ' && state === 'idle') {
+        e.preventDefault();
+        toggleListening();
+      }
+      if (e.key === 'Escape' && state !== 'idle') {
+        updateState('idle');
+      }
+    });
+
+    // Initialize
+    updateState('idle');
+  </script>
+</body>
+</html>
