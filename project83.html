@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reusable Components Library - DataFlow</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Design Tokens */
+    :root {
+      --brand-primary: #6366f1;
+      --brand-primary-dark: #4f46e5;
+      --brand-secondary: #a855f7;
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      
+      --radius-md: 0.375rem;
+      --radius-lg: 0.5rem;
+      --radius-xl: 0.75rem;
+      --radius-full: 9999px;
+      
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      
+      --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --neutral-0: #0f172a;
+      --neutral-50: #1e293b;
+      --neutral-100: #334155;
+      --neutral-200: #475569;
+      --neutral-300: #64748b;
+      --neutral-400: #94a3b8;
+      --neutral-500: #cbd5e1;
+      --neutral-600: #e2e8f0;
+      --neutral-700: #f1f5f9;
+      --neutral-800: #f8fafc;
+      --neutral-900: #ffffff;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    /* Base */
+    body {
+      font-family: var(--font-sans);
+      background: var(--neutral-50);
+      color: var(--neutral-900);
+      padding: var(--space-8) var(--space-4);
+    }
+
+   .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+
+   .page-header h1 {
+      font-size: 2.25rem;
+      font-weight: 900;
+      margin-bottom: var(--space-3);
+    }
+
+   .section {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+
+   .section-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: var(--space-6);
+    }
+
+   .component-demo {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+
+   .component-demo:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+   .component-label {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-4);
+    }
+
+   .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      align-items: center;
+    }
+
+    /* Component 1: Modal/Dialog */
+   .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+
+   .modal-overlay.active {
+      display: flex;
+    }
+
+   .modal {
+      background: var(--neutral-0);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+    }
+
+   .modal-header {
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--neutral-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+   .modal-title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      color: var(--neutral-900);
+    }
+
+   .modal-close {
+      width: 2rem;
+      height: 2rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--neutral-500);
+      transition: all var(--transition);
+    }
+
+   .modal-close:hover {
+      background: var(--neutral-100);
+      color: var(--neutral-900);
+    }
+
+   .modal-body {
+      padding: var(--space-6);
+      color: var(--neutral-700);
+      line-height: 1.6;
+    }
+
+   .modal-footer {
+      padding: var(--space-6);
+      border-top: 1px solid var(--neutral-200);
+      display: flex;
+      gap: var(--space-3);
+      justify-content: flex-end;
+    }
+
+    /* Component 2: Dropdown Menu */
+   .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+   .dropdown-trigger {
+      padding: var(--space-3) var(--space-4);
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-300);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: all var(--transition);
+    }
+
+   .dropdown-trigger:hover {
+      border-color: var(--brand-primary);
+    }
+
+   .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + var(--space-2));
+      left: 0;
+      min-width: 200px;
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-2);
+      z-index: 100;
+    }
+
+   .dropdown-menu.active {
+      display: block;
+    }
+
+   .dropdown-item {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-sm);
+      color: var(--neutral-700);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+   .dropdown-item:hover {
+      background: var(--neutral-100);
+      color: var(--neutral-900);
+    }
+
+   .dropdown-divider {
+      height: 1px;
+      background: var(--neutral-200);
+      margin: var(--space-2) 0;
+    }
+
+    /* Component 3: Toast Notification */
+   .toast-container {
+      position: fixed;
+      top: var(--space-6);
+      right: var(--space-6);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+   .toast {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      gap: var(--space-3);
+      align-items: start;
+      min-width: 320px;
+      max-width: 400px;
+      animation: slideIn 300ms ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+   .toast-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      flex-shrink: 0;
+    }
+
+   .toast-content {
+      flex: 1;
+    }
+
+   .toast-title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-1);
+    }
+
+   .toast-text {
+      font-size: var(--text-sm);
+      color: var(--neutral-600);
+      line-height: 1.5;
+    }
+
+   .toast-close {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      color: var(--neutral-500);
+      flex-shrink: 0;
+    }
+
+   .toast-success {
+      border-left: 4px solid var(--success);
+    }
+
+   .toast-error {
+      border-left: 4px solid var(--error);
+    }
+
+   .toast-warning {
+      border-left: 4px solid var(--warning);
+    }
+
+    /* Component 4: Tooltip */
+   .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+   .tooltip-content {
+      visibility: hidden;
+      position: absolute;
+      bottom: calc(100% + var(--space-2));
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      white-space: nowrap;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+   .tooltip-content::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid transparent;
+      border-top-color: var(--neutral-900);
+    }
+
+   .tooltip:hover .tooltip-content {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Component 5: Tabs */
+   .tabs {
+      border-bottom: 2px solid var(--neutral-200);
+      display: flex;
+      gap: var(--space-2);
+    }
+
+   .tab {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--neutral-600);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all var(--transition);
+    }
+
+   .tab:hover {
+      color: var(--neutral-900);
+    }
+
+   .tab-active {
+      color: var(--brand-primary);
+      border-bottom-color: var(--brand-primary);
+    }
+
+   .tab-panel {
+      padding: var(--space-6) 0;
+      display: none;
+    }
+
+   .tab-panel.active {
+      display: block;
+    }
+
+    /* Component 6: Accordion */
+   .accordion {
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+   .accordion-item {
+      border-bottom: 1px solid var(--neutral-200);
+    }
+
+   .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+   .accordion-trigger {
+      width: 100%;
+      padding: var(--space-4);
+      background: var(--neutral-0);
+      border: none;
+      text-align: left;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--neutral-900);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background var(--transition);
+    }
+
+   .accordion-trigger:hover {
+      background: var(--neutral-50);
+    }
+
+   .accordion-icon {
+      transition: transform var(--transition);
+    }
+
+   .accordion-item.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+   .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--transition);
+    }
+
+   .accordion-item.active .accordion-content {
+      max-height: 500px;
+    }
+
+   .accordion-body {
+      padding: var(--space-4);
+      color: var(--neutral-600);
+      line-height: 1.6;
+      font-size: var(--text-sm);
+    }
+
+    /* Component 7: Pagination */
+   .pagination {
+      display: flex;
+      gap: var(--space-2);
+      align-items: center;
+    }
+
+   .page-btn {
+      min-width: 2.5rem;
+      height: 2.5rem;
+      padding: 0 var(--space-3);
+      border: 1px solid var(--neutral-300);
+      background: var(--neutral-0);
+      color: var(--neutral-700);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .page-btn:hover {
+      border-color: var(--brand-primary);
+      color: var(--brand-primary);
+    }
+
+   .page-btn-active {
+      background: var(--brand-primary);
+      border-color: var(--brand-primary);
+      color: var(--neutral-0);
+    }
+
+   .page-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Utility Button */
+   .btn {
+      padding: var(--space-3) var(--space-6);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      border-radius: var(--radius-lg);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+   .btn-primary {
+      background: var(--brand-primary);
+      color: var(--neutral-0);
+    }
+
+   .btn-primary:hover {
+      background: var(--brand-primary-dark);
+    }
+
+   .btn-secondary {
+      background: var(--neutral-100);
+      color: var(--neutral-900);
+      border-color: var(--neutral-300);
+    }
+
+   .btn-secondary:hover {
+      background: var(--neutral-200);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+     .demo-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Reusable Components Library</h1>
+      <p>Production-ready components. Copy-paste into any project. Zero dependencies.</p>
+    </div>
+
+    <!-- Modal Component -->
+    <div class="section">
+      <h2 class="section-title">Modal / Dialog</h2>
+      
+      <div class="component-demo">
+        <div class="component-label">Basic Modal</div>
+        <div class="demo-row">
+          <button class="btn btn-primary" onclick="openModal('demo-modal')">Open Modal</button>
+        </div>
+      </div>
+
+      <!-- Modal Markup -->
+      <div class="modal-overlay" id="demo-modal">
+        <div class="modal">
+          <div class="modal-header">
+            <div class="modal-title">Confirm Action</div>
+            <button class="modal-close" onclick="closeModal('demo-modal')">✕</button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this item? This action cannot be undone.
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal('demo-modal')">Cancel</button>
+            <button class="btn btn-primary" onclick="closeModal('demo-modal')">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dropdown Component -->
+    <div class="section">
+      <h2 class="section-title">Dropdown Menu</h2>
+      
+      <div class="component-demo">
+        <div class="component-label">Basic Dropdown</div>
+        <div class="demo-row">
+          <div class="dropdown">
+            <button class="dropdown-trigger" onclick="toggleDropdown('dropdown-1')">
+              Options ▼
+            </button>
+            <div class="dropdown-menu" id="dropdown-1">
+              <div class="dropdown-item">📝 Edit</div>
+              <div class="dropdown-item">📋 Duplicate</div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item" style="color: var(--error);">🗑️ Delete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Component -->
+    <div class="section">
+      <h2 class="section-title">Toast Notifications</h2>
+      
+      <div class="component-demo">
+        <div class="component-label">Toast Types</div>
+        <div class="demo-row">
+          <button class="btn btn-secondary" onclick="showToast('success')">Success Toast</button>
+          <button class="btn btn-secondary" onclick="showToast('error')">Error Toast</button>
+          <button class="btn btn-secondary" onclick="showToast('warning')">Warning Toast</button>
+        </div>
+      </div>
+
+      <!-- Toast Container -->
+      <div class="toast-container" id="toast-container"></div>
+    </div>
+
+    <!-- Tooltip Component -->
+    <div class="section">
+      <h2 class="section-title">Tooltip</h2>
+      
+      <div class="component-demo">
+        <div class="component-label">Hover Tooltips</div>
+        <div class="demo-row">
+          <div class="tooltip">
+            <button class="btn btn-secondary">Hover Me</button>
+            <div class="tooltip-content">This is a tooltip</div>
+          </div>
+          <div class="tooltip">
+            <button class="btn btn-secondary">Info Icon ℹ️</button>
+            <div class="tooltip-content">More information here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Component -->
+    <div class="section">
+      <h2 class="section-title">Tabs</h2>
+      
+      <div class="component-demo">
+        <div class="component-label">Basic Tabs</div>
+        <div class="tabs">
+          <button class="tab tab-active" onclick="switchTab(event, 'tab-1')">Overview</button>
+          <button class="tab" onclick="switchTab(event, 'tab-2')">Details</button>
+          <button class="tab" onclick="switchTab(event, 'tab-3')">Settings</button>
+        </div>
+        <div class="tab-panel active" id="tab-1">
+          <p style="color: var(--neutral-600); line-height: 1.6;">Overview content goes here. This is the first tab panel with some example content to demonstrate the tab switching functionality.</p>
+        </div>
+        <div class="tab-panel" id="tab-2">
+          <p style="color: var(--neutral-600); line-height: 1.6;">Details content goes here. Each tab can contain different content sections.</p>
+        </div>
+        <div class="tab-panel" id="tab-3">
+          <p style="color: var(--neutral-600); line-height: 1.6;">Settings content goes here. Configure your preferences in this tab.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion Component -->
+    <div class="section">
+      <h2 class="section-title">Accordion</h2>
+      
+      <div class="component-demo">
+        <div class="component-label">Collapsible Sections</div>
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              <span>What is included in the plan?</span>
+              <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                The plan includes unlimited projects, priority support, and access to all premium features. You also get 100GB of storage and advanced analytics.
+              </div>
+            </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              <span>Can I cancel anytime?</span>
+              <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                Yes, you can cancel your subscription at any time. No questions asked. You'll retain access until the end of your billing period.
+              </div>
+            </div>
+          <div class="accordion-item">
+            <button class="accordion-trigger" onclick="toggleAccordion(this)">
+              <span>Do you offer refunds?</span>
+              <span class="accordion-icon">▼</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                We offer a 30-day money-back guarantee. If you're not satisfied, contact support for a full refund.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination Component -->
+    <div class="section">
+      <h2 class="section-title">Pagination</h2>
+      
+      <div class="component-demo">
+        <div class="component-label">Page Navigation</div>
+        <div class="demo-row">
+          <div class="pagination">
+            <button class="page-btn" disabled>←</button>
+            <button class="page-btn page-btn-active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn">5</button>
+            <button class="page-btn">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modal Functions
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+
+    // Close modal on overlay click
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        e.target.classList.remove('active');
+      }
+    });
+
+    // Dropdown Functions
+    function toggleDropdown(id) {
+      const menu = document.getElementById(id);
+      menu.classList.toggle('active');
+    }
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+          menu.classList.remove('active');
+        });
+      }
+    });
+
+    // Toast Functions
+    function showToast(type) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      
+      const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠'
+      };
+      
+      const titles = {
+        success: 'Success',
+        error: 'Error',
+        warning: 'Warning'
+      };
+      
+      const messages = {
+        success: 'Your changes have been saved successfully.',
+        error: 'There was an error processing your request.',
+        warning: 'Please review your settings before continuing.'
+      };
+      
+      toast.innerHTML = `
+        <div class="toast-icon">${icons[type]}</div>
+        <div class="toast-content">
+          <div class="toast-title">${titles[type]}</div>
+          <div class="toast-text">${messages[type]}</div>
+        </div>
+        <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+      `;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+
+    // Tab Functions
+    function switchTab(event, tabId) {
+      // Remove active from all tabs and panels
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('tab-active');
+      });
+      document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+      
+      // Add active to clicked tab and corresponding panel
+      event.target.classList.add('tab-active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Accordion Functions
+    function toggleAccordion(trigger) {
+      const item = trigger.parentElement;
+      const isActive = item.classList.contains('active');
+      
+      // Close all items
+      document.querySelectorAll('.accordion-item').forEach(i => {
+        i.classList.remove('active');
+      });
+      
+      // Open clicked item if it wasn't active
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>
