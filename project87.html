@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Flow Wireframe - TaskFlow App</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --primary: #6366f1;
+      --primary-light: #e0e7ff;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+      --error: #ef4444;
+      --error-light: #fee2e2;
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --font: 'Inter', system-ui, sans-serif;
+      --font-mono: 'SF Mono', monospace;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    body {
+      font-family: var(--font);
+      background: var(--neutral-50);
+      color: var(--neutral-900);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+   .container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+   .page-header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+   .page-header p {
+      font-size: 16px;
+      color: var(--neutral-600);
+    }
+
+   .legend {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+   .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+   .legend-box {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 2px solid;
+    }
+
+    /* Flow Canvas */
+   .flow-canvas {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      padding: 40px;
+      overflow-x: auto;
+      min-height: 800px;
+      position: relative;
+    }
+
+   .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 280px);
+      grid-template-rows: repeat(4, 180px);
+      gap: 80px 120px;
+      position: relative;
+      width: fit-content;
+    }
+
+    /* Screen Node */
+   .screen-node {
+      background: var(--neutral-0);
+      border: 2px solid var(--neutral-300);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+      transition: all 200ms ease;
+    }
+
+   .screen-node:hover {
+      border-color: var(--primary);
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      transform: translateY(-2px);
+    }
+
+   .screen-node.start {
+      border-color: var(--success);
+      background: var(--success-light);
+    }
+
+   .screen-node.end {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+   .screen-node.decision {
+      border-color: var(--warning);
+      background: var(--warning-light);
+      transform: rotate(45deg);
+      width: 140px;
+      height: 140px;
+      margin: 20px;
+    }
+
+   .screen-node.decision .screen-content {
+      transform: rotate(-45deg);
+    }
+
+   .screen-node.modal {
+      border-style: dashed;
+      border-color: var(--primary);
+    }
+
+   .screen-badge {
+      position: absolute;
+      top: -10px;
+      left: 12px;
+      background: var(--neutral-900);
+      color: var(--neutral-0);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+   .screen-node.start .screen-badge { background: var(--success); }
+   .screen-node.end .screen-badge { background: var(--primary); }
+   .screen-node.decision .screen-badge { background: var(--warning); }
+
+   .screen-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--neutral-900);
+    }
+
+   .screen-desc {
+      font-size: 12px;
+      color: var(--neutral-600);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+   .screen-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+   .screen-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--neutral-100);
+      color: var(--neutral-600);
+    }
+
+    /* Wireframe Preview */
+   .wireframe {
+      width: 100%;
+      height: 60px;
+      background: var(--neutral-100);
+      border: 1px solid var(--neutral-200);
+      border-radius: 6px;
+      margin-bottom: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+   .wire-line {
+      height: 6px;
+      background: var(--neutral-300);
+      border-radius: 2px;
+    }
+
+   .wire-line.short { width: 60%; }
+   .wire-line.full { width: 100%; }
+
+    /* Connectors */
+   .connector {
+      position: absolute;
+      pointer-events: none;
+    }
+
+   .connector-line {
+      stroke: var(--neutral-400);
+      stroke-width: 2;
+      fill: none;
+      marker-end: url(#arrowhead);
+    }
+
+   .connector-label {
+      position: absolute;
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-300);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--neutral-700);
+      white-space: nowrap;
+    }
+
+    /* Section Labels */
+   .flow-section {
+      position: absolute;
+      top: -30px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Details Panel */
+   .details {
+      margin-top: 40px;
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+   .details-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+   .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+   .detail-card {
+      border: 1px solid var(--neutral-200);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+   .detail-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+   .detail-list {
+      list-style: none;
+      font-size: 14px;
+      color: var(--neutral-700);
+      line-height: 1.8;
+    }
+
+   .detail-list li {
+      padding-left: 20px;
+      position: relative;
+    }
+
+   .detail-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+     .flow-grid {
+        grid-template-columns: repeat(3, 280px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>TaskFlow - User Flow Wireframe</h1>
+      <p>Complete user journey from onboarding to task completion with all decision points</p>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-box" style="border-color: var(--success); background: var(--success-light);"></div>
+        <span>Start / Entry Point</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="border-color: var(--neutral-300);"></div>
+        <span>Screen / View</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="border-color: var(--warning); background: var(--warning-light); transform: rotate(45deg); width: 18px; height: 18px;"></div>
+        <span>Decision Point</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="border-color: var(--primary); border-style: dashed;"></div>
+        <span>Modal / Overlay</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="border-color: var(--primary); background: var(--primary-light);"></div>
+        <span>End / Success State</span>
+      </div>
+    </div>
+
+    <!-- Flow Canvas -->
+    <div class="flow-canvas">
+      <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="var(--neutral-400)" />
+          </marker>
+        </defs>
+        
+        <!-- Connectors will be drawn with SVG lines -->
+        <!-- Row 1: Onboarding Flow -->
+        <line x1="260" y1="90" x2="380" y2="90" class="connector-line" />
+        <line x1="260" y1="270" x2="380" y2="270" class="connector-line" />
+        
+        <!-- Row 2: Auth Flow -->
+        <line x1="660" y1="90" x2="780" y2="90" class="connector-line" />
+        <line x1="660" y1="270" x2="780" y2="270" class="connector-line" />
+        
+        <!-- Row 3: Main App -->
+        <line x1="1060" y1="90" x2="1180" y2="90" class="connector-line" />
+        <line x1="1060" y1="270" x2="1180" y2="270" class="connector-line" />
+        <line x1="1060" y1="450" x2="1180" y2="450" class="connector-line" />
+        
+        <!-- Vertical connectors -->
+        <line x1="140" y1="170" x2="140" y2="190" class="connector-line" />
+        <line x1="540" y1="170" x2="540" y2="190" class="connector-line" />
+        <line x1="940" y1="170" x2="940" y2="190" class="connector-line" />
+        <line x1="940" y1="350" x2="940" y2="370" class="connector-line" />
+      </svg>
+
+      <div class="flow-grid">
+        <!-- Row 1 -->
+        <div style="grid-column: 1; grid-row: 1;">
+          <div class="flow-section">1. Onboarding</div>
+          <div class="screen-node start">
+            <div class="screen-badge">01</div>
+            <div class="screen-content">
+              <div class="screen-title">Splash Screen</div>
+              <div class="wireframe">
+                <div class="wire-line full"></div>
+                <div class="wire-line short"></div>
+              </div>
+              <div class="screen-desc">App logo, auto-advance 2s</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Auto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="grid-column: 2; grid-row: 1;">
+          <div class="screen-node">
+            <div class="screen-badge">02</div>
+            <div class="screen-content">
+              <div class="screen-title">Welcome Screen</div>
+              <div class="wireframe">
+                <div class="wire-line full"></div>
+                <div class="wire-line full"></div>
+                <div class="wire-line short"></div>
+              </div>
+              <div class="screen-desc">Value prop + CTA button</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Tap</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="grid-column: 3; grid-row: 1;">
+          <div class="flow-section">2. Authentication</div>
+          <div class="screen-node decision">
+            <div class="screen-badge">03</div>
+            <div class="screen-content">
+              <div class="screen-title">Has Account?</div>
+              <div class="screen-desc">Check user status</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="grid-column: 4; grid-row: 1;">
+          <div class="screen-node">
+            <div class="screen-badge">04</div>
+            <div class="screen-content">
+              <div class="screen-title">Sign Up</div>
+              <div class="wireframe">
+                <div class="wire-line full"></div>
+                <div class="wire-line full"></div>
+                <div class="wire-line full"></div>
+              </div>
+              <div class="screen-desc">Email, password, name</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Form</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="grid-column: 5; grid-row: 1;">
+          <div class="flow-section">3. Main App</div>
+          <div class="screen-node end">
+            <div class="screen-badge">06</div>
+            <div class="screen-content">
+              <div class="screen-title">Dashboard</div>
+              <div class="wireframe">
+                <div class="wire-line short"></div>
+                <div class="wire-line full"></div>
+                <div class="wire-line full"></div>
+              </div>
+              <div class="screen-desc">Task list, stats, FAB</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Home</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div style="grid-column: 4; grid-row: 2;">
+          <div class="screen-node">
+            <div class="screen-badge">05</div>
+            <div class="screen-content">
+              <div class="screen-title">Sign In</div>
+              <div class="wireframe">
+                <div class="wire-line full"></div>
+                <div class="wire-line full"></div>
+                <div class="wire-line short"></div>
+              </div>
+              <div class="screen-desc">Email + password</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Form</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="grid-column: 5; grid-row: 2;">
+          <div class="screen-node">
+            <div class="screen-badge">07</div>
+            <div class="screen-content">
+              <div class="screen-title">Task Detail</div>
+              <div class="wireframe">
+                <div class="wire-line full"></div>
+                <div class="wire-line full"></div>
+                <div class="wire-line short"></div>
+              </div>
+              <div class="screen-desc">Edit, complete, delete</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Tap</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div style="grid-column: 5; grid-row: 3;">
+          <div class="screen-node modal">
+            <div class="screen-badge">08</div>
+            <div class="screen-content">
+              <div class="screen-title">Add Task Modal</div>
+              <div class="wireframe">
+                <div class="wire-line full"></div>
+                <div class="wire-line full"></div>
+                <div class="wire-line short"></div>
+              </div>
+              <div class="screen-desc">Overlay, form input</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Overlay</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div style="grid-column: 5; grid-row: 4;">
+          <div class="screen-node end">
+            <div class="screen-badge">09</div>
+            <div class="screen-content">
+              <div class="screen-title">Success State</div>
+              <div class="wireframe">
+                <div class="wire-line short"></div>
+                <div class="wire-line full"></div>
+              </div>
+              <div class="screen-desc">Toast: Task created!</div>
+              <div class="screen-meta">
+                <span class="screen-tag">Toast</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="details">
+      <div class="details-title">Flow Details & Annotations</div>
+      <div class="details-grid">
+        <div class="detail-card">
+          <h3>🎯 Entry Points</h3>
+          <ul class="detail-list">
+            <li>First launch → Splash Screen (01)</li>
+            <li>Returning user → Dashboard (06) if logged in</li>
+            <li>Deep link → Task Detail (07)</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h3>🔄 Key Interactions</h3>
+          <ul class="detail-list">
+            <li>Splash: Auto-advance 2s, fade transition</li>
+            <li>Welcome: Tap "Get Started" → Decision (03)</li>
+            <li>Decision: If new user → Sign Up (04), else Sign In (05)</li>
+            <li>Dashboard: Tap task → Detail (07), Tap FAB → Modal (08)</li>
+            <li>Modal: Submit → Success Toast (09) → Dashboard refresh</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h3>⚡ Transitions</h3>
+          <ul class="detail-list">
+            <li>Screen to Screen: Push Right, 300ms, Ease-Out</li>
+            <li>Modal: Overlay slide up, 300ms, backdrop blur</li>
+            <li>Toast: Slide down from top, 250ms, auto-dismiss 3s</li>
+            <li>Back: Push Left, 300ms</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h3>✅ Success States</h3>
+          <ul class="detail-list">
+            <li>Sign Up complete → Dashboard (06)</li>
+            <li>Task created → Toast (09) → Dashboard refresh</li>
+            <li>Task completed → Checkbox state + strikethrough</li>
+            <li>All fields valid → Submit button enabled</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h3>❌ Error States</h3>
+          <ul class="detail-list">
+            <li>Invalid email → Inline error, red border</li>
+            <li>Network error → Toast: "Connection failed"</li>
+            <li>Empty task name → Disable submit button</li>
+            <li>Session expired → Redirect to Sign In (05)</li>
+          </ul>
+        </div>
+
+        <div class="detail-card">
+          <h3>📱 XD Prototype Setup</h3>
+          <ul class="detail-list">
+            <li>Artboards: 393×852px, 9 total screens</li>
+            <li>Components: Button, Card, Input with States</li>
+            <li>Trigger: Tap, Auto, Time</li>
+            <li>Action: Auto-Animate, Overlay, Back</li>
+            <li>Easing: Ease-Out, 300ms default</li>
+            <li>Share: Web link with "Allow comments"</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
