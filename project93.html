@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenFlow AI - Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #e0e7ff;
+      --secondary: #a855f7;
+      --accent: #ec4899;
+      --success: #22c55e;
+      --success-light: #dcfce7;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+      --error: #ef4444;
+      --error-light: #fee2e2;
+
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+
+      --gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      --font: 'Inter', system-ui, sans-serif;
+      --ease: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    body {
+      font-family: var(--font);
+      background: var(--neutral-50);
+      color: var(--neutral-900);
+      line-height: 1.6;
+    }
+
+    /* Layout */
+.dashboard {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+.sidebar {
+      background: var(--neutral-900);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+.logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 8px;
+      margin-bottom: 8px;
+    }
+
+.logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--gradient);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+.logo-text {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--white);
+    }
+
+.nav-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+.nav-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0 8px;
+      margin-bottom: 8px;
+    }
+
+.nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--neutral-400);
+      cursor: pointer;
+      transition: all var(--ease);
+      text-decoration: none;
+    }
+
+.nav-item:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--neutral-200);
+    }
+
+.nav-item.active {
+      background: rgba(99,102,241,0.15);
+      color: var(--primary-light);
+    }
+
+.nav-icon {
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
+    }
+
+.nav-badge {
+      margin-left: auto;
+      padding: 2px 8px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+.sidebar-footer {
+      margin-top: auto;
+      padding: 16px 8px;
+      border-top: 1px solid var(--neutral-800);
+    }
+
+.user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+.user-card:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+.user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 14px;
+    }
+
+.user-info {
+      flex: 1;
+    }
+
+.user-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+.user-role {
+      font-size: 12px;
+      color: var(--neutral-500);
+    }
+
+    /* Main Content */
+.main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+.header {
+      height: 72px;
+      background: var(--white);
+      border-bottom: 1px solid var(--neutral-200);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+.header-left h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--neutral-900);
+    }
+
+.header-left p {
+      font-size: 14px;
+      color: var(--neutral-500);
+    }
+
+.header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+.btn {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font);
+      border: none;
+      cursor: pointer;
+      transition: all var(--ease);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+.btn:active {
+      transform: scale(0.96);
+    }
+
+.btn-secondary {
+      background: var(--neutral-100);
+      color: var(--neutral-700);
+    }
+
+.btn-secondary:hover {
+      background: var(--neutral-200);
+    }
+
+.btn-primary {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+.btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+.status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--success-light);
+      color: var(--success);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+.status-dot {
+      width: 6px;
+      height: 6px;
+      background: currentColor;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Content Area */
+.content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px;
+    }
+
+.content::-webkit-scrollbar {
+      width: 8px;
+    }
+
+.content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+.content::-webkit-scrollbar-thumb {
+      background: var(--neutral-300);
+      border-radius: 4px;
+    }
+
+    /* Grid */
+.grid {
+      display: grid;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+.grid-4 {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+.grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+
+.grid-3 {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    /* Card */
+.card {
+      background: var(--white);
+      border: 1px solid var(--neutral-200);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all var(--ease);
+    }
+
+.card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transform: translateY(-2px);
+    }
+
+.card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+.card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--neutral-900);
+    }
+
+.card-action {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+.card-action:hover {
+      color: var(--primary-dark);
+    }
+
+    /* Metric Card */
+.metric-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--neutral-900);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+.metric-label {
+      font-size: 14px;
+      color: var(--neutral-500);
+      margin-bottom: 12px;
+    }
+
+.metric-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+.metric-change.up {
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+.metric-change.down {
+      background: var(--error-light);
+      color: var(--error);
+    }
+
+    /* Chart Placeholder */
+.chart {
+      height: 200px;
+      background: linear-gradient(180deg, rgba(99,102,241,0.1) 0%, transparent 100%);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      gap: 8px;
+    }
+
+.chart-bar {
+      flex: 1;
+      background: var(--primary);
+      border-radius: 4px 4px 0 0;
+      opacity: 0.8;
+      animation: barGrow 1s ease-out forwards;
+      transform-origin: bottom;
+      transform: scaleY(0);
+    }
+
+    @keyframes barGrow {
+      to { transform: scaleY(1); }
+    }
+
+    /* Model Status */
+.model-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+.model-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--neutral-50);
+      border: 1px solid var(--neutral-200);
+      border-radius: 12px;
+      transition: all var(--ease);
+    }
+
+.model-item:hover {
+      background: var(--white);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+.model-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+.model-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+.model-details h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: 2px;
+    }
+
+.model-details p {
+      font-size: 12px;
+      color: var(--neutral-500);
+    }
+
+.model-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+.toggle {
+      width: 44px;
+      height: 24px;
+      background: var(--neutral-300);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+.toggle.active {
+      background: var(--success);
+    }
+
+.toggle::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--white);
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+      transition: all var(--ease);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+.toggle.active::after {
+      left: 22px;
+    }
+
+    /* Activity Feed */
+.activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+.activity-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+.activity-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+.activity-icon.success { background: var(--success-light); color: var(--success); }
+.activity-icon.warning { background: var(--warning-light); color: var(--warning); }
+.activity-icon.error { background: var(--error-light); color: var(--error); }
+.activity-icon.info { background: var(--primary-light); color: var(--primary); }
+
+.activity-content {
+      flex: 1;
+    }
+
+.activity-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--neutral-900);
+      margin-bottom: 2px;
+    }
+
+.activity-time {
+      font-size: 12px;
+      color: var(--neutral-500);
+    }
+
+    /* Usage Chart */
+.usage-bar {
+      height: 8px;
+      background: var(--neutral-200);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+.usage-fill {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 4px;
+      transition: width 1s ease-out;
+    }
+
+.usage-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--neutral-500);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+.dashboard {
+        grid-template-columns: 1fr;
+      }
+.sidebar {
+        display: none;
+      }
+.grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+.content {
+        padding: 20px;
+      }
+.grid-4,.grid-2 {
+        grid-template-columns: 1fr;
+      }
+.header {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">ZenFlow AI</div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Main</div>
+        <a class="nav-item active">
+          <span class="nav-icon">📊</span>
+          Dashboard
+        </a>
+        <a class="nav-item">
+          <span class="nav-icon">🤖</span>
+          Models
+          <span class="nav-badge">3</span>
+        </a>
+        <a class="nav-item">
+          <span class="nav-icon">💬</span>
+          Playground
+        </a>
+        <a class="nav-item">
+          <span class="nav-icon">📈</span>
+          Analytics
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Management</div>
+        <a class="nav-item">
+          <span class="nav-icon">🔑</span>
+          API Keys
+        </a>
+        <a class="nav-item">
+          <span class="nav-icon">👥</span>
+          Team
+        </a>
+        <a class="nav-item">
+          <span class="nav-icon">💳</span>
+          Billing
+        </a>
+        <a class="nav-item">
+          <span class="nav-icon">⚙️</span>
+          Settings
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-label">Resources</div>
+        <a class="nav-item">
+          <span class="nav-icon">📚</span>
+          Documentation
+        </a>
+        <a class="nav-item">
+          <span class="nav-icon">💡</span>
+          Support
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-card">
+          <div class="user-avatar">AK</div>
+          <div class="user-info">
+            <div class="user-name">Alex Kim</div>
+            <div class="user-role">Pro Plan</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Monitor your AI models and usage in real-time</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="status-badge">
+            <div class="status-dot"></div>
+            All Systems Operational
+          </div>
+          <button class="btn btn-secondary">Export</button>
+          <button class="btn btn-primary">+ New Model</button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Metrics Row -->
+        <div class="grid grid-4">
+          <div class="card">
+            <div class="metric-value">2.4M</div>
+            <div class="metric-label">Total Requests</div>
+            <div class="metric-change up">↑ 12.5% vs last month</div>
+          </div>
+          <div class="card">
+            <div class="metric-value">847ms</div>
+            <div class="metric-label">Avg Response Time</div>
+            <div class="metric-change down">↓ 8.2% faster</div>
+          </div>
+          <div class="card">
+            <div class="metric-value">99.98%</div>
+            <div class="metric-label">Uptime</div>
+            <div class="metric-change up">↑ 0.02%</div>
+          </div>
+          <div class="card">
+            <div class="metric-value">$1,284</div>
+            <div class="metric-label">Monthly Cost</div>
+            <div class="metric-change up">↑ 5.1%</div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Request Volume</div>
+              <a class="card-action">Last 7 days</a>
+            </div>
+            <div class="chart" id="chart">
+              <div class="chart-bar" style="height: 60%; animation-delay: 0s;"></div>
+              <div class="chart-bar" style="height: 80%; animation-delay: 0.1s;"></div>
+              <div class="chart-bar" style="height: 45%; animation-delay: 0.2s;"></div>
+              <div class="chart-bar" style="height: 90%; animation-delay: 0.3s;"></div>
+              <div class="chart-bar" style="height: 70%; animation-delay: 0.4s;"></div>
+              <div class="chart-bar" style="height: 85%; animation-delay: 0.5s;"></div>
+              <div class="chart-bar" style="height: 95%; animation-delay: 0.6s;"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">API Usage</div>
+              <a class="card-action">View details</a>
+            </div>
+            <div style="margin-bottom: 20px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 14px; font-weight: 600; color: var(--neutral-700);">Monthly Quota</span>
+                <span style="font-size: 14px; font-weight: 700; color: var(--neutral-900);">2.4M / 5M</span>
+              </div>
+              <div class="usage-bar">
+                <div class="usage-fill" style="width: 48%;"></div>
+              </div>
+              <div class="usage-labels">
+                <span>48% used</span>
+                <span>18 days left</span>
+              </div>
+            </div>
+            <div style="padding: 16px; background: var(--neutral-50); border-radius: 12px; font-size: 13px; color: var(--neutral-600);">
+              💡 You're on track to stay within quota this month
+            </div>
+          </div>
+        </div>
+
+        <!-- Models & Activity Row -->
+        <div class="grid grid-2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Active Models</div>
+              <a class="card-action">Manage</a>
+            </div>
+            <div class="model-list">
+              <div class="model-item">
+                <div class="model-info">
+                  <div class="model-icon">🚀</div>
+                  <div class="model-details">
+                    <h4>GPT-4 Turbo</h4>
+                    <p>1.2M requests • 842ms avg</p>
+                  </div>
+                </div>
+                <div class="model-status">
+                  <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                </div>
+              </div>
+              <div class="model-item">
+                <div class="model-info">
+                  <div class="model-icon">⚡</div>
+                  <div class="model-details">
+                    <h4>Claude 3.5 Sonnet</h4>
+                    <p>890K requests • 756ms avg</p>
+                  </div>
+                </div>
+                <div class="model-status">
+                  <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+                </div>
+              </div>
+              <div class="model-item">
+                <div class="model-info">
+                  <div class="model-icon">🎨</div>
+                  <div class="model-details">
+                    <h4>DALL-E 3</h4>
+                    <p>310K requests • 2.1s avg</p>
+                  </div>
+                <div class="model-status">
+                  <div class="toggle" onclick="this.classList.toggle('active')"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Recent Activity</div>
+              <a class="card-action">View all</a>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon success">✓</div>
+                <div class="activity-content">
+                  <div class="activity-title">Model deployment successful</div>
+                  <div class="activity-time">GPT-4 Turbo v2.1 • 2 min ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon info">🔑</div>
+                <div class="activity-content">
+                  <div class="activity-title">New API key generated</div>
+                  <div class="activity-time">Production key • 15 min ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon warning">⚠</div>
+                <div class="activity-content">
+                  <div class="activity-title">Rate limit warning</div>
+                  <div class="activity-time">80% of quota reached • 1 hour ago</div>
+                </div>
+              <div class="activity-item">
+                <div class="activity-icon success">👤</div>
+                <div class="activity-content">
+                  <div class="activity-title">Team member added</div>
+                  <div class="activity-time">sarah@company.com • 3 hours ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Animate usage bar on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.usage-fill').forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => bar.style.width = width, 100);
+      });
+    });
+
+    // Simulate real-time updates
+    setInterval(() => {
+      const metricValues = document.querySelectorAll('.metric-value');
+      const requests = metricValues[0];
+      const current = parseFloat(requests.textContent);
+      requests.textContent = (current + Math.random() * 0.1).toFixed(1) + 'M';
+    }, 3000);
+  </script>
+</body>
+</html>
