@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adobe XD Prototype System - DataFlow</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* Design Tokens */
+    :root {
+      --brand-primary: #6366f1;
+      --brand-primary-dark: #4f46e5;
+      --brand-secondary: #a855f7;
+      --brand-accent: #ec4899;
+      --brand-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+      
+      --neutral-0: #ffffff;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-300: #cbd5e1;
+      --neutral-400: #94a3b8;
+      --neutral-500: #64748b;
+      --neutral-600: #475569;
+      --neutral-700: #334155;
+      --neutral-800: #1e293b;
+      --neutral-900: #0f172a;
+      
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info: #3b82f6;
+      
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'SF Mono', 'Monaco', monospace;
+      
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.125rem;
+      --text-xl: 1.25rem;
+      --text-2xl: 1.5rem;
+      --text-3xl: 1.875rem;
+      --text-4xl: 2.25rem;
+      
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-12: 3rem;
+      
+      --radius-md: 0.375rem;
+      --radius-lg: 0.5rem;
+      --radius-xl: 0.75rem;
+      --radius-2xl: 1rem;
+      
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+      
+      --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    /* Base */
+    body {
+      font-family: var(--font-sans);
+      background: var(--neutral-50);
+      color: var(--neutral-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+   .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-4);
+    }
+
+   .page-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+      padding-bottom: var(--space-8);
+      border-bottom: 1px solid var(--neutral-200);
+    }
+
+   .page-header h1 {
+      font-size: var(--text-4xl);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      margin-bottom: var(--space-3);
+    }
+
+   .page-header p {
+      font-size: var(--text-lg);
+      color: var(--neutral-600);
+    }
+
+   .xd-badge {
+      display: inline-block;
+      background: #FF61F6;
+      color: var(--neutral-0);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: var(--space-4);
+    }
+
+    /* Section */
+   .section {
+      background: var(--neutral-0);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      margin-bottom: var(--space-8);
+    }
+
+   .section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--neutral-100);
+    }
+
+   .section-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: #FF61F6;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--neutral-0);
+    }
+
+   .section-title {
+      font-size: var(--text-3xl);
+      font-weight: 800;
+      color: var(--neutral-900);
+    }
+
+   .subsection {
+      margin-bottom: var(--space-8);
+    }
+
+   .subsection:last-child {
+      margin-bottom: 0;
+    }
+
+   .subsection-title {
+      font-size: var(--text-xl);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-4);
+    }
+
+   .subsection-desc {
+      font-size: var(--text-sm);
+      color: var(--neutral-600);
+      margin-bottom: var(--space-6);
+      line-height: 1.7;
+    }
+
+    /* Wireframe Grid */
+   .wireframe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
+    }
+
+   .wireframe-card {
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+    }
+
+   .wireframe-preview {
+      background: var(--neutral-100);
+      padding: var(--space-4);
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+   .wireframe-frame {
+      width: 375px;
+      height: 667px;
+      background: var(--neutral-0);
+      border: 8px solid var(--neutral-800);
+      border-radius: 32px;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+    }
+
+   .wireframe-header {
+      height: 60px;
+      background: var(--neutral-200);
+      border-bottom: 1px solid var(--neutral-300);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-4);
+      gap: var(--space-3);
+    }
+
+   .wireframe-box {
+      background: var(--neutral-300);
+      border-radius: var(--radius-md);
+    }
+
+   .wireframe-content {
+      padding: var(--space-4);
+    }
+
+   .wireframe-info {
+      padding: var(--space-4);
+      background: var(--neutral-0);
+    }
+
+   .wireframe-title {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-2);
+    }
+
+   .wireframe-desc {
+      font-size: var(--text-sm);
+      color: var(--neutral-600);
+      line-height: 1.6;
+      margin-bottom: var(--space-3);
+    }
+
+   .wireframe-meta {
+      display: flex;
+      gap: var(--space-4);
+      font-size: var(--text-xs);
+      color: var(--neutral-500);
+      font-family: var(--font-mono);
+    }
+
+    /* Flow Diagram */
+   .flow-diagram {
+      background: var(--neutral-50);
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      overflow-x: auto;
+    }
+
+   .flow-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+
+   .flow-row:last-child {
+      margin-bottom: 0;
+    }
+
+   .flow-node {
+      background: var(--neutral-0);
+      border: 2px solid var(--neutral-300);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      min-width: 160px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+   .flow-node-primary {
+      border-color: var(--brand-primary);
+      background: var(--brand-50);
+    }
+
+   .flow-node-title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-1);
+    }
+
+   .flow-node-desc {
+      font-size: var(--text-xs);
+      color: var(--neutral-600);
+    }
+
+   .flow-arrow {
+      font-size: var(--text-2xl);
+      color: var(--neutral-400);
+      flex-shrink: 0;
+    }
+
+   .flow-label {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--neutral-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--neutral-0);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--neutral-200);
+    }
+
+    /* Component States */
+   .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-6);
+    }
+
+   .state-card {
+      border: 1px solid var(--neutral-200);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+   .state-preview {
+      background: var(--neutral-50);
+      padding: var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+    }
+
+   .state-info {
+      padding: var(--space-4);
+      background: var(--neutral-0);
+    }
+
+   .state-name {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-1);
+    }
+
+   .state-desc {
+      font-size: var(--text-xs);
+      color: var(--neutral-600);
+    }
+
+    /* Button States */
+   .btn {
+      padding: var(--space-3) var(--space-6);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      border-radius: var(--radius-lg);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+   .btn-primary {
+      background: var(--brand-primary);
+      color: var(--neutral-0);
+    }
+
+   .btn-primary-hover {
+      background: var(--brand-primary-dark);
+      color: var(--neutral-0);
+    }
+
+   .btn-primary-active {
+      background: var(--brand-primary-dark);
+      color: var(--neutral-0);
+      transform: scale(0.98);
+    }
+
+   .btn-primary-disabled {
+      background: var(--neutral-300);
+      color: var(--neutral-500);
+      cursor: not-allowed;
+    }
+
+    /* Specs Table */
+   .specs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+    }
+
+   .specs-table th {
+      text-align: left;
+      padding: var(--space-3) var(--space-4);
+      font-weight: 700;
+      color: var(--neutral-700);
+      background: var(--neutral-50);
+      border-bottom: 2px solid var(--neutral-200);
+    }
+
+   .specs-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--neutral-200);
+      color: var(--neutral-700);
+    }
+
+   .specs-table code {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      background: var(--neutral-100);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    /* Code Block */
+   .code-block {
+      background: var(--neutral-900);
+      color: var(--neutral-100);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      line-height: 1.7;
+      overflow-x: auto;
+      margin-top: var(--space-4);
+    }
+
+    /* Guidelines */
+   .guidelines {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+
+   .guideline {
+      padding: var(--space-6);
+      border-radius: var(--radius-xl);
+      border: 2px solid;
+    }
+
+   .guideline-do {
+      background: #f0fdf4;
+      border-color: var(--success);
+    }
+
+   .guideline-dont {
+      background: #fef2f2;
+      border-color: var(--error);
+    }
+
+   .guideline-title {
+      font-size: var(--text-lg);
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+   .guideline-do .guideline-title {
+      color: var(--success);
+    }
+
+   .guideline-dont .guideline-title {
+      color: var(--error);
+    }
+
+   .guideline-list {
+      list-style: none;
+      font-size: var(--text-sm);
+      line-height: 1.8;
+      color: var(--neutral-700);
+    }
+
+   .guideline-list li {
+      padding-left: var(--space-5);
+      position: relative;
+      margin-bottom: var(--space-2);
+    }
+
+   .guideline-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+     .wireframe-grid {
+        grid-template-columns: 1fr;
+      }
+     .guidelines {
+        grid-template-columns: 1fr;
+      }
+     .flow-row {
+        flex-direction: column;
+      }
+     .flow-arrow {
+        transform: rotate(90deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Adobe XD Prototype System</h1>
+      <p>Wireframes, flows, component states, and handoff specs for DataFlow mobile app.</p>
+      <div class="xd-badge">Adobe XD 2026</div>
+    </div>
+
+    <!-- Artboards & Wireframes -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📱</div>
+        <h2 class="section-title">Artboards & Wireframes</h2>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Mobile App - iPhone 15 Pro (393×852)</h3>
+        <p class="subsection-desc">Key screens with component usage and interaction notes. Grid: 8px. Safe area: 44px top, 34px bottom.</p>
+        
+        <div class="wireframe-grid">
+          <!-- Screen 1: Onboarding -->
+          <div class="wireframe-card">
+            <div class="wireframe-preview">
+              <div class="wireframe-frame">
+                <div class="wireframe-header">
+                  <div class="wireframe-box" style="width: 100px; height: 24px;"></div>
+                </div>
+                <div class="wireframe-content">
+                  <div class="wireframe-box" style="width: 80%; height: 40px; margin: 40px auto;"></div>
+                  <div class="wireframe-box" style="width: 60%; height: 16px; margin: 0 auto 40px;"></div>
+                  <div class="wireframe-box" style="width: 200px; height: 200px; margin: 0 auto 40px; border-radius: 50%;"></div>
+                  <div class="wireframe-box" style="width: 100%; height: 48px; border-radius: 12px;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="wireframe-info">
+              <div class="wireframe-title">01. Onboarding</div>
+              <div class="wireframe-desc">Welcome screen with hero illustration and CTA. Auto-animate entrance: Fade in + Scale.</div>
+              <div class="wireframe-meta">
+                <span>Artboard: 393×852</span>
+                <span>Components: 3</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 2: Dashboard -->
+          <div class="wireframe-card">
+            <div class="wireframe-preview">
+              <div class="wireframe-frame">
+                <div class="wireframe-header">
+                  <div class="wireframe-box" style="width: 32px; height: 32px; border-radius: 50%;"></div>
+                  <div class="wireframe-box" style="width: 120px; height: 24px; margin-left: auto;"></div>
+                </div>
+                <div class="wireframe-content">
+                  <div class="wireframe-box" style="width: 100%; height: 32px; margin-bottom: 16px;"></div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+                    <div class="wireframe-box" style="height: 100px; border-radius: 12px;"></div>
+                    <div class="wireframe-box" style="height: 100px; border-radius: 12px;"></div>
+                  </div>
+                  <div class="wireframe-box" style="width: 100%; height: 200px; border-radius: 12px;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="wireframe-info">
+              <div class="wireframe-title">02. Dashboard</div>
+              <div class="wireframe-desc">Main app view with stats cards and chart. Tap card → Detail view. Scroll enabled.</div>
+              <div class="wireframe-meta">
+                <span>Artboard: 393×852</span>
+                <span>Components: 8</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Screen 3: Detail View -->
+          <div class="wireframe-card">
+            <div class="wireframe-preview">
+              <div class="wireframe-frame">
+                <div class="wireframe-header">
+                  <div class="wireframe-box" style="width: 24px; height: 24px;"></div>
+                  <div class="wireframe-box" style="width: 100px; height: 24px; margin: 0 auto;"></div>
+                  <div class="wireframe-box" style="width: 24px; height: 24px; margin-left: auto;"></div>
+                </div>
+                <div class="wireframe-content">
+                  <div class="wireframe-box" style="width: 100%; height: 180px; border-radius: 12px; margin-bottom: 16px;"></div>
+                  <div class="wireframe-box" style="width: 100%; height: 16px; margin-bottom: 8px;"></div>
+                  <div class="wireframe-box" style="width: 80%; height: 16px; margin-bottom: 24px;"></div>
+                  <div class="wireframe-box" style="width: 100%; height: 48px; border-radius: 12px;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="wireframe-info">
+              <div class="wireframe-title">03. Detail View</div>
+              <div class="wireframe-desc">Item detail with hero image and action button. Swipe back or tap arrow.</div>
+              <div class="wireframe-meta">
+                <span>Artboard: 393×852</span>
+                <span>Components: 5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Flows -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🔄</div>
+        <h2 class="section-title">User Flows & Interactions</h2>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Onboarding Flow</h3>
+        <p class="subsection-desc">First-time user experience from launch to dashboard. Total: 3 screens, ~30 seconds.</p>
+        
+        <div class="flow-diagram">
+          <div class="flow-row">
+            <div class="flow-node flow-node-primary">
+              <div class="flow-node-title">Launch App</div>
+              <div class="flow-node-desc">Splash Screen</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-label">Auto 2s</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">
+              <div class="flow-node-title">Welcome</div>
+              <div class="flow-node-desc">Value Prop</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-label">Tap "Get Started"</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">
+              <div class="flow-node-title">Sign Up</div>
+              <div class="flow-node-desc">Email/SSO</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-label">Submit</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node flow-node-primary">
+              <div class="flow-node-title">Dashboard</div>
+              <div class="flow-node-desc">Empty State</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block">
+Interaction: Tap "Get Started"
+  Transition: Push Right
+  Duration: 300ms
+  Easing: Ease-Out
+  Animation: Auto-Animate (matching layers)
+
+Interaction: Submit Sign Up
+  Transition: Dissolve
+  Duration: 400ms
+  Destination: Dashboard (Component State: Empty)
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Core Task Flow: Create Item</h3>
+        <p class="subsection-desc">Primary user action from dashboard to success state.</p>
+        
+        <div class="flow-diagram">
+          <div class="flow-row">
+            <div class="flow-node flow-node-primary">
+              <div class="flow-node-title">Dashboard</div>
+              <div class="flow-node-desc">FAB Visible</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-label">Tap FAB</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">
+              <div class="flow-node-title">Create Form</div>
+              <div class="flow-node-desc">Modal Overlay</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-label">Submit</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">
+              <div class="flow-node-title">Success Toast</div>
+              <div class="flow-node-desc">Auto-dismiss 3s</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node flow-node-primary">
+              <div class="flow-node-title">Dashboard</div>
+              <div class="flow-node-desc">Updated List</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Component States -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">🎛️</div>
+        <h2 class="section-title">Component States</h2>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Button States</h3>
+        <p class="subsection-desc">Define all interactive states in XD: Default, Hover, Active, Disabled, Loading.</p>
+        
+        <div class="states-grid">
+          <div class="state-card">
+            <div class="state-preview">
+              <button class="btn btn-primary">Default</button>
+            </div>
+            <div class="state-info">
+              <div class="state-name">Default</div>
+              <div class="state-desc">Base state. BG: #6366F1</div>
+            </div>
+          </div>
+          <div class="state-card">
+            <div class="state-preview">
+              <button class="btn btn-primary-hover">Hover</button>
+            </div>
+            <div class="state-info">
+              <div class="state-name">Hover</div>
+              <div class="state-desc">Cursor over. BG: #4F46E5</div>
+            </div>
+          </div>
+          <div class="state-card">
+            <div class="state-preview">
+              <button class="btn btn-primary-active">Active</button>
+            </div>
+            <div class="state-info">
+              <div class="state-name">Active</div>
+              <div class="state-desc">Pressed. Scale: 0.98</div>
+            </div>
+          </div>
+          <div class="state-card">
+            <div class="state-preview">
+              <button class="btn btn-primary-disabled">Disabled</button>
+            </div>
+            <div class="state-info">
+              <div class="state-name">Disabled</div>
+              <div class="state-desc">Opacity: 50%. Cursor: not-allowed</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block">
+XD Setup: Component States
+1. Create Master Component: Button/Primary
+2. Add State: Hover (change background)
+3. Add State: Active (add scale transform)
+4. Add State: Disabled (reduce opacity)
+5. Set Trigger: Hover, Tap
+6. Transition: Dissolve, 200ms, Ease-Out
+        </div>
+      </div>
+    </div>
+
+    <!-- Handoff Specs -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">📐</div>
+        <h2 class="section-title">Handoff Specs</h2>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Layout Grid</h3>
+        <table class="specs-table">
+          <thead>
+            <tr>
+              <th>Device</th>
+              <th>Artboard</th>
+              <th>Columns</th>
+              <th>Gutter</th>
+              <th>Margin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mobile</strong></td>
+              <td><code>393×852</code></td>
+              <td>4</td>
+              <td><code>16px</code></td>
+              <td><code>16px</code></td>
+            </tr>
+            <tr>
+              <td><strong>Tablet</strong></td>
+              <td><code>768×1024</code></td>
+              <td>8</td>
+              <td><code>24px</code></td>
+              <td><code>24px</code></td>
+            </tr>
+            <tr>
+              <td><strong>Desktop</strong></td>
+              <td><code>1440×900</code></td>
+              <td>12</td>
+              <td><code>24px</code></td>
+              <td><code>80px</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subsection">
+        <h3 class="subsection-title">Export Settings</h3>
+        <table class="specs-table">
+          <thead>
+            <tr>
+              <th>Asset Type</th>
+              <th>Format</th>
+              <th>Scale</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Icons</strong></td>
+              <td><code>SVG</code></td>
+              <td>1x</td>
+              <td>iOS, Android, Web</td>
+            </tr>
+            <tr>
+              <td><strong>Images</strong></td>
+              <td><code>PNG</code></td>
+              <td>1x, 2x, 3x</td>
+              <td>Mobile apps</td>
+            </tr>
+            <tr>
+              <td><strong>Images</strong></td>
+              <td><code>WebP</code></td>
+              <td>1x, 2x</td>
+              <td>Web</td>
+            </tr>
+            <tr>
+              <td><strong>Logos</strong></td>
+              <td><code>SVG, PDF</code></td>
+              <td>1x</td>
+              <td>All platforms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- XD Best Practices -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">✨</div>
+        <h2 class="section-title">Adobe XD Best Practices</h2>
+      </div>
+
+      <div class="guidelines">
+        <div class="guideline guideline-do">
+          <div class="guideline-title">✓ Do</div>
+          <ul class="guideline-list">
+            <li>Use Components for all repeatable elements</li>
+            <li>Create Component States for interactions</li>
+            <li>Use Repeat Grid for lists and galleries</li>
+            <li>Set up Auto-Animate for micro-interactions</li>
+            <li>Use Stacks for responsive layouts</li>
+            <li>Name layers semantically: Button/Primary</li>
+            <li>Use Character Styles for typography</li>
+            <li>Share CC Libraries for team consistency</li>
+          </ul>
+        </div>
+        <div class="guideline guideline-dont">
+          <div class="guideline-title">✗ Don't</div>
+          <ul class="guideline-list">
+            <li>Detach components unnecessarily</li>
+            <li>Use absolute positioning for layouts</li>
+            <li>Hardcode values instead of using styles</li>
+            <li>Mix artboard sizes in one file</li>
+            <li>Forget to set prototype interactions</li>
+            <li>Skip responsive resize testing</li>
+            <li>Use too many artboards per file</li>
+            <li>Ignore 8px grid system</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection" style="margin-top: var(--space-8);">
+        <h3 class="subsection-title">Prototype Settings</h3>
+        <div class="code-block">
+Device: iPhone 15 Pro
+Artboard: 393 × 852 px
+Preview: Fit Width
+Home Artboard: 01-Onboarding
+Trigger: Tap
+Action: Auto-Animate
+Destination: Next Screen
+Easing: Ease-Out
+Duration: 300ms
+
+Micro-interactions:
+- Button Press: Scale 0.98, 100ms
+- Card Tap: Push Right, 300ms
+- Modal: Overlay, Dissolve, 200ms
+- Toast: Slide In Top, 300ms
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+   .btn-primary-hover {
+      background: var(--brand-primary-dark);
+      color: var(--neutral-0);
+    }
+   .btn-primary-active {
+      background: var(--brand-primary-dark);
+      color: var(--neutral-0);
+      transform: scale(0.98);
+    }
+   .btn-primary-disabled {
+      background: var(--neutral-300);
+      color: var(--neutral-500);
+      cursor: not-allowed;
+    }
+  </style>
+</body>
+</html>
