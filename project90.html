@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenFlow - App Icon Designs</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #6366f1;
+      --secondary: #a855f7;
+      --accent: #ec4899;
+      --dark: #0f172a;
+      --white: #ffffff;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    body {
+      font-family: var(--font);
+      background: #f1f5f9;
+      padding: 40px 20px;
+      color: var(--dark);
+    }
+
+ .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+ .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+ .header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+ .header p {
+      font-size: 16px;
+      color: #64748b;
+    }
+
+ .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+ .icon-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+ .icon-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+ .icon-desc {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+ .icon-preview {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    /* Base Icon Sizes */
+ .icon-1024 {
+      width: 180px;
+      height: 180px;
+      border-radius: 40px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+ .icon-180 {
+      width: 60px;
+      height: 60px;
+      border-radius: 13px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Style 1: Gradient Mark */
+ .style-1 {
+      background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+ .style-1::before {
+      content: '';
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+      top: -50%;
+      left: -50%;
+    }
+
+ .style-1 svg {
+      width: 60%;
+      height: 60%;
+      z-index: 1;
+    }
+
+    /* Style 2: Minimal Line */
+ .style-2 {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e2e8f0;
+    }
+
+ .style-2 svg {
+      width: 50%;
+      height: 50%;
+    }
+
+    /* Style 3: 3D Layered */
+ .style-3 {
+      background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+ .style-3::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+      border-radius: inherit;
+    }
+
+ .style-3 svg {
+      width: 55%;
+      height: 55%;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+      z-index: 1;
+    }
+
+    /* Style 4: Dark Mode */
+ .style-4 {
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+ .style-4::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(99,102,241,0.3) 0%, rgba(168,85,247,0.3) 100%);
+      border-radius: inherit;
+    }
+
+ .style-4 svg {
+      width: 50%;
+      height: 50%;
+      z-index: 1;
+    }
+
+    /* Specs Table */
+ .specs {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+ .specs h2 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px;
+      background: #f8fafc;
+      font-weight: 700;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+ .download-btn {
+      padding: 8px 16px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+    }
+
+ .download-btn:active { transform: scale(0.96); }
+
+    /* Guidelines */
+ .guidelines {
+      background: #fef3c7;
+      border: 1px solid #fbbf24;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 32px;
+    }
+
+ .guidelines h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #92400e;
+    }
+
+ .guidelines ul {
+      list-style: none;
+      font-size: 14px;
+      color: #92400e;
+      line-height: 1.8;
+    }
+
+ .guidelines li::before {
+      content: '✓ ';
+      font-weight: 700;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>ZenFlow App Icon</h1>
+      <p>4 production-ready designs for iOS + Android. Export at 1024×1024px</p>
+    </div>
+
+    <div class="grid">
+      <!-- Style 1: Gradient Mark -->
+      <div class="icon-card">
+        <div class="icon-title">1. Gradient Mark</div>
+        <div class="icon-desc">Primary brand icon. Vibrant gradient with lightning bolt. Best for App Store.</div>
+        <div class="icon-preview">
+          <div class="icon-1024 style-1" id="icon1-large">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="icon-180 style-1">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z" fill="white"/>
+            </svg>
+          </div>
+        <button class="download-btn" onclick="downloadSVG('icon1', 'gradient')">Download SVG</button>
+      </div>
+
+      <!-- Style 2: Minimal Line -->
+      <div class="icon-card">
+        <div class="icon-title">2. Minimal Line</div>
+        <div class="icon-desc">Clean outline style. Works on light backgrounds. Good for widgets.</div>
+        <div class="icon-preview">
+          <div class="icon-1024 style-2" id="icon2-large">
+            <svg viewBox="0 0 100 100" fill="none" stroke="#6366f1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z"/>
+            </svg>
+          </div>
+          <div class="icon-180 style-2">
+            <svg viewBox="0 0 100 100" fill="none" stroke="#6366f1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z"/>
+            </svg>
+          </div>
+        </div>
+        <button class="download-btn" onclick="downloadSVG('icon2', 'minimal')">Download SVG</button>
+      </div>
+
+      <!-- Style 3: 3D Layered -->
+      <div class="icon-card">
+        <div class="icon-title">3. 3D Layered</div>
+        <div class="icon-desc">Depth with highlight overlay. Modern iOS style. Premium feel.</div>
+        <div class="icon-preview">
+          <div class="icon-1024 style-3" id="icon3-large">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="icon-180 style-3">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <button class="download-btn" onclick="downloadSVG('icon3', '3d')">Download SVG</button>
+      </div>
+
+      <!-- Style 4: Dark Mode -->
+      <div class="icon-card">
+        <div class="icon-title">4. Dark Mode</div>
+        <div class="icon-desc">Dark background with gradient glow. For dark UI themes.</div>
+        <div class="icon-preview">
+          <div class="icon-1024 style-4" id="icon4-large">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z" fill="url(#grad)"/>
+              <defs>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#6366f1"/>
+                  <stop offset="100%" stop-color="#a855f7"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="icon-180 style-4">
+            <svg viewBox="0 0 100 100" fill="none">
+              <path d="M50 15L30 50H45L35 85L70 45H55L65 15H50Z" fill="url(#grad2)"/>
+              <defs>
+                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#6366f1"/>
+                  <stop offset="100%" stop-color="#a855f7"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <button class="download-btn" onclick="downloadSVG('icon4', 'dark')">Download SVG</button>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="specs">
+      <h2>Export Specifications</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Size</th>
+            <th>Format</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>iOS App Store</strong></td>
+            <td>1024×1024px</td>
+            <td>PNG, no alpha</td>
+            <td>Required. No rounded corners, no transparency</td>
+          </tr>
+          <tr>
+            <td><strong>iOS Home Screen</strong></td>
+            <td>180×180px @3x</td>
+            <td>PNG</td>
+            <td>iPhone. Auto-rounded by iOS</td>
+          </tr>
+          <tr>
+            <td><strong>iOS iPad</strong></td>
+            <td>167×167px @2x</td>
+            <td>PNG</td>
+            <td>iPad Pro</td>
+          </tr>
+          <tr>
+            <td><strong>Android Play Store</strong></td>
+            <td>512×512px</td>
+            <td>PNG, 32-bit</td>
+            <td>Required. Max 1MB</td>
+          </tr>
+          <tr>
+            <td><strong>Android Adaptive</strong></td>
+            <td>432×432px</td>
+            <td>PNG/SVG</td>
+            <td>Foreground layer. 66dp safe zone</td>
+          </tr>
+          <tr>
+            <td><strong>Web/Marketing</strong></td>
+            <td>512×512px</td>
+            <td>SVG, PNG</td>
+            <td>Favicon, social media</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="guidelines">
+        <h3>Design Guidelines</h3>
+        <ul>
+          <li>Keep key elements inside 80% safe zone for iOS rounded corners</li>
+          <li>Test at 29×29px - smallest iOS size. Must stay recognizable</li>
+          <li>Avoid text in icon. Use simple, bold shapes</li>
+          <li>Ensure 4.5:1 contrast ratio for accessibility</li>
+          <li>Android adaptive: Keep important content in center 66dp circle</li>
+          <li>No transparency for iOS App Store submission</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function downloadSVG(id, name) {
+      const element = document.getElementById(id + '-large');
+      const svg = element.querySelector('svg');
+      const bg = window.getComputedStyle(element).background;
+      
+      // Create full SVG with background
+      const fullSVG = `
+        <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="50%" stop-color="#a855f7"/>
+              <stop offset="100%" stop-color="#ec4899"/>
+            </linearGradient>
+          </defs>
+          <rect width="1024" height="1024" rx="223" fill="url(#bg)"/>
+          ${svg.outerHTML.replace('<svg viewBox="0 0 100 100"', '<svg x="256" y="256" width="512" height="512" viewBox="0 0 100 100"')}
+        </svg>
+      `;
+      
+      const blob = new Blob([fullSVG], {type: 'image/svg+xml'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `zenflow-icon-${name}-1024.svg`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      alert(`Downloaded ${name} icon!\n\nNext: Open in Figma/XD and export PNG at required sizes:\n- 1024×1024 for App Store\n- 512×512 for Play Store\n- 180×180 for iOS`);
+    }
+  </script>
+</body>
+</html>
