@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Project Management Software for Teams | ZenFlow - Free 14 Day Trial</title>
+  <meta name="title" content="Project Management Software for Teams | ZenFlow - Free 14 Day Trial">
+  <meta name="description" content="ZenFlow helps teams ship projects 40% faster. Plan sprints, track tasks, and collaborate in real-time. Start your free 14-day trial. No credit card required.">
+  <meta name="keywords" content="project management, team collaboration, agile software, task tracker, sprint planning">
+  <link rel="canonical" href="https://zenflow.app/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zenflow.app/">
+  <meta property="og:title" content="Project Management Software for Teams | ZenFlow">
+  <meta property="og:description" content="ZenFlow helps teams ship projects 40% faster. Plan sprints, track tasks, and collaborate in real-time.">
+  <meta property="og:image" content="https://zenflow.app/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://zenflow.app/">
+  <meta property="twitter:title" content="Project Management Software for Teams | ZenFlow">
+  <meta property="twitter:description" content="ZenFlow helps teams ship projects 40% faster. Plan sprints, track tasks, and collaborate in real-time.">
+  <meta property="twitter:image" content="https://zenflow.app/twitter-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/hero-image.webp" as="image">
+
+  <!-- Structured Data - Organization + Product + FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "ZenFlow",
+        "url": "https://zenflow.app",
+        "logo": "https://zenflow.app/logo.png",
+        "sameAs": [
+          "https://twitter.com/zenflow",
+          "https://linkedin.com/company/zenflow"
+        ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "ZenFlow",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web, iOS, Android",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free 14-day trial"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "reviewCount": "1247"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is ZenFlow free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ZenFlow offers a free 14-day trial with full features. No credit card required. Paid plans start at $8/user/month."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does ZenFlow integrate with Slack?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, ZenFlow has native Slack integration plus 50+ other tools including GitHub, Figma, and Google Workspace."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* Critical CSS - inline for fastest render */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-subtle: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      --container: 1200px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --bg-subtle: #1e293b;
+        --border: #334155;
+        --text: #f1f5f9;
+        --text-secondary: #cbd5e1;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    /* Skip link for accessibility + SEO */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      z-index: 9999;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* Layout */
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header - semantic + sticky for UX */
+    header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    /* Navigation - semantic list */
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 150ms;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    /* Hero - H1 only once per page */
+    .hero {
+      padding: 6rem 0 4rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin: 0 0 1.5rem;
+      max-width: 20ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-desc {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 60ch;
+      margin: 0 auto 2rem;
+    }
+
+    /* CTA buttons */
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 150ms;
+      min-height: 44px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-subtle);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    /* Social proof - builds E-E-A-T */
+    .social-proof {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      opacity: 0.6;
+    }
+
+    /* Features - H2 for section hierarchy */
+    .features {
+      padding: 5rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin: 0 0 1rem;
+    }
+
+    .section-header p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature {
+      padding: 2rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+    }
+
+    .feature-icon {
+      width: 3rem;
+      height: 3rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 0.75rem;
+    }
+
+    .feature p {
+      margin: 0;
+      color: var(--text-secondary);
+    }
+
+    /* FAQ - targets featured snippets */
+    .faq {
+      padding: 5rem 0;
+      background: var(--bg-subtle);
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0;
+    }
+
+    .faq-item summary {
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-item summary::-webkit-details-marker { display: none; }
+
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      transition: transform 150ms;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      margin-top: 1rem;
+      color: var(--text-secondary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-col a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .footer-col a:hover { color: var(--text); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav ul { display: none; }
+      .hero { padding: 4rem 0 3rem; }
+      .hero h1 { font-size: 2rem; }
+      .btn-group { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+    }
+
+    /* Performance: reduce layout shift */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Breadcrumbs - internal linking */
+    .breadcrumbs {
+      padding: 1rem 0;
+      font-size: 0.875rem;
+    }
+
+    .breadcrumbs ol {
+      display: flex;
+      gap: 0.5rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .breadcrumbs a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .breadcrumbs [aria-current="page"] {
+      color: var(--text);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header with semantic nav -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="logo" aria-label="ZenFlow homepage">
+          <span aria-hidden="true">⚡</span>
+          ZenFlow
+        </a>
+
+        <nav aria-label="Main navigation">
+          <ul>
+            <li><a href="/features">Features</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/login">Login</a></li>
+          </ul>
+        </nav>
+
+        <a href="/signup" class="btn btn-primary">Start Free Trial</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs - helps Google understand site structure -->
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <div class="container">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><span aria-current="page">Project Management Software</span></li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <!-- Hero - Single H1 with target keyword -->
+    <section class="hero">
+      <div class="container">
+        <h1>Project Management Software That Teams Actually Love</h1>
+        <p class="hero-desc">
+          ZenFlow helps teams ship projects 40% faster with AI-powered planning, real-time collaboration, and zero learning curve. Join 50,000+ teams.
+        </p>
+        <div class="btn-group">
+          <a href="/signup" class="btn btn-primary">Start Free 14-Day Trial</a>
+          <a href="/demo" class="btn btn-secondary">Watch 2-Min Demo</a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-secondary);">
+          No credit card required • Cancel anytime
+        </p>
+      </div>
+    </section>
+
+    <!-- Social Proof - E-E-A-T signals -->
+    <section class="social-proof" aria-label="Trusted by companies">
+      <div class="container">
+        <p style="text-align: center; font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em;">
+          Trusted by 50,000+ teams at
+        </p>
+        <div class="logos">
+          <img src="/logo-stripe.svg" alt="Stripe" width="100" height="40" loading="lazy">
+          <img src="/logo-shopify.svg" alt="Shopify" width="100" height="40" loading="lazy">
+          <img src="/logo-airbnb.svg" alt="Airbnb" width="100" height="40" loading="lazy">
+          <img src="/logo-figma.svg" alt="Figma" width="100" height="40" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- Features - H2 + H3 hierarchy for SEO -->
+    <section class="features">
+      <div class="container">
+        <div class="section-header">
+          <h2>Everything You Need to Ship Faster</h2>
+          <p>Stop juggling tools. ZenFlow replaces your task tracker, docs, and chat with one unified workspace.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">🤖</div>
+            <h3>AI Sprint Planning</h3>
+            <p>Describe your goal and ZenFlow breaks it into tasks, estimates effort, and assigns to your team. Save 5 hours per sprint.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">⚡</div>
+            <h3>Real-Time Collaboration</h3>
+            <p>See who's online, edit docs together, and comment on tasks. No more "Did you see my Slack?" messages.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">📊</div>
+            <h3>Advanced Analytics</h3>
+            <p>Track velocity, cycle time, and burnout risk. Export to CSV or connect to your BI tool via API.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">🔗</div>
+            <h3>50+ Integrations</h3>
+            <p>Connect Slack, GitHub, Figma, Google Workspace, and more. Two-way sync keeps everything updated.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">🔒</div>
+            <h3>Enterprise Security</h3>
+            <p>SOC 2 Type II certified, GDPR compliant, SSO/SAML support. Your data is encrypted at rest and in transit.</p>
+          </article>
+
+          <article class="feature">
+            <div class="feature-icon" aria-hidden="true">📱</div>
+            <h3>Works Everywhere</h3>
+            <p>Native apps for iOS, Android, Mac, Windows, and Linux. Plus a lightning-fast web app. Offline mode included.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ - Targets "People Also Ask" snippets -->
+    <section class="faq">
+      <div class="container">
+        <div class="section-header">
+          <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Is ZenFlow free?</summary>
+            <div class="faq-answer">
+              <p>ZenFlow offers a free 14-day trial with full access to all features. No credit card required. After the trial, paid plans start at $8 per user per month when billed annually. We also have a free plan for teams of up to 3 people.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Does ZenFlow integrate with Slack and GitHub?</summary>
+            <div class="faq-answer">
+              <p>Yes. ZenFlow has native two-way integrations with Slack, GitHub, GitLab, Jira, Figma, Notion, and 50+ other tools. You can create tasks from Slack messages, sync GitHub issues, and embed Figma files directly in ZenFlow.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>How is ZenFlow different from Jira or Asana?</summary>
+            <div class="faq-answer">
+              <p>Unlike Jira which requires admin setup, ZenFlow works out of the box. Unlike Asana which lacks developer features, ZenFlow has native Git integration and sprint planning. We're the only tool that combines docs, tasks, and chat in one AI-powered workspace.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Can I import data from Trello or Monday.com?</summary>
+            <div class="faq-answer">
+              <p>Yes. Our migration tool imports boards, tasks, comments, and attachments from Trello, Asana, Monday.com, ClickUp, and Jira. Most teams migrate in under 10 minutes. We also offer free migration assistance for teams over 20 people.</p>
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Is my data secure?</summary>
+            <div class="faq-answer">
+              <p>ZenFlow is SOC 2 Type II certified and GDPR compliant. All data is encrypted at rest with AES-256 and in transit with TLS 1.3. We offer SSO/SAML, SCIM provisioning, and audit logs on Enterprise plans. Your data is stored in US or EU regions.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="padding: 5rem 0; text-align: center;">
+      <div class="container">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Ship Faster?</h2>
+        <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 2rem;">
+          Join 50,000+ teams using ZenFlow. Start your free 14-day trial today.
+        </p>
+        <a href="/signup" class="btn btn-primary" style="font-size: 1.125rem; padding: 1rem 2rem;">
+          Start Free Trial
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer with internal links -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="/features">Features</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/integrations">Integrations</a></li>
+            <li><a href="/changelog">Changelog</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/guides">Guides</a></li>
+            <li><a href="/templates">Templates</a></li>
+            <li><a href="/api">API Docs</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/about">About</a></li>
+            <li><a href="/careers">Careers</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/press">Press</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/security">Security</a></li>
+            <li><a href="/gdpr">GDPR</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="padding-top: 2rem; border-top: 1px solid var(--border); text-align: center;">
+        <p>&copy; 2026 ZenFlow Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Defer non-critical JS -->
+  <script defer>
+    // Lazy load images
+    if ('loading' in HTMLImageElement.prototype) {
+      const images = document.querySelectorAll('img[loading="lazy"]');
+      images.forEach(img => img.src = img.dataset.src);
+    }
+  </script>
+</body>
+</html>
