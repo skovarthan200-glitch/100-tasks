@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenFlow - Smart Watch UI</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+
+      --bg: #000000;
+      --surface: #1c1c1e;
+      --surface-2: #2c2c2e;
+      --text: #ffffff;
+      --text-secondary: #8e8e93;
+      --border: #38383a;
+
+      --gradient-blue: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
+      --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+      --gradient-green: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
+      --gradient-orange: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+
+      --font: 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --ease: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    body {
+      font-family: var(--font);
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* Watch Frame */
+.watch-frame {
+      position: relative;
+      width: 368px;
+      height: 448px;
+    }
+
+.watch-body {
+      width: 368px;
+      height: 448px;
+      background: linear-gradient(135deg, #2d2d2f 0%, #1c1c1e 100%);
+      border-radius: 56px;
+      padding: 12px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+      position: relative;
+    }
+
+    /* Digital Crown */
+.crown {
+      position: absolute;
+      right: -8px;
+      top: 120px;
+      width: 8px;
+      height: 48px;
+      background: linear-gradient(90deg, #3a3a3c 0%, #2c2c2e 100%);
+      border-radius: 0 4px 4px 0;
+      box-shadow: inset -2px 0 4px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+
+.crown::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 4px;
+      height: 24px;
+      background: #1c1c1e;
+      border-radius: 2px;
+    }
+
+    /* Side Button */
+.side-btn {
+      position: absolute;
+      right: -6px;
+      top: 200px;
+      width: 6px;
+      height: 60px;
+      background: linear-gradient(90deg, #3a3a3c 0%, #2c2c2e 100%);
+      border-radius: 0 3px 3px 0;
+      cursor: pointer;
+    }
+
+    /* Screen */
+.screen {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Status Bar */
+.status-bar {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+    }
+
+.status-time {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.5px;
+    }
+
+    /* App Container */
+.app-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+.app {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: all var(--ease);
+      transform: scale(0.9);
+    }
+
+.app.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: scale(1);
+    }
+
+    /* Watch Face */
+.watch-face {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 40px 24px;
+      background: radial-gradient(circle at 50% 30%, #1e3a8a 0%, #000000 70%);
+      position: relative;
+      overflow: hidden;
+    }
+
+.watch-face::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(14,165,233,0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: glow 4s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+.time-display {
+      text-align: center;
+      z-index: 1;
+      margin-bottom: 24px;
+    }
+
+.time-main {
+      font-size: 72px;
+      font-weight: 200;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+.time-seconds {
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--primary);
+      margin-left: 4px;
+    }
+
+.date-display {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+.complications {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      width: 100%;
+      z-index: 1;
+    }
+
+.complication {
+      aspect-ratio: 1;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+.complication:active {
+      transform: scale(0.92);
+      background: rgba(255,255,255,0.12);
+    }
+
+.comp-icon {
+      font-size: 20px;
+    }
+
+.comp-value {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+.comp-label {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    /* App Grid */
+.app-grid {
+      height: 100%;
+      padding: 50px 20px 20px;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-content: start;
+    }
+
+.app-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+.app-icon {
+      aspect-ratio: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+.app-icon:active {
+      transform: scale(0.92);
+      background: var(--surface-2);
+    }
+
+.app-icon-img {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+.app-icon-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    /* Workout App */
+.workout-app {
+      height: 100%;
+      padding: 50px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+.workout-header {
+      text-align: center;
+    }
+
+.workout-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+.workout-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+.workout-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      flex: 1;
+    }
+
+.metric {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+.metric-icon {
+      font-size: 24px;
+    }
+
+.metric-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+
+.metric-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+.workout-controls {
+      display: flex;
+      gap: 12px;
+    }
+
+.workout-btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 14px;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+.workout-btn:active {
+      transform: scale(0.96);
+    }
+
+.btn-pause {
+      background: var(--warning);
+      color: var(--bg);
+    }
+
+.btn-stop {
+      background: var(--error);
+      color: var(--text);
+    }
+
+    /* Notifications */
+.notif-app {
+      height: 100%;
+      padding: 50px 20px 20px;
+      overflow-y: auto;
+    }
+
+.notif-app::-webkit-scrollbar {
+      display: none;
+    }
+
+.notif-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+.notif-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+.notif-item:active {
+      transform: scale(0.98);
+      background: var(--surface-2);
+    }
+
+.notif-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+.notif-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+.notif-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+.notif-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+.notif-time {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Page Indicator */
+.page-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 100;
+    }
+
+.page-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: all var(--ease);
+    }
+
+.page-dot.active {
+      background: var(--text);
+      width: 18px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="watch-frame">
+    <div class="watch-body">
+      <div class="crown" onclick="handleCrown()"></div>
+      <div class="side-btn" onclick="handleSideButton()"></div>
+
+      <div class="screen">
+        <div class="status-bar">
+          <div class="status-time" id="statusTime">9:41</div>
+        </div>
+
+        <div class="app-container">
+          <!-- Watch Face -->
+          <div class="app active" id="watchFace">
+            <div class="watch-face">
+              <div class="time-display">
+                <div class="time-main">
+                  <span id="hours">09</span>:<span id="minutes">41</span><span class="time-seconds" id="seconds">23</span>
+                </div>
+                <div class="date-display" id="date">Mon, Oct 13</div>
+              </div>
+              <div class="complications">
+                <div class="complication" onclick="openApp('workout')">
+                  <div class="comp-icon">🏃</div>
+                  <div class="comp-value">2.4k</div>
+                  <div class="comp-label">Steps</div>
+                </div>
+                <div class="complication" onclick="openApp('heart')">
+                  <div class="comp-icon">❤️</div>
+                  <div class="comp-value">72</div>
+                  <div class="comp-label">BPM</div>
+                </div>
+                <div class="complication" onclick="openApp('weather')">
+                  <div class="comp-icon">☀️</div>
+                  <div class="comp-value">24°</div>
+                  <div class="comp-label">Sunny</div>
+                </div>
+                <div class="complication" onclick="openApp('battery')">
+                  <div class="comp-icon">🔋</div>
+                  <div class="comp-value">87%</div>
+                  <div class="comp-label">Battery</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- App Grid -->
+          <div class="app" id="appGrid">
+            <div class="app-grid">
+              <div class="app-icon" onclick="openApp('workout')">
+                <div class="app-icon-img" style="background: var(--gradient-green);">🏃</div>
+                <div class="app-icon-label">Workout</div>
+              </div>
+              <div class="app-icon" onclick="openApp('heart')">
+                <div class="app-icon-img" style="background: var(--gradient-orange);">❤️</div>
+                <div class="app-icon-label">Heart</div>
+              </div>
+              <div class="app-icon" onclick="openApp('notifications')">
+                <div class="app-icon-img" style="background: var(--gradient-blue);">🔔</div>
+                <div class="app-icon-label">Notif</div>
+              </div>
+              <div class="app-icon" onclick="openApp('weather')">
+                <div class="app-icon-img" style="background: var(--gradient-blue);">☀️</div>
+                <div class="app-icon-label">Weather</div>
+              </div>
+              <div class="app-icon" onclick="openApp('timer')">
+                <div class="app-icon-img" style="background: var(--gradient-purple);">⏱️</div>
+                <div class="app-icon-label">Timer</div>
+              </div>
+              <div class="app-icon" onclick="openApp('music')">
+                <div class="app-icon-img" style="background: var(--gradient-orange);">🎵</div>
+                <div class="app-icon-label">Music</div>
+              </div>
+              <div class="app-icon" onclick="openApp('messages')">
+                <div class="app-icon-img" style="background: var(--gradient-green);">💬</div>
+                <div class="app-icon-label">Messages</div>
+              </div>
+              <div class="app-icon" onclick="openApp('calendar')">
+                <div class="app-icon-img" style="background: var(--gradient-purple);">📅</div>
+                <div class="app-icon-label">Calendar</div>
+              </div>
+              <div class="app-icon" onclick="openApp('settings')">
+                <div class="app-icon-img" style="background: var(--surface-2);">⚙️</div>
+                <div class="app-icon-label">Settings</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Workout App -->
+          <div class="app" id="workout">
+            <div class="workout-app">
+              <div class="workout-header">
+                <div class="workout-title">Running</div>
+                <div class="workout-subtitle">Active • 12:34</div>
+              </div>
+              <div class="workout-metrics">
+                <div class="metric">
+                  <div class="metric-icon">⏱️</div>
+                  <div class="metric-value" id="workoutTime">12:34</div>
+                  <div class="metric-label">Time</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-icon">❤️</div>
+                  <div class="metric-value" id="workoutHR">142</div>
+                  <div class="metric-label">BPM</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-icon">📍</div>
+                  <div class="metric-value" id="workoutDist">2.4</div>
+                  <div class="metric-label">KM</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-icon">🔥</div>
+                  <div class="metric-value" id="workoutCal">186</div>
+                  <div class="metric-label">Cal</div>
+                </div>
+              <div class="workout-controls">
+                <button class="workout-btn btn-pause" onclick="pauseWorkout()">Pause</button>
+                <button class="workout-btn btn-stop" onclick="stopWorkout()">Stop</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="app" id="notifications">
+            <div class="notif-app">
+              <div class="notif-list">
+                <div class="notif-item">
+                  <div class="notif-icon" style="background: var(--gradient-green);">💬</div>
+                  <div class="notif-content">
+                    <div class="notif-title">Sarah Chen</div>
+                    <div class="notif-text">Hey! Are we still on for coffee at 3?</div>
+                    <div class="notif-time">2m ago</div>
+                  </div>
+                </div>
+                <div class="notif-item">
+                  <div class="notif-icon" style="background: var(--gradient-blue);">📅</div>
+                  <div class="notif-content">
+                    <div class="notif-title">Meeting in 15 min</div>
+                    <div class="notif-text">Design Review with Product Team</div>
+                    <div class="notif-time">5m ago</div>
+                  </div>
+                </div>
+                <div class="notif-item">
+                  <div class="notif-icon" style="background: var(--gradient-orange);">🏃</div>
+                  <div class="notif-content">
+                    <div class="notif-title">Activity Goal</div>
+                    <div class="notif-text">You're 80% to your daily step goal!</div>
+                    <div class="notif-time">1h ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-dots" id="pageDots">
+          <div class="page-dot active"></div>
+          <div class="page-dot"></div>
+          <div class="page-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentApp = 'watchFace';
+    let currentPage = 0;
+    let workoutInterval;
+    let workoutSeconds = 754; // 12:34
+    let isPaused = false;
+
+    // Update time
+    function updateTime() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+      document.getElementById('statusTime').textContent = `${hours}:${minutes}`;
+
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      document.getElementById('date').textContent =
+        `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Navigation
+    function openApp(appName) {
+      document.querySelectorAll('.app').forEach(app => app.classList.remove('active'));
+      document.getElementById(appName).classList.add('active');
+      currentApp = appName;
+      updatePageDots();
+
+      if (appName === 'workout' &&!workoutInterval) {
+        startWorkout();
+      }
+    }
+
+    function handleCrown() {
+      if (currentApp === 'watchFace') {
+        openApp('appGrid');
+        currentPage = 1;
+      } else if (currentApp === 'appGrid') {
+        openApp('watchFace');
+        currentPage = 0;
+      } else {
+        openApp('appGrid');
+        currentPage = 1;
+      }
+      updatePageDots();
+    }
+
+    function handleSideButton() {
+      openApp('watchFace');
+      currentPage = 0;
+      updatePageDots();
+    }
+
+    function updatePageDots() {
+      const dots = document.querySelectorAll('.page-dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentPage);
+      });
+    }
+
+    // Workout simulation
+    function startWorkout() {
+      workoutInterval = setInterval(() => {
+        if (!isPaused) {
+          workoutSeconds++;
+          const mins = Math.floor(workoutSeconds / 60);
+          const secs = workoutSeconds % 60;
+          document.getElementById('workoutTime').textContent =
+            `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+          // Simulate heart rate
+          const hr = 135 + Math.floor(Math.random() * 20);
+          document.getElementById('workoutHR').textContent = hr;
+
+          // Simulate distance
+          const dist = (workoutSeconds / 300).toFixed(1);
+          document.getElementById('workoutDist').textContent = dist;
+
+          // Simulate calories
+          const cal = Math.floor(workoutSeconds * 0.25);
+          document.getElementById('workoutCal').textContent = cal;
+        }
+      }, 1000);
+    }
+
+    function pauseWorkout() {
+      isPaused =!isPaused;
+      event.target.textContent = isPaused? 'Resume' : 'Pause';
+    }
+
+    function stopWorkout() {
+      clearInterval(workoutInterval);
+      workoutInterval = null;
+      openApp('watchFace');
+      currentPage = 0;
+      updatePageDots();
+    }
+
+    // Swipe gesture simulation
+    let touchStartX = 0;
+    document.querySelector('.screen').addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    document.querySelector('.screen').addEventListener('touchend', e => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && currentPage < 2) {
+          // Swipe left
+          currentPage++;
+          if (currentPage === 1) openApp('appGrid');
+          else if (currentPage === 2) openApp('notifications');
+        } else if (diff < 0 && currentPage > 0) {
+          // Swipe right
+          currentPage--;
+          if (currentPage === 0) openApp('watchFace');
+          else if (currentPage === 1) openApp('appGrid');
+        }
+        updatePageDots();
+      }
+    });
+
+    // Click on watch face to open apps
+    document.getElementById('watchFace').addEventListener('click', (e) => {
+      if (!e.target.closest('.complication')) {
+        openApp('appGrid');
+        currentPage = 1;
+        updatePageDots();
+      }
+    });
+  </script>
+</body>
+</html>
