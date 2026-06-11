@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO -->
+  <title>Alex Chen - Product Designer & Frontend Developer | Portfolio</title>
+  <meta name="title" content="Alex Chen - Product Designer & Frontend Developer | Portfolio">
+  <meta name="description" content="Product Designer & Frontend Developer based in San Francisco. I design and build web apps for startups. View my work, case studies, and get in touch.">
+  <meta name="keywords" content="product designer, frontend developer, UX designer, React, portfolio, San Francisco">
+  <meta name="author" content="Alex Chen">
+  <link rel="canonical" href="https://alexchen.design/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alexchen.design/">
+  <meta property="og:title" content="Alex Chen - Product Designer & Frontend Developer">
+  <meta property="og:description" content="I design and build web apps for startups. View my work and case studies.">
+  <meta property="og:image" content="https://alexchen.design/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://alexchen.design/">
+  <meta property="twitter:title" content="Alex Chen - Product Designer & Frontend Developer">
+  <meta property="twitter:description" content="I design and build web apps for startups. View my work and case studies.">
+  <meta property="twitter:image" content="https://alexchen.design/og-image.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Preload -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Alex Chen",
+    "url": "https://alexchen.design",
+    "image": "https://alexchen.design/profile.jpg",
+    "jobTitle": "Product Designer & Frontend Developer",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Freelance"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "San Francisco",
+      "addressRegion": "CA"
+    },
+    "sameAs": [
+      "https://twitter.com/alexchendesign",
+      "https://linkedin.com/in/alexchen",
+      "https://github.com/alexchen",
+      "https://dribbble.com/alexchen"
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-elevated: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #64748b;
+      --primary: #0ea5e9;
+      --primary-hover: #0284c7;
+      --primary-text: #ffffff;
+
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+      --container: 1200px;
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --bg-subtle: #1e293b;
+        --bg-elevated: #1e293b;
+        --border: #334155;
+        --text: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-tertiary: #94a3b8;
+      }
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Skip link */
+   .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      border-radius: 0.5rem;
+      z-index: 9999;
+    }
+   .skip-link:focus { top: 1rem; }
+
+    /* Container */
+   .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+   .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      min-height: 72px;
+    }
+
+   .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+   .logo-icon {
+      width: 2rem;
+      height: 2rem;
+      background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+    }
+
+    /* Nav */
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 150ms;
+      position: relative;
+    }
+
+    nav a:hover, nav a:focus {
+      color: var(--text);
+    }
+
+    nav a[aria-current="page"]::after {
+      content: '';
+      position: absolute;
+      bottom: -1.5rem;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary);
+    }
+
+   .mobile-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    /* Hero */
+   .hero {
+      padding: 6rem 0 4rem;
+    }
+
+   .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+   .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin: 0 0 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+   .hero h1 span {
+      background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+   .hero-desc {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin: 0 0 2rem;
+      max-width: 50ch;
+    }
+
+   .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+   .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.875rem 1.75rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 150ms;
+      min-height: 48px;
+      border: 1px solid transparent;
+    }
+
+   .btn-primary {
+      background: var(--primary);
+      color: var(--primary-text);
+    }
+
+   .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+   .btn-secondary {
+      background: var(--bg-subtle);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+   .btn-secondary:hover {
+      background: var(--bg-elevated);
+      border-color: var(--text-tertiary);
+    }
+
+   .hero-image {
+      position: relative;
+    }
+
+   .hero-image img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+    }
+
+   .hero-badge {
+      position: absolute;
+      bottom: 2rem;
+      left: -2rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.5rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+   .badge-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+   .badge-text strong {
+      display: block;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+   .badge-text span {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* Section */
+    section {
+      padding: 5rem 0;
+    }
+
+   .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+   .section-label {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+   .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin: 0 0 1rem;
+      letter-spacing: -0.02em;
+    }
+
+   .section-header p {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+
+    /* Work Grid */
+   .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+   .work-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 200ms;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+   .work-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+
+   .work-image {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: var(--bg-subtle);
+    }
+
+   .work-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 300ms;
+    }
+
+   .work-card:hover.work-image img {
+      transform: scale(1.05);
+    }
+
+   .work-content {
+      padding: 1.5rem;
+    }
+
+   .work-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+   .tag {
+      padding: 0.25rem 0.625rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+   .work-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+    }
+
+   .work-desc {
+      color: var(--text-secondary);
+      margin: 0 0 1rem;
+      font-size: 0.9375rem;
+    }
+
+   .work-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9375rem;
+    }
+
+    /* About */
+   .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+   .about-content h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+    }
+
+   .about-content p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+   .skills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+   .skill-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+   .skill-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+   .skill-name {
+      font-weight: 600;
+      font-size: 0.9375rem;
+    }
+
+    /* Contact */
+   .contact {
+      background: var(--bg-subtle);
+      border-radius: var(--radius);
+      padding: 3rem;
+      text-align: center;
+    }
+
+   .contact h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 0 1rem;
+    }
+
+   .contact p {
+      color: var(--text-secondary);
+      margin: 0 0 2rem;
+      font-size: 1.125rem;
+    }
+
+   .contact-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 0 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+   .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+   .footer-col h4 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 1rem;
+      color: var(--text);
+    }
+
+   .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+   .footer-col a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 150ms;
+    }
+
+   .footer-col a:hover {
+      color: var(--text);
+    }
+
+   .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+   .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+   .social-links a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      transition: all 150ms;
+    }
+
+   .social-links a:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
+      }
+
+      nav ul.show { display: flex; }
+
+      nav a {
+        padding: 0.75rem;
+        display: block;
+      }
+
+     .mobile-toggle { display: block; }
+
+     .hero { padding: 3rem 0; }
+     .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+     .hero-badge {
+        position: static;
+        margin-top: 2rem;
+      }
+
+     .work-grid {
+        grid-template-columns: 1fr;
+      }
+
+     .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+     .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section { padding: 3rem 0; }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+   .fade-in {
+      animation: fadeInUp 600ms ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="logo" aria-label="Alex Chen homepage">
+          <div class="logo-icon">A</div>
+          <span>Alex Chen</span>
+        </a>
+
+        <nav aria-label="Main navigation">
+          <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">☰</button>
+          <ul id="nav-menu">
+            <li><a href="#work" aria-current="page">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="/blog">Blog</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="fade-in">
+            <h1>Hi, I'm Alex.<br><span>Product Designer</span> & Developer</h1>
+            <p class="hero-desc">
+              I help startups ship better products faster. Currently designing and building web apps that users love.
+            </p>
+            <div class="hero-actions">
+              <a href="#work" class="btn btn-primary">View My Work</a>
+              <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+          </div>
+
+          <div class="hero-image fade-in">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=600&fit=crop"
+                 alt="Alex Chen, Product Designer"
+                 width="600"
+                 height="600"
+                 loading="eager">
+            <div class="hero-badge">
+              <div class="badge-icon">⭐</div>
+              <div class="badge-text">
+                <strong>5.0</strong>
+                <span>50+ Projects</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section id="work">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Portfolio</span>
+          <h2>Featured Work</h2>
+          <p>A selection of projects I've designed and built for startups and enterprises</p>
+        </div>
+
+        <div class="work-grid">
+          <article class="work-card">
+            <a href="/work/zenflow" aria-label="View ZenFlow case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
+                     alt="ZenFlow Dashboard Interface"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+              </div>
+              <div class="work-content">
+                <div class="work-tags">
+                  <span class="tag">Product Design</span>
+                  <span class="tag">React</span>
+                  <span class="tag">SaaS</span>
+                </div>
+                <h3 class="work-title">ZenFlow Dashboard</h3>
+                <p class="work-desc">Complete redesign of analytics platform increasing user engagement by 40% and reducing churn 25%.</p>
+                <span class="work-link">View Case Study →</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="work-card">
+            <a href="/work/fintech" aria-label="View FinTech App case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+                     alt="FinTech Mobile App Interface"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+              </div>
+              <div class="work-content">
+                <div class="work-tags">
+                  <span class="tag">Mobile App</span>
+                  <span class="tag">UX Research</span>
+                  <span class="tag">FinTech</span>
+                </div>
+                <h3 class="work-title">FinTech Mobile App</h3>
+                <p class="work-desc">Designed and shipped iOS/Android app for YC-backed startup. 4.8★ rating, 100k+ downloads.</p>
+                <span class="work-link">View Case Study →</span>
+              </div>
+            </a>
+          </article>
+
+          <article class="work-card">
+            <a href="/work/ecommerce" aria-label="View E-commerce Platform case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=400&fit=crop"
+                     alt="E-commerce Platform Interface"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+              </div>
+              <div class="work-content">
+                <div class="work-tags">
+                  <span class="tag">E-commerce</span>
+                  <span class="tag">Next.js</span>
+                  <span class="tag">Conversion</span>
+                </div>
+                <h3 class="work-title">E-commerce Platform</h3>
+                <p class="work-desc">Built headless commerce site increasing conversion rate from 1.2% to 3.4% in 3 months.</p>
+                <span class="work-link">View Case Study →</span>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" style="background: var(--bg-subtle);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">About</span>
+          <h2>Designer, Developer, Problem Solver</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-content">
+            <h3>8+ Years Building Products</h3>
+            <p>
+              I'm a product designer and frontend developer based in San Francisco. I help startups and enterprises ship products that users love.
+            </p>
+            <p>
+              Previously Lead Designer at Stripe and Frontend Engineer at Airbnb. Now I work with select clients to design and build their MVPs and scale their design systems.
+            </p>
+            <p>
+              When I'm not pushing pixels, you'll find me contributing to open source, writing about design systems, or hiking in Marin.
+            </p>
+          </div>
+
+          <div>
+            <h3 style="margin-bottom: 1rem;">Skills & Tools</h3>
+            <div class="skills">
+              <div class="skill-item">
+                <div class="skill-icon">🎨</div>
+                <div class="skill-name">Figma</div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">⚛️</div>
+                <div class="skill-name">React</div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">📱</div>
+                <div class="skill-name">Mobile</div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">🔍</div>
+                <div class="skill-name">UX Research</div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">💻</div>
+                <div class="skill-name">TypeScript</div>
+              </div>
+              <div class="skill-item">
+                <div class="skill-icon">🎯</div>
+                <div class="skill-name">Design Systems</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact">
+          <h3>Let's Work Together</h3>
+          <p>Have a project in mind? I'm currently available for freelance work and consulting.</p>
+          <div class="contact-links">
+            <a href="mailto:alex@alexchen.design" class="btn btn-primary">Email Me</a>
+            <a href="https://cal.com/alexchen" class="btn btn-secondary" target="_blank" rel="noopener">Book a Call</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon">A</div>
+            <span>Alex Chen</span>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.9375rem;">
+            Product Designer & Frontend Developer helping startups ship better products.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Work</h4>
+          <ul>
+            <li><a href="/work/zenflow">ZenFlow</a></li>
+            <li><a href="/work/fintech">FinTech App</a></li>
+            <li><a href="/work/ecommerce">E-commerce</a></li>
+            <li><a href="/work">View All</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/case-studies">Case Studies</a></li>
+            <li><a href="/resources">Design Resources</a></li>
+            <li><a href="/newsletter">Newsletter</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://twitter.com/alexchendesign" target="_blank" rel="noopener">Twitter</a></li>
+            <li><a href="https://linkedin.com/in/alexchen" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://github.com/alexchen" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="https://dribbble.com/alexchen" target="_blank" rel="noopener">Dribbble</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Alex Chen. All rights reserved.</p>
+        <div class="social-links">
+          <a href="https://twitter.com/alexchendesign" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+          <a href="https://linkedin.com/in/alexchen" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+          <a href="https://github.com/alexchen" aria-label="GitHub" target="_blank" rel="noopener">⚙️</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-toggle');
+      const isOpen = menu.classList.toggle('show');
+      btn.setAttribute('aria-expanded', isOpen);
+      btn.textContent = isOpen? '✕' : '☰';
+    }
+
+    // Close mobile menu on link click
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById('nav-menu');
+        const btn = document.querySelector('.mobile-toggle');
+        if (menu.classList.contains('show')) {
+          menu.classList.remove('show');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = '☰';
+        }
+      });
+    });
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.removeAttribute('aria-current');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.setAttribute('aria-current', 'page');
+        }
+      });
+    });
+
+    // Lazy load animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.work-card,.skill-item').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
