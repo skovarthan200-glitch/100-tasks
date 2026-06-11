@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  
+  <!-- PWA Meta -->
+  <meta name="theme-color" content="#0ea5e9">
+  <meta name="description" content="ZenFlow Tasks - Manage projects offline. Fast, installable, works everywhere.">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ZenFlow">
+  
+  <title>ZenFlow Tasks</title>
+  
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png">
+  <link rel="apple-touch-icon" href="/icons/icon-180.png">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --primary: #0ea5e9;
+      --primary-dark: #0284c7;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+
+      --bg: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-elevated: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-secondary: #64748b;
+
+      --safe-top: env(safe-area-inset-top);
+      --safe-bottom: env(safe-area-inset-bottom);
+
+      --radius: 12px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+
+      --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --bg-secondary: #1e293b;
+        --bg-elevated: #1e293b;
+        --border: #334155;
+        --text: #f1f5f9;
+        --text-secondary: #94a3b8;
+      }
+    }
+
+    html { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--text);
+      background: var(--bg);
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* App Shell */
+    .app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      height: 100dvh; /* Dynamic viewport for mobile */
+    }
+
+    /* Status Bar Spacer for iOS */
+    .status-spacer {
+      height: var(--safe-top);
+      background: var(--primary);
+    }
+
+    /* Header */
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 1rem 1rem 1rem calc(1rem + var(--safe-top));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      z-index: 100;
+    }
+
+    .header-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 150ms;
+    }
+
+    .icon-btn:active { background: rgba(255,255,255,0.3); }
+
+    /* Offline Banner */
+    .offline-banner {
+      background: var(--warning);
+      color: #000;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    .offline-banner.show { display: block; }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 1rem;
+      padding-bottom: calc(80px + var(--safe-bottom));
+    }
+
+    /* Install Prompt */
+    .install-prompt {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+      display: none;
+      animation: slideDown 300ms ease;
+    }
+
+    .install-prompt.show { display: block; }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .install-content {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .install-icon {
+      width: 3rem;
+      height: 3rem;
+      background: var(--primary);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .install-text {
+      flex: 1;
+    }
+
+    .install-title {
+      font-weight: 700;
+      margin: 0 0 0.25rem;
+    }
+
+    .install-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    /* Task List */
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .task {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      box-shadow: var(--shadow);
+      transition: transform 150ms, box-shadow 150ms;
+    }
+
+    .task:active {
+      transform: scale(0.98);
+    }
+
+    .task-checkbox {
+      width: 1.5rem;
+      height: 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 150ms;
+    }
+
+    .task-checkbox.checked {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+
+    .task-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .task-title {
+      font-weight: 600;
+      margin: 0 0 0.25rem;
+      word-wrap: break-word;
+    }
+
+    .task-title.done {
+      text-decoration: line-through;
+      color: var(--text-secondary);
+    }
+
+    .task-meta {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .task-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.125rem 0.5rem;
+      background: var(--bg-secondary);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* FAB */
+    .fab {
+      position: fixed;
+      bottom: calc(1.5rem + var(--safe-bottom));
+      right: 1.5rem;
+      width: 56px;
+      height: 56px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 150ms, background 150ms;
+      z-index: 50;
+    }
+
+    .fab:active {
+      transform: scale(0.95);
+      background: var(--primary-dark);
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--border);
+      padding: 0.5rem 0 calc(0.5rem + var(--safe-bottom));
+      display: flex;
+      justify-content: space-around;
+      z-index: 100;
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 150ms;
+      min-height: 56px;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-icon {
+      font-size: 1.5rem;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      z-index: 200;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.show { display: block; }
+
+    .modal {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-elevated);
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 1.5rem 1.5rem calc(1.5rem + var(--safe-bottom));
+      transform: translateY(100%);
+      transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 201;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal.show { transform: translateY(0); }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .modal-close {
+      width: 44px;
+      height: 44px;
+      border: none;
+      background: var(--bg-secondary);
+      color: var(--text);
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-family: var(--font);
+      font-size: 1rem;
+      color: var(--text);
+      min-height: 44px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 48px;
+    }
+
+    .btn:active {
+      background: var(--primary-dark);
+    }
+
+    /* Empty State */
+    .empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+
+    .empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    /* Pull to refresh indicator */
+    .ptr {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100%);
+      padding: 1rem;
+      transition: transform 200ms;
+    }
+
+    .ptr.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="status-spacer"></div>
+
+    <!-- Header -->
+    <header class="header">
+      <h1 class="header-title">My Tasks</h1>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Search" onclick="showSearch()">
+          🔍
+        </button>
+        <button class="icon-btn" aria-label="Settings" onclick="showSettings()">
+          ⚙️
+        </button>
+      </div>
+    </header>
+
+    <!-- Offline Banner -->
+    <div class="offline-banner" id="offlineBanner">
+      You're offline. Changes will sync when reconnected.
+    </div>
+
+    <!-- Main Content -->
+    <main class="main" id="main">
+      <!-- Install Prompt -->
+      <div class="install-prompt" id="installPrompt">
+        <div class="install-content">
+          <div class="install-icon">📱</div>
+          <div class="install-text">
+            <p class="install-title">Install ZenFlow</p>
+            <p class="install-desc">Add to home screen for app-like experience</p>
+          </div>
+          <button class="btn" style="width: auto; padding: 0.5rem 1rem;" onclick="installPWA()">Install</button>
+        </div>
+      </div>
+
+      <!-- Pull to Refresh -->
+      <div class="ptr" id="ptr">↓ Pull to refresh</div>
+
+      <!-- Task List -->
+      <div class="task-list" id="taskList"></div>
+
+      <!-- Empty State -->
+      <div class="empty" id="emptyState" style="display: none;">
+        <div class="empty-icon">✓</div>
+        <h2 style="margin: 0 0 0.5rem;">All caught up!</h2>
+        <p>No tasks yet. Tap + to create your first task.</p>
+      </div>
+    </main>
+
+    <!-- FAB -->
+    <button class="fab" aria-label="Add task" onclick="showAddTask()">+</button>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-item active" onclick="switchTab('tasks', this)">
+        <span class="nav-icon">✓</span>
+        <span>Tasks</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('projects', this)">
+        <span class="nav-icon">📁</span>
+        <span>Projects</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('stats', this)">
+        <span class="nav-icon">📊</span>
+        <span>Stats</span>
+      </button>
+      <button class="nav-item" onclick="switchTab('profile', this)">
+        <span class="nav-icon">👤</span>
+        <span>Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Add Task Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+  <div class="modal" id="taskModal" role="dialog" aria-labelledby="modalTitle">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modalTitle">New Task</h2>
+      <button class="modal-close" aria-label="Close" onclick="closeModal()">×</button>
+    </div>
+    <form onsubmit="addTask(event)">
+      <div class="form-group">
+        <label for="taskTitle">Task Name *</label>
+        <input type="text" id="taskTitle" required autocomplete="off">
+      </div>
+      <div class="form-group">
+        <label for="taskDesc">Description</label>
+        <textarea id="taskDesc" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="taskProject">Project</label>
+        <select id="taskProject">
+          <option value="">No Project</option>
+          <option value="work">Work</option>
+          <option value="personal">Personal</option>
+        </select>
+      </div>
+      <button type="submit" class="btn">Create Task</button>
+    </form>
+  </div>
+
+  <script>
+    // App State
+    let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    let deferredPrompt;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTasks();
+      registerSW();
+      checkInstallPrompt();
+      setupOfflineDetection();
+      setupPullToRefresh();
+    });
+
+    // Service Worker Registration
+    async function registerSW() {
+      if ('serviceWorker' in navigator) {
+        try {
+          await navigator.serviceWorker.register('/sw.js');
+          console.log('SW registered');
+        } catch (err) {
+          console.log('SW registration failed');
+        }
+      }
+    }
+
+    // Install Prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installPrompt').classList.add('show');
+    });
+
+    function checkInstallPrompt() {
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        console.log('Already installed');
+      }
+    }
+
+    async function installPWA() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User response: ${outcome}`);
+      deferredPrompt = null;
+      document.getElementById('installPrompt').classList.remove('show');
+    }
+
+    // Offline Detection
+    function setupOfflineDetection() {
+      const banner = document.getElementById('offlineBanner');
+
+      function updateOnlineStatus() {
+        if (navigator.onLine) {
+          banner.classList.remove('show');
+          syncTasks();
+        } else {
+          banner.classList.add('show');
+        }
+      }
+
+      window.addEventListener('online', updateOnlineStatus);
+      window.addEventListener('offline', updateOnlineStatus);
+      updateOnlineStatus();
+    }
+
+    // Task Management
+    function renderTasks() {
+      const list = document.getElementById('taskList');
+      const empty = document.getElementById('emptyState');
+
+      if (tasks.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      list.innerHTML = tasks.map(task => `
+        <div class="task" data-id="${task.id}">
+          <button
+            class="task-checkbox ${task.done ? 'checked' : ''}"
+            onclick="toggleTask('${task.id}')"
+            aria-label="${task.done ? 'Mark incomplete' : 'Mark complete'}"
+          >
+            ${task.done ? '✓' : ''}
+          </button>
+          <div class="task-content">
+            <h3 class="task-title ${task.done ? 'done' : ''}">${escapeHtml(task.title)}</h3>
+            <div class="task-meta">
+              ${task.project ? `<span class="task-badge">📁 ${task.project}</span>` : ''}
+              <span class="task-badge">${formatDate(task.created)}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function showAddTask() {
+      document.getElementById('modalOverlay').classList.add('show');
+      document.getElementById('taskModal').classList.add('show');
+      document.getElementById('taskTitle').focus();
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('show');
+      document.getElementById('taskModal').classList.remove('show');
+      document.querySelector('#taskModal form').reset();
+    }
+
+    function addTask(e) {
+      e.preventDefault();
+      const title = document.getElementById('taskTitle').value.trim();
+      const desc = document.getElementById('taskDesc').value.trim();
+      const project = document.getElementById('taskProject').value;
+
+      if (!title) return;
+
+      const task = {
+        id: Date.now().toString(),
+        title,
+        desc,
+        project,
+        done: false,
+        created: new Date().toISOString(),
+        synced: navigator.onLine
+      };
+
+      tasks.unshift(task);
+      saveTasks();
+      renderTasks();
+      closeModal();
+
+      // Show toast
+      showToast('Task created');
+
+      // Background sync if offline
+      if (!navigator.onLine && 'sync' in registration) {
+        registration.sync.register('sync-tasks');
+      }
+    }
+
+    function toggleTask(id) {
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.done = !task.done;
+        task.synced = navigator.onLine;
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    function saveTasks() {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    async function syncTasks() {
+      const unsynced = tasks.filter(t => !t.synced);
+      if (unsynced.length === 0) return;
+
+      // Simulate API call
+      console.log('Syncing', unsynced.length, 'tasks');
+      unsynced.forEach(t => t.synced = true);
+      saveTasks();
+      showToast('Synced ' + unsynced.length + ' tasks');
+    }
+
+    // Pull to Refresh
+    function setupPullToRefresh() {
+      const main = document.getElementById('main');
+      const ptr = document.getElementById('ptr');
+      let startY = 0;
+      let pulling = false;
+
+      main.addEventListener('touchstart', (e) => {
+        if (main.scrollTop === 0) {
+          startY = e.touches[0].pageY;
+          pulling = true;
+        }
+      });
+
+      main.addEventListener('touchmove', (e) => {
+        if (!pulling) return;
+        const y = e.touches[0].pageY;
+        const diff = y - startY;
+
+        if (diff > 0 && diff < 100) {
+          ptr.classList.add('visible');
+          ptr.textContent = diff > 60 ? '↑ Release to refresh' : '↓ Pull to refresh';
+        }
+      });
+
+      main.addEventListener('touchend', () => {
+        if (pulling) {
+          ptr.classList.remove('visible');
+          if (ptr.textContent.includes('Release')) {
+            refresh();
+          }
+          pulling = false;
+        }
+      });
+    }
+
+    function refresh() {
+      showToast('Refreshing...');
+      setTimeout(() => {
+        renderTasks();
+        showToast('Up to date');
+      }, 500);
+    }
+
+    // Tab Navigation
+    function switchTab(tab, btn) {
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      showToast(`Switched to ${tab}`);
+    }
+
+    // Utils
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function formatDate(iso) {
+      const d = new Date(iso);
+      const now = new Date();
+      const diff = now - d;
+      const days = Math.floor(diff / 86400000);
+
+      if (days === 0) return 'Today';
+      if (days === 1) return 'Yesterday';
+      if (days < 7) return `${days}d ago`;
+      return d.toLocaleDateString();
+    }
+
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        bottom: calc(100px + var(--safe-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text);
+        color: var(--bg);
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--radius);
+        font-weight: 600;
+        box-shadow: var(--shadow-lg);
+        z-index: 1000;
+        animation: toastIn 300ms ease;
+      `;
+      toast.textContent = msg;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2000);
+    }
+
+    function showSearch() {
+      showToast('Search coming soon');
+    }
+
+    function showSettings() {
+      showToast('Settings coming soon');
+    }
+
+    // Add CSS animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes toastIn {
+        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
