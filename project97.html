@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessible Dashboard - ZenFlow</title>
+  <style>
+    /* Reset + Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Color tokens - WCAG AA 4.5:1 contrast minimum */
+      --color-bg: #ffffff;
+      --color-surface: #f8fafc;
+      --color-surface-hover: #f1f5f9;
+      --color-border: #cbd5e1;
+      --color-border-strong: #94a3b8;
+
+      --color-text: #0f172a;
+      --color-text-secondary: #475569;
+      --color-text-muted: #64748b;
+
+      --color-primary: #1d4ed8;
+      --color-primary-hover: #1e40af;
+      --color-primary-text: #ffffff;
+
+      --color-success: #15803d;
+      --color-success-bg: #dcfce7;
+      --color-error: #b91c1c;
+      --color-error-bg: #fee2e2;
+      --color-warning: #a16207;
+      --color-warning-bg: #fef3c7;
+
+      --color-focus: #1d4ed8;
+      --focus-ring: 0 0 0 3px rgba(29, 78, 216, 0.5);
+
+      --font-base: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: ui-monospace, 'SF Mono', Consolas, monospace;
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      --ease: 150ms ease;
+    }
+
+    /* Dark mode - still WCAG AA */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-bg: #0f172a;
+        --color-surface: #1e293b;
+        --color-surface-hover: #334155;
+        --color-border: #475569;
+        --color-border-strong: #64748b;
+
+        --color-text: #f1f5f9;
+        --color-text-secondary: #cbd5e1;
+        --color-text-muted: #94a3b8;
+
+        --color-primary: #60a5fa;
+        --color-primary-hover: #3b82f6;
+        --color-primary-text: #0f172a;
+
+        --color-success: #4ade80;
+        --color-success-bg: #14532d;
+        --color-error: #f87171;
+        --color-error-bg: #7f1d1d;
+        --color-warning: #fbbf24;
+        --color-warning-bg: #78350f;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    html {
+      font-size: 100%; /* Respect user browser setting */
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-base);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      background: var(--color-bg);
+    }
+
+    /* Focus visible for keyboard users only */
+    :focus {
+      outline: none;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+      box-shadow: var(--focus-ring);
+    }
+
+    /* Skip link - hidden until focused */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: var(--space-4);
+      background: var(--color-primary);
+      color: var(--color-primary-text);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 9999;
+    }
+
+    .skip-link:focus {
+      top: var(--space-4);
+    }
+
+    /* Screen reader only text */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Layout */
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    nav {
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      padding: var(--space-6) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 0 var(--space-2);
+    }
+
+    .logo-icon {
+      width: 2rem;
+      height: 2rem;
+      background: var(--color-primary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: var(--color-primary-text);
+    }
+
+    .logo-text {
+      font-size: 1.125rem;
+      font-weight: 800;
+    }
+
+    /* Nav list */
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .nav-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: var(--space-2);
+      margin-top: var(--space-4);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      transition: background var(--ease), color var(--ease);
+    }
+
+    .nav-link:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-text);
+    }
+
+    .nav-link[aria-current="page"] {
+      background: var(--color-primary);
+      color: var(--color-primary-text);
+    }
+
+    .nav-icon {
+      font-size: 1.25rem;
+      width: 1.5rem;
+      text-align: center;
+    }
+
+    /* Main content */
+    main {
+      padding: var(--space-8);
+      max-width: 1200px;
+    }
+
+    /* Header */
+    .page-header {
+      margin-bottom: var(--space-8);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0 0 var(--space-2);
+    }
+
+    .page-desc {
+      font-size: 1.125rem;
+      color: var(--color-text-secondary);
+      margin: 0;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    /* Form elements */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .required::after {
+      content: ' *';
+      color: var(--color-error);
+    }
+
+    input[type="text"],
+    input[type="search"],
+    select,
+    textarea {
+      width: 100%;
+      padding: var(--space-3);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-md);
+      font-family: var(--font-base);
+      font-size: 1rem;
+      color: var(--color-text);
+      transition: border-color var(--ease);
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: var(--color-border);
+    }
+
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      border-color: var(--color-primary);
+    }
+
+    input[aria-invalid="true"] {
+      border-color: var(--color-error);
+    }
+
+    .help-text {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+    }
+
+    .error-text {
+      font-size: 0.8125rem;
+      color: var(--color-error);
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      font-family: var(--font-base);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--ease);
+      min-height: 44px; /* WCAG touch target */
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-primary-text);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--color-primary-hover);
+    }
+
+    .btn-secondary {
+      background: var(--color-surface);
+      color: var(--color-text);
+      border-color: var(--color-border-strong);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--color-surface-hover);
+    }
+
+    .btn-icon {
+      font-size: 1.125rem;
+    }
+
+    /* Cards */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+
+    .card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* Table - accessible */
+    .table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-8);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+
+    caption {
+      text-align: left;
+      padding: var(--space-4);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    th {
+      background: var(--color-surface);
+      padding: var(--space-3) var(--space-4);
+      text-align: left;
+      font-weight: 700;
+      color: var(--color-text);
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    tr:hover {
+      background: var(--color-surface-hover);
+    }
+
+    /* Status badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .badge-error {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+    }
+
+    .badge-warning {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    /* Alerts - ARIA live regions */
+    .alert {
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      border-left: 4px solid;
+      margin-bottom: var(--space-4);
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .alert-success {
+      background: var(--color-success-bg);
+      border-color: var(--color-success);
+      color: var(--color-success);
+    }
+
+    .alert-error {
+      background: var(--color-error-bg);
+      border-color: var(--color-error);
+      color: var(--color-error);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        z-index: 100;
+        transition: left var(--ease);
+      }
+
+      nav.open {
+        left: 0;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      main {
+        padding: var(--space-4);
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: var(--space-4);
+      left: var(--space-4);
+      z-index: 101;
+      width: 44px;
+      height: 44px;
+      background: var(--color-primary);
+      color: var(--color-primary-text);
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip to main content -->
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <div class="app">
+    <!-- Navigation -->
+    <nav aria-label="Main navigation" id="nav">
+      <div class="logo">
+        <div class="logo-icon" aria-hidden="true">⚡</div>
+        <span class="logo-text">ZenFlow</span>
+      </div>
+
+      <ul class="nav-list" role="list">
+        <li role="listitem">
+          <div class="nav-section-title" id="nav-main">Main</div>
+          <ul class="nav-list" role="list" aria-labelledby="nav-main">
+            <li role="listitem">
+              <a href="#dashboard" class="nav-link" aria-current="page">
+                <span class="nav-icon" aria-hidden="true">📊</span>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li role="listitem">
+              <a href="#projects" class="nav-link">
+                <span class="nav-icon" aria-hidden="true">📁</span>
+                <span>Projects</span>
+              </a>
+            </li>
+            <li role="listitem">
+              <a href="#analytics" class="nav-link">
+                <span class="nav-icon" aria-hidden="true">📈</span>
+                <span>Analytics</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li role="listitem">
+          <div class="nav-section-title" id="nav-manage">Manage</div>
+          <ul class="nav-list" role="list" aria-labelledby="nav-manage">
+            <li role="listitem">
+              <a href="#team" class="nav-link">
+                <span class="nav-icon" aria-hidden="true">👥</span>
+                <span>Team</span>
+              </a>
+            </li>
+            <li role="listitem">
+              <a href="#settings" class="nav-link">
+                <span class="nav-icon" aria-hidden="true">⚙️</span>
+                <span>Settings</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Mobile menu button -->
+    <button class="mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav" onclick="toggleNav()">
+      <span aria-hidden="true">☰</span>
+    </button>
+
+    <!-- Main content -->
+    <main id="main" tabindex="-1">
+      <div class="page-header">
+        <h1>Dashboard Overview</h1>
+        <p class="page-desc">Monitor your team performance and project status</p>
+      </div>
+
+      <!-- Live region for announcements -->
+      <div aria-live="polite" aria-atomic="true" class="sr-only" id="announcements"></div>
+
+      <!-- Alert example -->
+      <div class="alert alert-success" role="alert">
+        <span aria-hidden="true">✓</span>
+        <div>
+          <strong>Success:</strong> Your report has been generated and is ready to download.
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar" role="toolbar" aria-label="Dashboard actions">
+        <form role="search" class="form-group" style="flex: 1; max-width: 400px;">
+          <label for="search" class="sr-only">Search projects</label>
+          <input 
+            type="search" 
+            id="search" 
+            name="search" 
+            placeholder="Search projects..."
+            aria-describedby="search-help"
+          >
+          <span id="search-help" class="help-text">Search by name or ID</span>
+        </form>
+
+        <div style="display: flex; gap: var(--space-2);">
+          <button class="btn btn-secondary" type="button">
+            <span class="btn-icon" aria-hidden="true">↓</span>
+            Export
+          </button>
+          <button class="btn btn-primary" type="button">
+            <span class="btn-icon" aria-hidden="true">+</span>
+            New Project
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <section aria-labelledby="stats-heading">
+        <h2 id="stats-heading" class="sr-only">Key Metrics</h2>
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-header">
+              <h3 class="card-title">Active Projects</h3>
+              <span aria-hidden="true">📁</span>
+            </div>
+            <p style="font-size: 2rem; font-weight: 800; margin: 0; line-height: 1;">
+              24
+              <span class="sr-only">projects</span>
+            </p>
+            <p style="margin: var(--space-2) 0 0; color: var(--color-text-secondary);">
+              <span class="badge badge-success">
+                <span aria-hidden="true">↑</span>
+                12% from last month
+              </span>
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <h3 class="card-title">Team Members</h3>
+              <span aria-hidden="true">👥</span>
+            </div>
+            <p style="font-size: 2rem; font-weight: 800; margin: 0; line-height: 1;">
+              18
+              <span class="sr-only">members</span>
+            </p>
+            <p style="margin: var(--space-2) 0 0; color: var(--color-text-secondary);">
+              3 active now
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <h3 class="card-title">Completion Rate</h3>
+              <span aria-hidden="true">✓</span>
+            </div>
+            <p style="font-size: 2rem; font-weight: 800; margin: 0; line-height: 1;">
+              94<span style="font-size: 1.25rem;">%</span>
+              <span class="sr-only">percent</span>
+            </p>
+            <p style="margin: var(--space-2) 0 0; color: var(--color-text-secondary);">
+              <span class="badge badge-success">
+                <span aria-hidden="true">↑</span>
+                5% improvement
+              </span>
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Data Table -->
+      <section aria-labelledby="projects-heading">
+        <h2 id="projects-heading" style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-4);">
+          Recent Projects
+        </h2>
+
+        <div class="table-wrapper">
+          <table>
+            <caption>List of 5 most recent projects with status and assignee</caption>
+            <thead>
+              <tr>
+                <th scope="col">Project Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Assignee</th>
+                <th scope="col">Due Date</th>
+                <th scope="col"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Website Redesign</strong></td>
+                <td>
+                  <span class="badge badge-success">
+                    <span aria-hidden="true">●</span>
+                    Active
+                  </span>
+                </td>
+                <td>Sarah Chen</td>
+                <td>
+                  <time datetime="2026-06-20">Jun 20, 2026</time>
+                </td>
+                <td>
+                  <button class="btn btn-secondary" style="min-height: auto; padding: var(--space-2) var(--space-3); font-size: 0.8125rem;" aria-label="View Website Redesign project">
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Mobile App v2</strong></td>
+                <td>
+                  <span class="badge badge-warning">
+                    <span aria-hidden="true">●</span>
+                    Review
+                  </span>
+                </td>
+                <td>Alex Kim</td>
+                <td>
+                  <time datetime="2026-06-25">Jun 25, 2026</time>
+                </td>
+                <td>
+                  <button class="btn btn-secondary" style="min-height: auto; padding: var(--space-2) var(--space-3); font-size: 0.8125rem;" aria-label="View Mobile App v2 project">
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>API Migration</strong></td>
+                <td>
+                  <span class="badge badge-success">
+                    <span aria-hidden="true">●</span>
+                    Active
+                  </span>
+                </td>
+                <td>Jordan Lee</td>
+                <td>
+                  <time datetime="2026-07-01">Jul 1, 2026</time>
+                </td>
+                <td>
+                  <button class="btn btn-secondary" style="min-height: auto; padding: var(--space-2) var(--space-3); font-size: 0.8125rem;" aria-label="View API Migration project">
+                    View
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Q2 Analytics</strong></td>
+                <td>
+                  <span class="badge badge-error">
+                    <span aria-hidden="true">●</span>
+                    Blocked
+                  </span>
+                </td>
+                <td>Taylor Wu</td>
+                <td>
+                  <time datetime="2026-06-15">Jun 15, 2026</time>
+                </td>
+                <td>
+                  <button class="btn btn-secondary" style="min-height: auto; padding: var(--space-2) var(--space-3); font-size: 0.8125rem;" aria-label="View Q2 Analytics project">
+                    View
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Form Example -->
+      <section aria-labelledby="form-heading">
+        <h2 id="form-heading" style="font-size: 1.25rem; font-weight: 700; margin-bottom: var(--space-4);">
+          Add New Task
+        </h2>
+
+        <form style="max-width: 600px;" novalidate>
+          <div style="display: grid; gap: var(--space-4);">
+            <div class="form-group">
+              <label for="task-name" class="required">Task Name</label>
+              <input 
+                type="text" 
+                id="task-name" 
+                name="task-name" 
+                required 
+                aria-required="true"
+                aria-describedby="task-name-error"
+              >
+              <span id="task-name-error" class="error-text" role="alert" style="display: none;">
+                <span aria-hidden="true">⚠</span>
+                Task name is required
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label for="task-priority">Priority</label>
+              <select id="task-priority" name="task-priority">
+                <option value="">Select priority</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+              <span class="help-text">How urgent is this task?</span>
+            </div>
+
+            <div class="form-group">
+              <label for="task-desc">Description</label>
+              <textarea 
+                id="task-desc" 
+                name="task-desc" 
+                rows="4"
+                aria-describedby="task-desc-help"
+              ></textarea>
+              <span id="task-desc-help" class="help-text">Provide details to help your team understand the task</span>
+            </div>
+
+            <fieldset style="border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4);">
+              <legend style="font-weight: 600; padding: 0 var(--space-2);">Notifications</legend>
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                <label style="display: flex; align-items: center; gap: var(--space-2); font-weight: 400; cursor: pointer;">
+                  <input type="checkbox" name="notify-email" style="width: 1.25rem; height: 1.25rem;">
+                  Email me when task is complete
+                </label>
+                <label style="display: flex; align-items: center; gap: var(--space-2); font-weight: 400; cursor: pointer;">
+                  <input type="checkbox" name="notify-slack" style="width: 1.25rem; height: 1.25rem;">
+                  Send Slack notification to team
+                </label>
+              </div>
+            </fieldset>
+
+            <div style="display: flex; gap: var(--space-3); justify-content: flex-end;">
+              <button type="button" class="btn btn-secondary">Cancel</button>
+              <button type="submit" class="btn btn-primary">Create Task</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Mobile nav toggle
+    function toggleNav() {
+      const nav = document.getElementById('nav');
+      const btn = document.querySelector('.mobile-menu-btn');
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+
+    // Close nav on escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const nav = document.getElementById('nav');
+        const btn = document.querySelector('.mobile-menu-btn');
+        if (nav.classList.contains('open')) {
+          nav.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.focus();
+        }
+      }
+    });
+
+    // Form validation example
+    document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const taskName = document.getElementById('task-name');
+      const error = document.getElementById('task-name-error');
+
+      if (!taskName.value.trim()) {
+        taskName.setAttribute('aria-invalid', 'true');
+        error.style.display = 'flex';
+        taskName.focus();
+
+        // Announce to screen readers
+        document.getElementById('announcements').textContent = 'Error: Task name is required';
+      } else {
+        taskName.setAttribute('aria-invalid', 'false');
+        error.style.display = 'none';
+        document.getElementById('announcements').textContent = 'Task created successfully';
+        e.target.reset();
+      }
+    });
+
+    // Announce page changes for SPA
+    function announcePageChange(pageName) {
+      document.getElementById('announcements').textContent = `Navigated to ${pageName}`;
+    }
+  </script>
+</body>
+</html>
