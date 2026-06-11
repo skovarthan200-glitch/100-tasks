@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Alex Rivera — UI/UX Designer | Dribbble Showcase</title>
+  <meta name="description" content="UI/UX Designer crafting beautiful interfaces for SaaS & mobile apps. Browse my latest shots: dashboards, design systems, mobile UI. Available for freelance projects.">
+  <meta name="keywords" content="UI designer, UX designer, Dribbble, product design, interface design, SaaS UI, mobile app design, Figma">
+  <link rel="canonical" href="https://alexrivera.design/showcase">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://alexrivera.design/showcase">
+  <meta property="og:title" content="Alex Rivera — UI/UX Designer">
+  <meta property="og:description" content="Crafting beautiful interfaces for SaaS & mobile apps. Browse my latest UI shots and case studies.">
+  <meta property="og:image" content="https://alexrivera.design/og-dribbble.jpg">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Schema: Person + CreativeWork -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Alex Rivera",
+    "url": "https://alexrivera.design",
+    "image": "https://alexrivera.design/avatar.jpg",
+    "jobTitle": "UI/UX Designer",
+    "description": "Crafting beautiful interfaces for SaaS & mobile apps",
+    "sameAs": [
+      "https://dribbble.com/alexrivera",
+      "https://behance.net/alexrivera",
+      "https://linkedin.com/in/alexrivera"
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Dribbble Color System */
+      --bg: #f8f7f4;
+      --bg-card: #ffffff;
+      --text: #0d0c22;
+      --text-secondary: #6e6d7a;
+      --text-tertiary: #9e9ea7;
+      --border: #e7e7e9;
+      --pink: #ea4c89;
+      --pink-hover: #d44278;
+      --purple: #7247b7;
+
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+      --container: 1600px;
+      --radius: 8px;
+      --shadow: 0 1px 2px rgba(0,0,0,0.08);
+      --shadow-lg: 0 8px 16px rgba(0,0,0,0.08);
+      --ease: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d0c22;
+        --bg-card: #1a1825;
+        --text: #f8f7f4;
+        --text-secondary: #b9b8c1;
+        --text-tertiary: #6e6d7a;
+        --border: #2d2b3a;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms!important;
+        transition-duration: 0.01ms!important;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+ .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header - Dribbble Style */
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+ .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      min-height: 68px;
+    }
+
+ .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--text);
+      font-style: italic;
+      letter-spacing: -0.02em;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: color var(--ease);
+    }
+
+    nav a:hover, nav a[aria-current="page"] {
+      color: var(--text);
+    }
+
+ .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+ .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--ease);
+      min-height: 40px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-family: var(--font);
+    }
+
+ .btn-primary {
+      background: var(--pink);
+      color: white;
+    }
+
+ .btn-primary:hover {
+      background: var(--pink-hover);
+      transform: translateY(-1px);
+    }
+
+ .btn-ghost {
+      background: transparent;
+      color: var(--text);
+    }
+
+ .btn-ghost:hover {
+      background: var(--bg);
+    }
+
+ .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+ .mobile-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    /* Hero - Profile Header */
+ .hero {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 0;
+    }
+
+ .profile-header {
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 2rem;
+      align-items: start;
+    }
+
+ .profile-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+ .profile-info h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0 0 0.25rem;
+      letter-spacing: -0.02em;
+    }
+
+ .profile-tagline {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin: 0 0 1rem;
+    }
+
+ .profile-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+ .profile-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+    }
+
+ .profile-stats {
+      display: flex;
+      gap: 2rem;
+    }
+
+ .profile-stat strong {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text);
+    }
+
+ .profile-stat span {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+ .profile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+ .social-links {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+ .social-links a {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all var(--ease);
+      font-size: 1rem;
+    }
+
+ .social-links a:hover {
+      background: var(--pink);
+      color: white;
+      border-color: var(--pink);
+    }
+
+    /* Filters - Dribbble Style */
+ .filters {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 68px;
+      z-index: 90;
+    }
+
+ .filters-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+ .filter-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+ .filter-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+ .filter-select {
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      font-family: var(--font);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 4.5L6 7.5L9 4.5' stroke='%236e6d7a' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+    }
+
+ .filter-select:hover {
+      border-color: var(--text-secondary);
+    }
+
+ .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+ .filter-tab {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--ease);
+    }
+
+ .filter-tab:hover {
+      border-color: var(--text-secondary);
+      color: var(--text);
+    }
+
+ .filter-tab.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    /* Work Grid - Masonry */
+ .work-section {
+      padding: 2rem 0 4rem;
+    }
+
+ .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+ .shot {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all var(--ease);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+ .shot:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+ .shot-image {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: var(--bg);
+      position: relative;
+    }
+
+ .shot-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 400ms;
+    }
+
+ .shot:hover.shot-image img {
+      transform: scale(1.05);
+    }
+
+ .shot-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.6) 100%);
+      opacity: 0;
+      transition: opacity var(--ease);
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+    }
+
+ .shot:hover.shot-overlay {
+      opacity: 1;
+    }
+
+ .shot-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+
+ .shot-action {
+      width: 36px;
+      height: 36px;
+      background: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.125rem;
+      transition: all var(--ease);
+    }
+
+ .shot-action:hover {
+      background: var(--pink);
+      color: white;
+      transform: scale(1.1);
+    }
+
+ .shot-content {
+      padding: 1rem;
+    }
+
+ .shot-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+ .shot-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+ .shot-author {
+      flex: 1;
+      min-width: 0;
+    }
+
+ .shot-author strong {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+ .shot-author span {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+    }
+
+ .shot-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+ .shot-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.8125rem;
+      color: var(--text-tertiary);
+    }
+
+ .shot-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Case Study Modal */
+ .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+ .modal.show { display: block; }
+
+ .modal-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+ .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+ .modal-close {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: var(--bg);
+      border-radius: 8px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+ .modal-body {
+      padding: 2rem;
+    }
+
+ .modal-body img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      margin-bottom: 2rem;
+    }
+
+ .modal-body h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+    }
+
+ .modal-body p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      padding: 3rem 0 2rem;
+      margin-top: 4rem;
+    }
+
+ .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+ .footer-col h4 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 1rem;
+      color: var(--text);
+    }
+
+ .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+ .footer-col a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--ease);
+      font-size: 0.9375rem;
+    }
+
+ .footer-col a:hover { color: var(--pink); }
+
+ .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-tertiary);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
+      }
+
+      nav ul.show { display: flex; }
+      nav a { padding: 0.75rem; display: block; }
+   .mobile-toggle { display: block; }
+   .header-actions.btn { display: none; }
+
+   .profile-header {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+   .profile-avatar { margin: 0 auto; }
+   .profile-stats { justify-content: center; }
+   .profile-actions { align-items: center; }
+
+   .work-grid {
+        grid-template-columns: 1fr;
+      }
+
+   .footer-grid { grid-template-columns: 1fr; }
+   .filters-inner { flex-direction: column; align-items: stretch; }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--pink);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="logo" aria-label="Homepage">Dribbble</a>
+
+        <nav aria-label="Main navigation">
+          <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">☰</button>
+          <ul id="nav-menu">
+            <li><a href="#shots" aria-current="page">Shots</a></li>
+            <li><a href="#designers">Designers</a></li>
+            <li><a href="#jobs">Jobs</a></li>
+            <li><a href="#blog">Blog</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#signin" class="btn btn-ghost">Sign in</a>
+          <a href="#signup" class="btn btn-primary">Sign up</a>
+          <img src="https://i.pravatar.cc/80?img=33" alt="Your avatar" class="avatar">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Profile -->
+    <section class="hero">
+      <div class="container">
+        <div class="profile-header">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop"
+               alt="Alex Rivera"
+               class="profile-avatar"
+               width="140"
+               height="140">
+
+          <div class="profile-info">
+            <h1>Alex Rivera</h1>
+            <p class="profile-tagline">Senior UI/UX Designer • Design Systems • SaaS Products</p>
+            <div class="profile-meta">
+              <span class="profile-meta-item">📍 San Francisco, CA</span>
+              <span class="profile-meta-item">💼 Available for freelance</span>
+              <span class="profile-meta-item">⭐ Pro Member</span>
+            </div>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <strong>1.2M</strong>
+                <span>Shot Views</span>
+              </div>
+              <div class="profile-stat">
+                <strong>24.5K</strong>
+                <span>Followers</span>
+              </div>
+              <div class="stat">
+                <strong>847</strong>
+                <span>Appreciations</span>
+              </div>
+            <p class="profile-bio">
+              Crafting beautiful, conversion-focused interfaces for SaaS startups.
+              Former Lead Designer at Stripe. I help companies increase signup rates 40%+ through user-centered design and systematic design thinking.
+            </p>
+          </div>
+
+          <div class="profile-actions">
+            <button class="btn btn-primary">Follow</button>
+            <button class="btn btn-ghost">Message</button>
+            <div class="social-links">
+              <a href="https://behance.net/alexrivera" aria-label="Behance" target="_blank" rel="noopener">Be</a>
+              <a href="https://linkedin.com/in/alexrivera" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+              <a href="https://twitter.com/alexriveraux" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+              <a href="https://figma.com/@alexrivera" aria-label="Figma" target="_blank" rel="noopener">Fg</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+      <div class="container">
+        <div class="filters-inner">
+          <div class="filter-group">
+            <span class="filter-label">Filter:</span>
+            <div class="filter-tabs">
+              <button class="filter-tab active" onclick="filterShots('all')">All Shots</button>
+              <button class="filter-tab" onclick="filterShots('web')">Web Design</button>
+              <button class="filter-tab" onclick="filterShots('mobile')">Mobile App</button>
+              <button class="filter-tab" onclick="filterShots('dashboard')">Dashboard</button>
+              <button class="filter-tab" onclick="filterShots('design-system')">Design System</button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <label class="filter-label" for="sort">Sort by:</label>
+            <select class="filter-select" id="sort" onchange="sortShots(this.value)">
+              <option value="popular">Popular</option>
+              <option value="recent">Recent</option>
+              <option value="views">Most Viewed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Grid -->
+    <section class="work-section" id="shots">
+      <div class="container">
+        <div class="work-grid" id="workGrid">
+          <!-- Shot 1 -->
+          <article class="shot" data-category="dashboard web">
+            <a href="#shot-1" onclick="openShot('shot-1')">
+              <div class="shot-image">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=450&fit=crop"
+                     alt="Analytics Dashboard - Dark Mode UI Design"
+                     loading="lazy"
+                     width="600"
+                     height="450">
+                <div class="shot-overlay">
+                  <div class="shot-actions">
+                    <button class="shot-action" aria-label="Save shot" onclick="event.stopPropagation(); saveShot('1')">💾</button>
+                    <button class="shot-action" aria-label="Like shot" onclick="event.stopPropagation(); likeShot('1')">❤️</button>
+                  </div>
+                </div>
+              <div class="shot-content">
+                <div class="shot-header">
+                  <img src="https://i.pravatar.cc/64?img=33" alt="Alex Rivera" class="shot-avatar">
+                  <div class="shot-author">
+                    <strong>Alex Rivera</strong>
+                    <span>Pro</span>
+                  </div>
+                </div>
+                <h3 class="shot-title">Analytics Dashboard — Dark Mode SaaS UI</h3>
+                <div class="shot-meta">
+                  <span class="shot-stat">👁 12.4k</span>
+                  <span class="shot-stat">❤️ 847</span>
+                  <span class="shot-stat">💬 23</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Shot 2 -->
+          <article class="shot" data-category="mobile">
+            <a href="#shot-2" onclick="openShot('shot-2')">
+              <div class="shot-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=450&fit=crop"
+                     alt="FinTech Mobile Banking App UI"
+                     loading="lazy"
+                     width="600"
+                     height="450">
+                <div class="shot-overlay">
+                  <div class="shot-actions">
+                    <button class="shot-action" aria-label="Save shot" onclick="event.stopPropagation(); saveShot('2')">💾</button>
+                    <button class="shot-action" aria-label="Like shot" onclick="event.stopPropagation(); likeShot('2')">❤️</button>
+                  </div>
+                </div>
+              <div class="shot-content">
+                <div class="shot-header">
+                  <img src="https://i.pravatar.cc/64?img=33" alt="Alex Rivera" class="shot-avatar">
+                  <div class="shot-author">
+                    <strong>Alex Rivera</strong>
+                    <span>Pro</span>
+                  </div>
+                </div>
+                <h3 class="shot-title">FinTech Mobile Banking — iOS App</h3>
+                <div class="shot-meta">
+                  <span class="shot-stat">👁 8.2k</span>
+                  <span class="shot-stat">❤️ 623</span>
+                  <span class="shot-stat">💬 18</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Shot 3 -->
+          <article class="shot" data-category="design-system">
+            <a href="#shot-3" onclick="openShot('shot-3')">
+              <div class="shot-image">
+                <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=450&fit=crop"
+                     alt="Design System Components Library"
+                     loading="lazy"
+                     width="600"
+                     height="450">
+                <div class="shot-overlay">
+                  <div class="shot-actions">
+                    <button class="shot-action" aria-label="Save shot" onclick="event.stopPropagation(); saveShot('3')">💾</button>
+                    <button class="shot-action" aria-label="Like shot" onclick="event.stopPropagation(); likeShot('3')">❤️</button>
+                  </div>
+                </div>
+              </div>
+              <div class="shot-content">
+                <div class="shot-header">
+                  <img src="https://i.pravatar.cc/64?img=33" alt="Alex Rivera" class="shot-avatar">
+                  <div class="shot-author">
+                    <strong>Alex Rivera</strong>
+                    <span>Pro</span>
+                  </div>
+                </div>
+                <h3 class="shot-title">Enterprise Design System — 200+ Components</h3>
+                <div class="shot-meta">
+                  <span class="shot-stat">👁 15.1k</span>
+                  <span class="shot-stat">❤️ 1.2k</span>
+                  <span class="shot-stat">💬 47</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Shot 4 -->
+          <article class="shot" data-category="web dashboard">
+            <a href="#shot-4" onclick="openShot('shot-4')">
+              <div class="shot-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=450&fit=crop"
+                     alt="CRM Sales Dashboard Interface"
+                     loading="lazy"
+                     width="600"
+                     height="450">
+                <div class="shot-overlay">
+                  <div class="shot-actions">
+                    <button class="shot-action" aria-label="Save shot" onclick="event.stopPropagation(); saveShot('4')">💾</button>
+                    <button class="shot-action" aria-label="Like shot" onclick="event.stopPropagation(); likeShot('4')">❤️</button>
+                  </div>
+                </div>
+              </div>
+              <div class="shot-content">
+                <div class="shot-header">
+                  <img src="https://i.pravatar.cc/64?img=33" alt="Alex Rivera" class="shot-avatar">
+                  <div class="shot-author">
+                    <strong>Alex Rivera</strong>
+                    <span>Pro</span>
+                  </div>
+                </div>
+                <h3 class="shot-title">CRM Sales Dashboard — B2B SaaS</h3>
+                <div class="shot-meta">
+                  <span class="shot-stat">👁 9.1k</span>
+                  <span class="shot-stat">❤️ 734</span>
+                  <span class="shot-stat">💬 31</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Shot 5 -->
+          <article class="shot" data-category="mobile">
+            <a href="#shot-5" onclick="openShot('shot-5')">
+              <div class="shot-image">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=450&fit=crop"
+                     alt="Health & Fitness Tracking App UI"
+                     loading="lazy"
+                     width="600"
+                     height="450">
+                <div class="shot-overlay">
+                  <div class="shot-actions">
+                    <button class="shot-action" aria-label="Save shot" onclick="event.stopPropagation(); saveShot('5')">💾</button>
+                    <button class="shot-action" aria-label="Like shot" onclick="event.stopPropagation(); likeShot('5')">❤️</button>
+                  </div>
+                </div>
+              <div class="shot-content">
+                <div class="shot-header">
+                  <img src="https://i.pravatar.cc/64?img=33" alt="Alex Rivera" class="shot-avatar">
+                  <div class="shot-author">
+                    <strong>Alex Rivera</strong>
+                    <span>Pro</span>
+                  </div>
+                </div>
+                <h3 class="shot-title">Health Tracker — Workout & Nutrition App</h3>
+                <div class="shot-meta">
+                  <span class="shot-stat">👁 4.3k</span>
+                  <span class="shot-stat">❤️ 318</span>
+                  <span class="shot-stat">💬 12</span>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Shot 6 -->
+          <article class="shot" data-category="web">
+            <a href="#shot-6" onclick="openShot('shot-6')">
+              <div class="shot-image">
+                <img src="https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=450&fit=crop"
+                     alt="E-commerce Product Page Design"
+                     loading="lazy"
+                     width="600"
+                     height="450">
+                <div class="shot-overlay">
+                  <div class="shot-actions">
+                    <button class="shot-action" aria-label="Save shot" onclick="event.stopPropagation(); saveShot('6')">💾</button>
+                    <button class="shot-action" aria-label="Like shot" onclick="event.stopPropagation(); likeShot('6')">❤️</button>
+                  </div>
+                </div>
+              </div>
+              <div class="shot-content">
+                <div class="shot-header">
+                  <img src="https://i.pravatar.cc/64?img=33" alt="Alex Rivera" class="shot-avatar">
+                  <div class="shot-author">
+                    <strong>Alex Rivera</strong>
+                    <span>Pro</span>
+                  </div>
+                </div>
+                <h3 class="shot-title">E-commerce Product Page — Conversion Focused</h3>
+                <div class="shot-meta">
+                  <span class="shot-stat">👁 6.8k</span>
+                  <span class="shot-stat">❤️ 492</span>
+                  <span class="shot-stat">💬 19</span>
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Shot Modal -->
+  <div class="modal" id="shotModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Shot Title</h2>
+        <button class="modal-close" aria-label="Close modal" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo" style="margin-bottom: 1rem; color: white;">Alex<span style="color: var(--pink);">.</span></div>
+          <p style="color: rgba(255,255,255,0.7); font-size: 0.9375rem; line-height: 1.7;">
+            UI/UX Designer crafting beautiful interfaces for SaaS & mobile apps.
+            Available for freelance projects and design consulting.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Work</h4>
+          <ul>
+            <li><a href="#shots">All Shots</a></li>
+            <li><a href="/case-studies">Case Studies</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/archive">Archive</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">UI/UX Design</a></li>
+            <li><a href="#services">Design Systems</a></li>
+            <li><a href="#services">User Research</a></li>
+            <li><a href="#services">Prototyping</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href
