@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZenFlow Redesign — Client Presentation | Alex Rivera</title>
+  <meta name="description" content="UI/UX Design proposal for ZenFlow SaaS platform redesign">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --bg-slide: #ffffff;
+      --bg-dark: #020617;
+      --text: #0f172a;
+      --text-light: #ffffff;
+      --text-secondary: #475569;
+      --border: #e2e8f0;
+      --accent: #0ea5e9;
+      --accent-dark: #0284c7;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --gradient: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%);
+
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+      --radius: 12px;
+      --shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-slide: #1e293b;
+        --text: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --border: #334155;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text-light);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Slide Container */
+   .deck {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+   .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+   .slide.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+   .slide.prev {
+      transform: translateX(-100%);
+    }
+
+   .slide-content {
+      max-width: 1200px;
+      width: 100%;
+      background: var(--bg-slide);
+      color: var(--text);
+      border-radius: 24px;
+      padding: 4rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Slide Types */
+   .slide-title {
+      background: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+   .slide-title.slide-content {
+      background: transparent;
+      box-shadow: none;
+      text-align: center;
+    }
+
+   .slide-dark {
+      background: var(--bg-dark);
+      color: var(--text-light);
+    }
+
+   .slide-dark.slide-content {
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Typography */
+    h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 0 0 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 0 0.75rem;
+    }
+
+    p {
+      font-size: 1.125rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+   .slide-dark p,.slide-title p {
+      color: rgba(255,255,255,0.8);
+    }
+
+   .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Components */
+   .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+   .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+      align-items: center;
+    }
+
+   .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+   .stat-card {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+    }
+
+   .stat-card strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+   .stat-card span {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+   .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+   .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 1.125rem;
+    }
+
+   .feature-list li::before {
+      content: '✓';
+      width: 2rem;
+      height: 2rem;
+      background: var(--gradient);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+   .mockup {
+      width: 100%;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+   .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+   .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+   .timeline-item {
+      position: relative;
+      padding-bottom: 2rem;
+    }
+
+   .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.5rem;
+      top: 0;
+      width: 1rem;
+      height: 1rem;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid var(--bg-slide);
+    }
+
+   .timeline-item h4 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+   .timeline-item span {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    /* Navigation */
+   .deck-nav {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--bg-slide);
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      z-index: 100;
+    }
+
+   .nav-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: all 200ms;
+      color: var(--text);
+    }
+
+   .nav-btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+   .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+   .slide-counter {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* Progress Bar */
+   .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(0,0,0,0.1);
+      z-index: 101;
+    }
+
+   .progress-bar {
+      height: 100%;
+      background: var(--gradient);
+      transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Speaker Notes */
+   .notes-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 101;
+    }
+
+   .notes {
+      position: fixed;
+      right: -400px;
+      top: 0;
+      bottom: 0;
+      width: 400px;
+      background: var(--bg-slide);
+      border-left: 1px solid var(--border);
+      padding: 2rem;
+      overflow-y: auto;
+      transition: right 300ms;
+      z-index: 102;
+    }
+
+   .notes.show { right: 0; }
+
+   .notes h3 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+   .notes p {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+    }
+
+    /* Print Styles */
+    @media print {
+      body { overflow: visible; }
+     .deck-nav,.notes-toggle,.progress { display: none; }
+     .slide {
+        position: relative;
+        opacity: 1;
+        transform: none;
+        page-break-after: always;
+        height: 100vh;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+     .slide { padding: 2rem 1rem; }
+     .slide-content { padding: 2rem 1.5rem; }
+     .grid-2,.grid-3 { grid-template-columns: 1fr; }
+     .profile-header { grid-template-columns: 1fr; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.75rem; }
+    }
+
+    /* Animations */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+   .animate-in {
+      animation: slideIn 600ms ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Notes Toggle -->
+  <button class="btn btn-ghost notes-toggle" onclick="toggleNotes()">📝 Notes</button>
+  <div class="notes" id="notes">
+    <h3>Speaker Notes</h3>
+    <div id="notesContent"></div>
+  </div>
+
+  <!-- Deck -->
+  <div class="deck" id="deck">
+    <!-- Slide 1: Title -->
+    <section class="slide slide-title active" data-notes="Welcome the client. Set the tone: confident, collaborative. Mention this is a 6-week engagement starting next Monday.">
+      <div class="slide-content">
+        <div class="badge">🎨 Design Proposal</div>
+        <h1>ZenFlow<br><span class="gradient-text">SaaS Redesign</span></h1>
+        <p style="font-size: 1.5rem; margin-bottom: 3rem;">
+          Transforming user experience to increase<br>
+          conversion by 40% in 6 weeks
+        </p>
+        <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; font-size: 1.125rem;">
+          <div>
+            <strong style="display: block; font-size: 1.5rem;">Alex Rivera</strong>
+            <span style="opacity: 0.8;">Senior UI/UX Designer</span>
+          </div>
+          <div style="width: 1px; height: 40px; background: rgba(255,255,255,0.3);"></div>
+          <div>
+            <strong style="display: block; font-size: 1.5rem;">Oct 15, 2026</strong>
+            <span style="opacity: 0.8;">Presentation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Problem -->
+    <section class="slide" data-notes="Current state: 2.1% trial-to-paid conversion, industry avg is 5%. Users drop off during onboarding. Mobile experience is broken.">
+      <div class="slide-content">
+        <div class="badge">The Challenge</div>
+        <h2>Current Experience is<br>Costing You Users</h2>
+        <div class="grid-2" style="margin-top: 3rem;">
+          <div>
+            <h3>📉 Low Conversion</h3>
+            <p>Only 2.1% of trial users convert to paid. Industry average is 5-8% for B2B SaaS.</p>
+
+            <h3 style="margin-top: 2rem;">😕 Confusing Onboarding</h3>
+            <p>68% of users drop off during setup. Too many steps, unclear value prop.</p>
+
+            <h3 style="margin-top: 2rem;">📱 Poor Mobile UX</h3>
+            <p>45% of traffic is mobile, but experience is desktop-only. Losing users.</p>
+          </div>
+          <div>
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=500&fit=crop"
+                 alt="Current dashboard with usability issues"
+                 class="mockup">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Opportunity -->
+    <section class="slide slide-dark" data-notes="Good news: fixing these 3 areas = 40% conversion lift. Based on research with 50 users and competitor analysis.">
+      <div class="slide-content">
+        <div class="badge" style="background: var(--success);">The Opportunity</div>
+        <h2>3 Key Improvements =<br><span class="gradient-text">40% Conversion Lift</span></h2>
+        <div class="grid-3" style="margin-top: 3rem;">
+          <div class="stat-card">
+            <strong>+127%</strong>
+            <span>Trial Signups</span>
+            <p style="margin-top: 1rem; font-size: 0.9375rem;">Simplified onboarding from 8 steps to 3</p>
+          </div>
+          <div class="stat-card">
+            <strong>+85%</strong>
+            <span>User Activation</span>
+            <p style="margin-top: 1rem; font-size: 0.9375rem;">Clear value prop + guided first-run</p>
+          </div>
+          <div class="stat-card">
+            <strong>+40%</strong>
+            <span>Paid Conversion</span>
+            <p style="margin-top: 1rem; font-size: 0.9375rem;">Mobile-first + faster time-to-value</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Solution -->
+    <section class="slide" data-notes="Show the redesigned dashboard. Key changes: 1) Simplified nav 2) Progressive disclosure 3) Mobile responsive 4) Faster load times">
+      <div class="slide-content">
+        <div class="badge">The Solution</div>
+        <h2>Redesigned for<br>Conversion & Clarity</h2>
+        <div class="grid-2" style="margin-top: 2rem;">
+          <div>
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+                 alt="New dashboard design"
+                 class="mockup">
+          </div>
+          <div>
+            <ul class="feature-list">
+              <li>Simplified navigation - 3 clicks to any feature</li>
+              <li>Progressive disclosure - show only what's needed</li>
+              <li>Mobile-first responsive - works on all devices</li>
+              <li>60% faster load time - optimized performance</li>
+              <li>Guided onboarding - interactive product tour</li>
+              <li>Clear value props - users understand benefits</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Process -->
+    <section class="slide" data-notes="6-week timeline. Week 1-2: Research & Design. Week 3-4: Prototyping. Week 5-6: Dev handoff & testing.">
+      <div class="slide-content">
+        <div class="badge">Process</div>
+        <h2>6-Week Sprint<br>to Launch</h2>
+        <div class="timeline" style="margin-top: 3rem;">
+          <div class="timeline-item">
+            <h4>Week 1-2: Discovery & Design</h4>
+            <p>User interviews, competitive analysis, wireframes, high-fidelity designs in Figma</p>
+            <span>Deliverable: Approved designs + prototype</span>
+          </div>
+          <div class="timeline-item">
+            <h4>Week 3-4: Design System & Testing</h4>
+            <p>Component library, design tokens, usability testing with 10 users, iterations</p>
+            <span>Deliverable: Design system + test results</span>
+          </div>
+          <div class="timeline-item">
+            <h4>Week 5-6: Dev Handoff & QA</h4>
+            <p>Developer documentation, React component specs, QA testing, launch support</p>
+            <span>Deliverable: Production-ready handoff</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Investment -->
+    <section class="slide slide-dark" data-notes="Investment: $18,000 fixed price. Includes everything: research, design, prototyping, design system, dev handoff. ROI: If we increase conversion from 2% to 3%, that's +$50k MRR at current traffic.">
+      <div class="slide-content">
+        <div class="badge" style="background: var(--warning);">Investment</div>
+        <h2>Fixed Price.<br><span class="gradient-text">Predictable Results.</span></h2>
+        <div class="grid-2" style="margin-top: 3rem;">
+          <div>
+            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius); padding: 2rem;">
+              <h3 style="font-size: 3rem; margin-bottom: 0.5rem;">$18,000</h3>
+              <p style="font-size: 1.125rem; margin-bottom: 2rem;">Complete redesign package</p>
+              <ul class="feature-list">
+                <li>User research & testing</li>
+                <li>Full UI/UX redesign</li>
+                <li>Design system in Figma</li>
+                <li>Interactive prototype</li>
+                <li>Developer handoff docs</li>
+                <li>30 days post-launch support</li>
+              </ul>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin-bottom: 1.5rem;">ROI Calculator</h3>
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid var(--success); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem;">
+              <strong style="display: block; font-size: 2rem; color: var(--success);">+$50K MRR</strong>
+              <span style="opacity: 0.8;">If conversion increases 1% (2% → 3%)</span>
+            </div>
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid var(--success); border-radius: var(--radius); padding: 1.5rem;">
+              <strong style="display: block; font-size: 2rem; color: var(--success);">3 Months</strong>
+              <span style="opacity: 0.8;">Payback period at current traffic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 7: Next Steps -->
+    <section class="slide slide-title" data-notes="Call to action: Sign contract today, kickoff Monday. I have availability starting next week. Questions?">
+      <div class="slide-content">
+        <h1>Let's Ship This<br><span class="gradient-text">Together</span></h1>
+        <p style="font-size: 1.5rem; margin-bottom: 3rem; opacity: 0.9;">
+          Ready to start? I can kick off next Monday.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <button class="btn" style="background: white; color: var(--bg-dark); font-size: 1.125rem; padding: 1rem 2rem;">
+            Approve Proposal
+          </button>
+          <button class="btn" style="background: transparent; color: white; border: 2px solid white; font-size: 1.125rem; padding: 1rem 2rem;">
+            Ask Questions
+          </button>
+        </div>
+        <p style="margin-top: 3rem; font-size: 1rem; opacity: 0.7;">
+          Alex Rivera • alex@alexrivera.design • (555) 847-2646
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Navigation -->
+  <div class="deck-nav">
+    <button class="nav-btn" id="prevBtn" onclick="prevSlide()" aria-label="Previous slide">←</button>
+    <span class="slide-counter">
+      <span id="currentSlide">1</span> / <span id="totalSlides">7</span>
+    </span>
+    <button class="nav-btn" id="nextBtn" onclick="nextSlide()" aria-label="Next slide">→</button>
+    <button class="nav-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen">⛶</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    document.getElementById('totalSlides').textContent = totalSlides;
+
+    const notesData = [
+      "Welcome the client. Set the tone: confident, collaborative. Mention this is a 6-week engagement starting next Monday.",
+      "Current state: 2.1% trial-to-paid conversion, industry avg is 5%. Users drop off during onboarding. Mobile experience is broken.",
+      "Good news: fixing these 3 areas = 40% conversion lift. Based on research with 50 users and competitor analysis.",
+      "Show the redesigned dashboard. Key changes: 1) Simplified nav 2) Progressive disclosure 3) Mobile responsive 4) Faster load times",
+      "6-week timeline. Week 1-2: Research & Design. Week 3-4: Prototyping. Week 5-6: Dev handoff & testing.",
+      "Investment: $18,000 fixed price. Includes everything. ROI: If we increase conversion from 2% to 3%, that's +$50k MRR.",
+      "Call to action: Sign contract today, kickoff Monday. I have availability starting next week. Questions?"
+    ];
+
+    function updateSlide() {
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active', 'prev');
+        if (index === currentSlide) {
+          slide.classList.add('active');
+        } else if (index < currentSlide) {
+          slide.classList.add('prev');
+        }
+      });
+
+      document.getElementById('currentSlide').textContent = currentSlide + 1;
+      document.getElementById('progressBar').style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+      document.getElementById('prevBtn').disabled = currentSlide === 0;
+      document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+
+      // Update notes
+      document.getElementById('notesContent').innerHTML = `<p>${notesData[currentSlide]}</p>`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function toggleNotes() {
+      document.getElementById('notes').classList.toggle('show');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
+      } else if (e.key === 'p' || e.key === 'P') {
+        window.print();
+      } else if (e.key === 'n' || e.key === 'N') {
+        toggleNotes();
+      }
+    });
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    document.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) nextSlide();
+        else prevSlide();
+      }
+    });
+
+    // Initialize
+    updateSlide();
+
+    // Click on slide to advance
+    slides.forEach(slide => {
+      slide.addEventListener('click', (e) => {
+        if (e.target === slide) nextSlide();
+      });
+    });
+  </script>
+</body>
+</html>
