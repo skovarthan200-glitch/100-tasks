@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Alex Rivera — UI/UX Designer | Behance Portfolio</title>
+  <meta name="description" content="Senior UI/UX Designer specializing in SaaS & mobile apps. View my case studies on design systems, user research, and conversion optimization. 50+ projects shipped.">
+  <meta name="keywords" content="UI UX designer, product designer, Behance portfolio, case studies, design systems, SaaS design, mobile app design">
+  <link rel="canonical" href="https://alexrivera.design/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://alexrivera.design/">
+  <meta property="og:title" content="Alex Rivera — UI/UX Designer">
+  <meta property="og:description" content="Senior UI/UX Designer. Case studies on SaaS, mobile apps, design systems.">
+  <meta property="og:image" content="https://alexrivera.design/og-cover.jpg">
+  <meta property="profile:first_name" content="Alex">
+  <meta property="profile:last_name" content="Rivera">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Schema: Person + CreativeWork -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Alex Rivera",
+    "url": "https://alexrivera.design",
+    "image": "https://alexrivera.design/profile.jpg",
+    "jobTitle": "Senior UI/UX Designer",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Freelance"
+    },
+    "sameAs": [
+      "https://www.behance.net/alexrivera",
+      "https://dribbble.com/alexrivera",
+      "https://linkedin.com/in/alexrivera"
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-dark: #0f172a;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --text-light: #94a3b8;
+      --border: #e2e8f0;
+      --accent: #0057ff;
+      --accent-hover: #0046cc;
+
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --container: 1400px;
+      --radius: 16px;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+      --ease: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --bg-card: #1e293b;
+        --bg-dark: #020617;
+        --text: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-light: #64748b;
+        --border: #334155;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms!important;
+        transition-duration: 0.01ms!important;
+      }
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+ .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Header - Behance Style */
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+ .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      min-height: 70px;
+    }
+
+ .logo {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+ .logo span {
+      color: var(--accent);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      transition: color var(--ease);
+    }
+
+    nav a:hover, nav a[aria-current="page"] {
+      color: var(--text);
+    }
+
+ .header-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+ .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--ease);
+      min-height: 44px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-size: 0.9375rem;
+    }
+
+ .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+ .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+ .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+ .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+ .mobile-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--border);
+      background: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text);
+      border-radius: 8px;
+    }
+
+    /* Hero - Profile Section */
+ .hero {
+      padding: 4rem 0 3rem;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+
+ .profile-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+ .avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--border);
+    }
+
+ .profile-info h1 {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin: 0 0 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+ .profile-title {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin: 0 0 1rem;
+    }
+
+ .profile-location {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 0.9375rem;
+    }
+
+ .profile-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+ .stat strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--text);
+    }
+
+ .stat span {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+ .profile-bio {
+      color: var(--text-secondary);
+      max-width: 60ch;
+      line-height: 1.7;
+    }
+
+ .profile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+ .social-links {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+ .social-links a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      transition: all var(--ease);
+      font-size: 1.125rem;
+    }
+
+ .social-links a:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* Filters - Behance Style */
+ .filters {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+    }
+
+ .filters-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+ .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+ .filter-tabs::-webkit-scrollbar { display: none; }
+
+ .filter-tab {
+      padding: 0.625rem 1.25rem;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 9999px;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--ease);
+      white-space: nowrap;
+    }
+
+ .filter-tab:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+ .filter-tab.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+ .view-toggle {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+ .view-btn {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--ease);
+    }
+
+ .view-btn:hover,.view-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Work Grid - Masonry Style */
+ .work-section {
+      padding: 3rem 0;
+    }
+
+ .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+ .work-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all var(--ease);
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+ .work-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+ .work-image {
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: var(--bg-subtle);
+      position: relative;
+    }
+
+ .work-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 500ms;
+    }
+
+ .work-card:hover.work-image img {
+      transform: scale(1.05);
+    }
+
+ .work-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 0.375rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      backdrop-filter: blur(10px);
+    }
+
+ .work-content {
+      padding: 1.25rem;
+    }
+
+ .work-title {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      line-height: 1.3;
+    }
+
+ .work-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+ .work-stats {
+      display: flex;
+      gap: 1rem;
+      margin-left: auto;
+    }
+
+ .work-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    /* Case Study Page */
+ .case-study {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+ .case-header {
+      margin-bottom: 3rem;
+    }
+
+ .case-meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+ .case-header h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 0 0 1rem;
+    }
+
+ .case-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+ .case-hero {
+      width: 100%;
+      border-radius: var(--radius);
+      margin: 2rem 0;
+    }
+
+ .case-section {
+      margin: 3rem 0;
+    }
+
+ .case-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+    }
+
+ .case-section p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+ .case-image {
+      width: 100%;
+      border-radius: var(--radius);
+      margin: 2rem 0;
+      border: 1px solid var(--border);
+    }
+
+ .case-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-dark);
+      color: white;
+      padding: 3rem 0 2rem;
+      margin-top: 4rem;
+    }
+
+ .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+ .footer-col h4 {
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 1rem;
+      color: var(--accent);
+    }
+
+ .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+ .footer-col a {
+      color: rgba(255,255,0.8);
+      text-decoration: none;
+      transition: color var(--ease);
+      font-size: 0.9375rem;
+    }
+
+ .footer-col a:hover { color: var(--accent); }
+
+ .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,0.6);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
+      }
+
+      nav ul.show { display: flex; }
+      nav a { padding: 0.75rem; display: block; }
+   .mobile-toggle { display: block; }
+   .header-actions.btn { display: none; }
+
+   .profile-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+   .avatar { margin: 0 auto; }
+   .profile-stats { justify-content: center; }
+   .profile-actions { align-items: center; }
+
+   .work-grid {
+        grid-template-columns: 1fr;
+      }
+
+   .case-grid {
+        grid-template-columns: 1fr;
+      }
+
+   .footer-grid { grid-template-columns: 1fr; }
+   .filters-inner { flex-direction: column; align-items: stretch; }
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+ .fade-in {
+      animation: fadeInUp 600ms ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <a href="/" class="logo" aria-label="Alex Rivera homepage">
+          AR<span>.</span>
+        </a>
+
+        <nav aria-label="Main navigation">
+          <button class="mobile-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">☰</button>
+          <ul id="nav-menu">
+            <li><a href="#work" aria-current="page">Work</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="https://behance.net/alexrivera" target="_blank" rel="noopener">Behance</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#contact" class="btn btn-primary">Hire Me</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero Profile -->
+    <section class="hero">
+      <div class="container">
+        <div class="profile-grid">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop"
+               alt="Alex Rivera, Senior UI/UX Designer"
+               class="avatar"
+               width="200"
+               height="200">
+
+          <div class="profile-info">
+            <h1>Alex Rivera</h1>
+            <p class="profile-title">Senior UI/UX Designer & Design Systems Architect</p>
+            <div class="profile-location">
+              <span>📍</span>
+              <span>San Francisco, CA • Available for freelance</span>
+            </div>
+            <div class="profile-stats">
+              <div class="stat">
+                <strong>50+</strong>
+                <span>Projects</span>
+              </div>
+              <div class="stat">
+                <strong>8</strong>
+                <span>Years Exp</span>
+              </div>
+              <div class="stat">
+                <strong>31</strong>
+                <span>Clients</span>
+              </div>
+            <p class="profile-bio">
+              I help SaaS startups increase conversion 40%+ through user-centered design.
+              Former Lead Designer at Stripe. Specializing in design systems, user research, and React prototypes.
+            </p>
+          </div>
+
+          <div class="profile-actions">
+            <a href="#contact" class="btn btn-primary">Let's Work Together</a>
+            <a href="/resume.pdf" class="btn btn-ghost">Download Resume</a>
+            <div class="social-links">
+              <a href="https://behance.net/alexrivera" aria-label="Behance" target="_blank" rel="noopener">Be</a>
+              <a href="https://dribbble.com/alexrivera" aria-label="Dribbble" target="_blank" rel="noopener">Dr</a>
+              <a href="https://linkedin.com/in/alexrivera" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+              <a href="https://twitter.com/alexriveraux" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+      <div class="container">
+        <div class="filters-inner">
+          <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterProjects('all')">All Work</button>
+            <button class="filter-tab" onclick="filterProjects('saas')">SaaS</button>
+            <button class="filter-tab" onclick="filterProjects('mobile')">Mobile Apps</button>
+            <button class="filter-tab" onclick="filterProjects('design-systems')">Design Systems</button>
+            <button class="filter-tab" onclick="filterProjects('web')">Web Apps</button>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn active" aria-label="Grid view" onclick="setView('grid')">⊞</button>
+            <button class="view-btn" aria-label="List view" onclick="setView('list')">☰</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Grid -->
+    <section class="work-section" id="work">
+      <div class="container">
+        <div class="work-grid" id="workGrid">
+          <!-- Project 1 -->
+          <article class="work-card" data-category="saas design-systems">
+            <a href="/case-study/zenflow" aria-label="View ZenFlow Dashboard case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop"
+                     alt="ZenFlow SaaS Dashboard - Analytics interface with charts"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+                <div class="work-badge">Case Study</div>
+                <div class="work-overlay">
+                  <span class="work-overlay-btn">View Project →</span>
+                </div>
+              <div class="work-content">
+                <h3 class="work-title">ZenFlow Analytics Dashboard</h3>
+                <div class="work-meta">
+                  <span>SaaS • Design System</span>
+                  <div class="work-stats">
+                    <span class="work-stat">👁 12.4k</span>
+                    <span class="work-stat">❤️ 847</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="work-card" data-category="mobile">
+            <a href="/case-study/fintech" aria-label="View FinTech Mobile App case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+                     alt="FinTech mobile app screens showing banking interface"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+                <div class="work-badge">Case Study</div>
+                <div class="work-overlay">
+                  <span class="work-overlay-btn">View Project →</span>
+                </div>
+              <div class="work-content">
+                <h3 class="work-title">FinTech Mobile Banking App</h3>
+                <div class="work-meta">
+                  <span>Mobile • iOS/Android</span>
+                  <div class="work-stats">
+                    <span class="work-stat">👁 8.2k</span>
+                    <span class="work-stat">❤️ 623</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="work-card" data-category="design-systems">
+            <a href="/case-study/design-system" aria-label="View Enterprise Design System case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=400&fit=crop"
+                     alt="Design system components library in Figma"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+                <div class="work-badge">Featured</div>
+                <div class="work-overlay">
+                  <span class="work-overlay-btn">View Project →</span>
+                </div>
+              </div>
+              <div class="work-content">
+                <h3 class="work-title">Enterprise Design System</h3>
+                <div class="work-meta">
+                  <span>Design System • Figma</span>
+                  <div class="work-stats">
+                    <span class="work-stat">👁 15.1k</span>
+                    <span class="work-stat">❤️ 1.2k</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="work-card" data-category="web saas">
+            <a href="/case-study/ecommerce" aria-label="View E-commerce Platform case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1557821552-17105176677c?w=600&h=400&fit=crop"
+                     alt="E-commerce platform product page design"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+                <div class="work-badge">Case Study</div>
+                <div class="work-overlay">
+                  <span class="work-overlay-btn">View Project →</span>
+                </div>
+              </div>
+              <div class="work-content">
+                <h3 class="work-title">Headless Commerce Platform</h3>
+                <div class="work-meta">
+                  <span>E-commerce • Next.js</span>
+                  <div class="work-stats">
+                    <span class="work-stat">👁 6.8k</span>
+                    <span class="work-stat">❤️ 492</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 5 -->
+          <article class="work-card" data-category="mobile">
+            <a href="/case-study/health" aria-label="View Health Tracking App case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop"
+                     alt="Health tracking mobile app interface"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+                <div class="work-overlay">
+                  <span class="work-overlay-btn">View Project →</span>
+                </div>
+              <div class="work-content">
+                <h3 class="work-title">Health & Fitness Tracker</h3>
+                <div class="work-meta">
+                  <span>Mobile • Health Tech</span>
+                  <div class="work-stats">
+                    <span class="work-stat">👁 4.3k</span>
+                    <span class="work-stat">❤️ 318</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Project 6 -->
+          <article class="work-card" data-category="saas web">
+            <a href="/case-study/crm" aria-label="View CRM Dashboard case study">
+              <div class="work-image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+                     alt="CRM dashboard with customer data visualization"
+                     loading="lazy"
+                     width="600"
+                     height="400">
+                <div class="work-overlay">
+                  <span class="work-overlay-btn">View Project →</span>
+                </div>
+              </div>
+              <div class="work-content">
+                <h3 class="work-title">CRM Sales Dashboard</h3>
+                <div class="work-meta">
+                  <span>SaaS • B2B</span>
+                  <div class="work-stats">
+                    <span class="work-stat">👁 9.1k</span>
+                    <span class="work-stat">❤️ 734</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo" style="margin-bottom: 1rem; color: white;">
+            AR<span style="color: var(--accent);">.</span>
+          </div>
+          <p style="color: rgba(255,255,255,0.7); font-size: 0.9375rem; line-height: 1.7;">
+            Senior UI/UX Designer helping SaaS startups ship products that convert.
+            Available for freelance projects and design consulting.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Work</h4>
+          <ul>
+            <li><a href="/case-study/zenflow">ZenFlow Dashboard</a></li>
+            <li><a href="/case-study/fintech">FinTech App</a></li>
+            <li><a href="/case-study/design-system">Design System</a></li>
+            <li><a href="#work">View All Projects</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Product Design</a></li>
+            <li><a href="#services">Design Systems</a></li>
+            <li><a href="#services">User Research</a></li>
+            <li><a href="#services">Prototyping</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://behance.net/alexrivera" target="_blank" rel="noopener">Behance</a></li>
+            <li><a href="https://dribbble.com/alexrivera" target="_blank" rel="noopener">Dribbble</a></li>
+            <li><a href="https://linkedin.com/in/alexrivera" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="mailto:hello@alexrivera.design">Email Me</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Alex Rivera. All rights reserved.</p>
+        <div class="social-links">
+          <a href="https://behance.net/alexrivera" aria-label="Behance" target="_blank" rel="noopener">Be</a>
+          <a href="https://dribbble.com/alexrivera" aria-label="Dribbble" target="_blank" rel="noopener">Dr</a>
+          <a href="https://linkedin.com/in/alexrivera" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+          <a href="https://twitter.com/alexriveraux" aria-label="Twitter" target="_blank" rel="noopener">𝕏</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    function toggleMenu() {
+      const menu = document.getElementById('nav-menu');
+      const btn = document.querySelector('.mobile-toggle');
+      const isOpen = menu.classList.toggle('show');
+      btn.setAttribute('aria-expanded', isOpen);
+      btn.textContent = isOpen? '✕' : '☰';
+    }
+
+    // Close mobile menu on link click
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        const menu = document.getElementById('nav-menu');
+        const btn = document.querySelector('.mobile-toggle');
+        if (menu.classList.contains('show')) {
+          menu.classList.remove('show');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = '☰';
+        }
+      });
+    });
+
+    // Filter projects
+    function filterProjects(category) {
+      const cards = document.querySelectorAll('.work-card');
+      const tabs = document.querySelectorAll('.filter-tab');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
+
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category.includes(category)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // View toggle
+    function setView(view) {
+      const grid = document.getElementById('workGrid');
+      const btns = document.querySelectorAll('.view-btn');
+
+      btns.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (view === 'list') {
+        grid.style.gridTemplateColumns = '1fr';
+      } else {
+        grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(320px, 1fr))';
+      }
+    }
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.removeAttribute('aria-current');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.setAttribute('aria-current', 'page');
+        }
+      });
+    });
+
+    // Fade in animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, { threshold: 0
